@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import os
+import platform
+import subprocess
 from pathlib import Path
 
 from PySide6.QtCore import Qt, Signal
@@ -25,7 +28,20 @@ class FileDropZone(QFrame):
         layout = QVBoxLayout(self)
         self._label = QLabel("Drop Excel or CSV file here\n(.xlsx, .csv)")
         self._label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self._label.setOpenExternalLinks(False)
+        self._label.linkActivated.connect(self._on_link_clicked)
         layout.addWidget(self._label)
+        self._current_path: str | None = None
+
+    def _on_link_clicked(self, link: str) -> None:
+        if link == "open_folder" and self._current_path:
+            path = Path(self._current_path).parent
+            if platform.system() == "Windows":
+                os.startfile(path)
+            elif platform.system() == "Darwin":
+                subprocess.Popen(["open", str(path)])
+            else:
+                subprocess.Popen(["xdg-open", str(path)])
 
     def dragEnterEvent(self, event: QDragEnterEvent) -> None:
         if event.mimeData().hasUrls():
@@ -43,8 +59,14 @@ class FileDropZone(QFrame):
                 break
 
     def set_file(self, path: str) -> None:
+        self._current_path = path
         name = Path(path).name
-        self._label.setText(f"Loaded: {name}")
+        # Use HTML link for clickability
+        self._label.setText(
+            f'Loaded: <a href="open_folder" style="color: #2563eb; text-decoration: none; font-weight: bold;">{name}</a>'
+            '<br><small style="color: #64748b;">(click to open folder)</small>'
+        )
 
     def clear(self) -> None:
+        self._current_path = None
         self._label.setText("Drop Excel or CSV file here\n(.xlsx, .csv)")
