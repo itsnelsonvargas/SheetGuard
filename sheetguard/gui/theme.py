@@ -48,30 +48,37 @@ QLabel#duplicatesValue { color: #2563EB; }
 QLabel#correctionsValue { color: #059669; }
 
 QPushButton {
-    background-color: #2563EB;
-    color: white;
-    border: 1px solid #1D4ED8;
+    background-color: transparent;
+    color: #2563EB;
+    border: 1px solid #2563EB;
     border-radius: 6px;
     padding: 8px 14px;
     font-weight: 700;
 }
-QPushButton:hover { background-color: #3B82F6; }
-QPushButton:pressed { background-color: #1E40AF; }
-QPushButton:disabled { background-color: #94A3B8; }
+QPushButton:hover { background-color: rgba(37, 99, 235, 20); }
+QPushButton:pressed { background-color: rgba(37, 99, 235, 40); }
+QPushButton:disabled { border-color: #94A3B8; color: #94A3B8; background-color: transparent; }
+
+QPushButton#secondary {
+    color: #64748B;
+    border: 1px solid #64748B;
+}
+QPushButton#secondary:hover { background-color: rgba(100, 116, 139, 20); }
+QPushButton#secondary:pressed { background-color: rgba(100, 116, 139, 40); }
 
 QPushButton#success {
-    background-color: #059669;
-    border: 1px solid #047857;
+    color: #059669;
+    border: 1px solid #059669;
 }
-QPushButton#success:hover { background-color: #10B981; }
-QPushButton#success:pressed { background-color: #065F46; }
+QPushButton#success:hover { background-color: rgba(5, 150, 105, 20); }
+QPushButton#success:pressed { background-color: rgba(5, 150, 105, 40); }
 
 QPushButton#danger { 
-    background-color: #DC2626; 
-    border: 1px solid #991B1B;
+    color: #DC2626; 
+    border: 1px solid #DC2626;
 }
-QPushButton#danger:hover { background-color: #EF4444; }
-QPushButton#danger:pressed { background-color: #991B1B; }
+QPushButton#danger:hover { background-color: rgba(220, 38, 38, 20); }
+QPushButton#danger:pressed { background-color: rgba(220, 38, 38, 40); }
 
 QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
     background-color: #FFFFFF;
