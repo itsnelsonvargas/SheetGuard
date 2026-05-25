@@ -53,6 +53,13 @@ QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
     border-radius: 6px;
     padding: 6px;
 }
+QTableWidget::item:hover {
+    background-color: rgba(100, 150, 255, 40);
+}
+QTableWidget::item:selected {
+    background-color: #e2e8f0;
+    color: #1a1d21;
+}
 QTabWidget::pane { border: 1px solid #e2e5ea; border-radius: 6px; background: #fff; }
 QTabBar::tab {
     background: #e2e8f0;
@@ -107,6 +114,13 @@ QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
     border-radius: 6px;
     padding: 6px;
     color: #c9d1d9;
+}
+QTableWidget::item:hover {
+    background-color: rgba(100, 150, 255, 40);
+}
+QTableWidget::item:selected {
+    background-color: #21262d;
+    color: #f0f6fc;
 }
 QTabWidget::pane { border: 1px solid #30363d; background: #161b22; }
 QTabBar::tab { background: #21262d; padding: 8px 16px; }

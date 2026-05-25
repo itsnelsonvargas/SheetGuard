@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pandas as pd
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
@@ -39,11 +40,45 @@ class DataTableWidget(QWidget):
         self._table.setAlternatingRowColors(True)
         self._table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self._table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
+        self._table.setMouseTracking(True)
+        self._table.cellEntered.connect(self._on_cell_entered)
         layout.addWidget(self._table)
 
         self._df: pd.DataFrame | None = None
         self._action_col_name: str | None = None
         self._action_callback: callable | None = None
+        self._hovered_row: int = -1
+
+    def _on_cell_entered(self, row: int, column: int) -> None:
+        """Visual feedback: highlight the entire row on hover."""
+        if row == self._hovered_row:
+            return
+        
+        # Clear old hover
+        if self._hovered_row != -1:
+            for c in range(self._table.columnCount()):
+                item = self._table.item(self._hovered_row, c)
+                if item:
+                    item.setData(Qt.ItemDataRole.BackgroundRole, None)
+        
+        self._hovered_row = row
+        
+        # Subtle semi-transparent highlight (works in light/dark)
+        highlight = QColor(100, 150, 255, 40) 
+        for c in range(self._table.columnCount()):
+            item = self._table.item(self._hovered_row, c)
+            if item:
+                item.setBackground(highlight)
+
+    def leaveEvent(self, event) -> None:
+        """Clear hover when mouse leaves the widget area."""
+        if self._hovered_row != -1:
+            for c in range(self._table.columnCount()):
+                item = self._table.item(self._hovered_row, c)
+                if item:
+                    item.setData(Qt.ItemDataRole.BackgroundRole, None)
+            self._hovered_row = -1
+        super().leaveEvent(event)
 
     def set_dataframe(self, df: pd.DataFrame | None, action_column: str | None = None, on_action: callable | None = None) -> None:
         self._df = df.copy() if df is not None else None
