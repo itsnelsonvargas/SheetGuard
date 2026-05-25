@@ -1,0 +1,8 @@
+learner_id,learner_name,birthdate,sex,municipality,school,age
+LRN-001,juan dela cruz,15/03/2010,M,manila,Rizal Elementary School,14
+LRN-002,MARIA SANTOS,2011-07-22,F,Quezon City,Bonifacio High School,13
+lrn-003,  Pedro   Reyes  ,03-15-2009,m,Invalid Town,Mabini Academy,16
+,Ana Garcia,01/01/2012,X,Makati,Unknown School,12
+LRN-001,Juan Dela Cruz,2010-03-15,M,Manila,Rizal Elementary School,14
+LRN-005,Lisa Wong,not-a-date,F,Cebu City,Cebu Central School,99
+LRN-006,Carlos Mendoza,05/06/2011,M,Quezon City,Quezon Science High,14

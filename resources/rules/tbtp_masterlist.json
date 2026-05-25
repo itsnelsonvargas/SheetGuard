@@ -1,0 +1,78 @@
+{
+  "rule_name": "TBTP Masterlist",
+  "version": "1.0",
+  "description": "Sample rule set for learner masterlist cleaning and validation",
+  "header_row": 0,
+  "columns": [
+    {
+      "field_id": "learner_id",
+      "column": "A",
+      "required": true,
+      "cleaning": ["trim", "uppercase"],
+      "regex": "^[A-Z0-9\\-]+$",
+      "max_length": 20
+    },
+    {
+      "field_id": "learner_name",
+      "column": "B",
+      "required": true,
+      "cleaning": ["trim", "collapse_spaces", "title"]
+    },
+    {
+      "field_id": "birthdate",
+      "column": "C",
+      "required": true,
+      "cleaning": ["normalize_date"],
+      "date_format": "YYYY-MM-DD"
+    },
+    {
+      "field_id": "sex",
+      "column": "D",
+      "required": true,
+      "cleaning": ["trim", "uppercase"],
+      "allowed_values": ["M", "F"]
+    },
+    {
+      "field_id": "municipality",
+      "column": "E",
+      "required": true,
+      "cleaning": ["trim", "title"],
+      "lookup": "municipalities"
+    },
+    {
+      "field_id": "school",
+      "column": "F",
+      "cleaning": ["trim", "title"],
+      "lookup": "schools"
+    },
+    {
+      "field_id": "age",
+      "column": "G",
+      "cleaning": ["numeric_cleanup"],
+      "min_value": 3,
+      "max_value": 25
+    }
+  ],
+  "duplicate_rules": [
+    {
+      "name": "learner_name_birthdate",
+      "fields": ["learner_name", "birthdate"]
+    },
+    {
+      "name": "learner_id",
+      "fields": ["learner_id"]
+    }
+  ],
+  "lookups": [
+    {
+      "name": "municipalities",
+      "path": "resources/lookups/municipalities.csv",
+      "key_column": "name"
+    },
+    {
+      "name": "schools",
+      "path": "resources/lookups/schools.csv",
+      "key_column": "name"
+    }
+  ]
+}
