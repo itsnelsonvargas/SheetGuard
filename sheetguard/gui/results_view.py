@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import pandas as pd
-from PySide6.QtWidgets import QTabWidget, QVBoxLayout, QWidget
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QHBoxLayout, QPushButton, QTabWidget, QVBoxLayout, QWidget
 
 from sheetguard.gui.widgets.data_table import DataTableWidget
 from sheetguard.gui.widgets.summary_cards import SummaryCards
@@ -12,6 +15,8 @@ from sheetguard.models.results import ProcessingResult
 
 class ResultsView(QWidget):
     """Main results area: summary cards + tabbed tables."""
+
+    request_row_deletion = Signal(int)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -31,6 +36,14 @@ class ResultsView(QWidget):
 
         layout.addWidget(self.tabs)
 
+    def _on_row_action(self, row_data: dict[str, Any]) -> None:
+        if "row_number" in row_data:
+            try:
+                row_idx = int(row_data["row_number"]) - 1
+                self.request_row_deletion.emit(row_idx)
+            except (ValueError, TypeError):
+                pass
+
     def show_result(self, result: ProcessingResult) -> None:
         self.summary.update_counts(
             errors=result.error_count,
@@ -40,7 +53,11 @@ class ResultsView(QWidget):
         )
         self.preview_table.set_dataframe(result.cleaned_df)
         self.errors_table.set_dataframe(self._issues_df(result))
-        self.duplicates_table.set_dataframe(self._duplicates_df(result))
+        self.duplicates_table.set_dataframe(
+            self._duplicates_df(result), 
+            action_column="Delete", 
+            on_action=self._on_row_action
+        )
 
     def show_preview(self, df: pd.DataFrame) -> None:
         self.preview_table.set_dataframe(df)

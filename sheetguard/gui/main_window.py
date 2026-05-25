@@ -168,6 +168,7 @@ class MainWindow(QMainWindow):
         splitter.addWidget(sidebar_scroll)
 
         self.results_view = ResultsView()
+        self.results_view.request_row_deletion.connect(self._on_row_deleted)
         splitter.addWidget(self.results_view)
         splitter.setStretchFactor(1, 1)
 
@@ -292,6 +293,25 @@ class MainWindow(QMainWindow):
     def _on_failed(self, message: str) -> None:
         self.btn_process.setEnabled(True)
         QMessageBox.critical(self, "Processing Failed", message)
+
+    @Slot(int)
+    def _on_row_deleted(self, row_idx: int) -> None:
+        if not self._result:
+            return
+        
+        # Confirm deletion
+        ans = QMessageBox.question(
+            self, 
+            "Delete Row", 
+            f"Are you sure you want to delete row {row_idx + 1} from the results?"
+        )
+        if ans == QMessageBox.StandardButton.Yes:
+            try:
+                self._result.drop_row(row_idx)
+                self.results_view.show_result(self._result)
+                self.status.showMessage(f"Deleted row {row_idx + 1}")
+            except Exception as exc:
+                QMessageBox.critical(self, "Delete Error", str(exc))
 
     def _import_rule(self) -> None:
         path, _ = QFileDialog.getOpenFileName(self, "Import Rule", "", "JSON (*.json)")
