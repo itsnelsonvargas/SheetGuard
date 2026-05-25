@@ -104,10 +104,36 @@ class DataTableWidget(QWidget):
         self._table.setHorizontalHeaderLabels([str(c) for c in cols])
 
         for r in range(len(df)):
+            # Detect group header (only 1st column has value, others are null/empty)
+            is_group_header = False
+            first_val = df.iloc[r, 0]
+            if pd.notna(first_val) and str(first_val).strip():
+                other_vals = df.iloc[r, 1:]
+                if other_vals.isna().all() or (other_vals.astype(str).str.strip() == "").all():
+                    is_group_header = True
+
+            if is_group_header:
+                item = QTableWidgetItem(str(first_val))
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                font = item.font()
+                font.setBold(True)
+                item.setFont(font)
+                # Subtle background for headers
+                item.setBackground(QColor(150, 150, 150, 30))
+                self._table.setItem(r, 0, item)
+                self._table.setSpan(r, 0, 1, self._table.columnCount())
+                continue
+
             for c, col in enumerate(df.columns):
                 val = coerce_cell(df.iloc[r, c])
                 item = QTableWidgetItem(str(val))
                 item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                
+                # Center align from 2nd column onwards
+                if c > 0:
+                    item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                
                 self._table.setItem(r, c, item)
             
             if self._action_col_name:

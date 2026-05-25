@@ -248,7 +248,7 @@ class MainWindow(QMainWindow):
             from sheetguard.services.file_loader import FileLoader
 
             df = FileLoader.load(path, self._rule_set)
-            self.results_view.show_preview(df)
+            self.results_view.show_preview(df, self._rule_set)
         except Exception as exc:
             QMessageBox.warning(self, "Preview", f"Could not preview file: {exc}")
 

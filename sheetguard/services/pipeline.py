@@ -70,6 +70,7 @@ class ProcessingPipeline:
             duplicates=duplicates,
             corrections=cleaner.corrections,
             summary=summary,
+            rule_set=self.rule_set,
         )
 
         report(100, "Complete")

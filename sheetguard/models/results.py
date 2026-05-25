@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import pandas as pd
+
+if TYPE_CHECKING:
+    from sheetguard.models.rules import RuleSet
 
 
 @dataclass
@@ -61,6 +64,7 @@ class ProcessingResult:
     duplicates: list[DuplicateGroup] = field(default_factory=list)
     corrections: dict[tuple[int, str], Any] = field(default_factory=dict)
     summary: dict[str, Any] = field(default_factory=dict)
+    rule_set: RuleSet | None = None
 
     @property
     def error_count(self) -> int:

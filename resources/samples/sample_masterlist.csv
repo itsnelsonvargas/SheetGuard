@@ -1,1201 +1,1201 @@
-learner_id,learner_name,birthdate,sex,municipality,school,age
-LRN-001,juan dela cruz,15/03/2010,M,manila,Rizal Elementary School,14
-LRN-001,Juan Dela Cruz,2010-03-15,M,Manila,Rizal Elementary School,14
-LRN-002,MARIA SANTOS,2011-07-22,F,Quezon City,Bonifacio High School,13
-lrn-003,  Pedro   Reyes  ,03-15-2009,m,Invalid Town,Mabini Academy,16
-,Ana Garcia,01/01/2012,X,Makati,Unknown School,12
-LRN-0006,Pedro Villanueva,2011-09-27,F,Davao City,Davao National High,13
-LRN-0007,Carlos Dela Cruz,2015-08-07,M,Davao City,Bonifacio High School,9
-LRN-0008,Antonio Lopez,2011-03-05,F,Makati,Bonifacio High School,12
-LRN-0009,Antonio Aquino,2014-10-02,M,Taguig,Bonifacio High School,6
+﻿learner_id,learner_name,birthdate,sex,municipality,school,age
+LRN-001,juan dela cruz,03-15-10,M,manila,Rizal Elementary School,14
+LRN-001,Juan Dela Cruz,03-15-10,M,Manila,Rizal Elementary School,14
+LRN-002,MARIA SANTOS,07-22-11,F,Quezon City,Bonifacio High School,13
+lrn-003,  Pedro   Reyes  ,03-15-09,m,Invalid Town,Mabini Academy,16
+,Ana Garcia,01-01-12,X,Makati,Unknown School,12
+LRN-0006,Pedro Villanueva,09-27-11,F,Davao City,Davao National High,13
+LRN-0007,Carlos Dela Cruz,08-07-15,M,Davao City,Bonifacio High School,9
+LRN-0008,Antonio Lopez,03-05-11,F,Makati,Bonifacio High School,12
+LRN-0009,Antonio Aquino,10-02-14,M,Taguig,Bonifacio High School,6
 LRN-0010,  ana lopez  ,Invalid Date,X,Nowhere,Quezon Science High,6
-LRN-0011,Pedro Aquino,2014-02-07,M,Davao City,Mabini Academy,5
-LRN-0012,Ana Reyes,2011-05-23,M,Davao City,Bonifacio High School,18
-LRN-0013,Maria Dela Cruz,2008-06-30,M,Taguig,Rizal Elementary School,15
-LRN-0014,Lisa Reyes,2008-04-03,M,Manila,Cebu Central School,18
-LRN-0015,Antonio Garcia,2010-06-08,F,Pasig,Mabini Academy,12
-LRN-0016,Lisa Aquino,2010-04-20,M,Manila,Davao National High,7
-LRN-0017,Jose Santos,2014-09-18,F,Davao City,Davao National High,16
-LRN-0018,Juan Wong,2011-05-26,F,Makati,Mabini Academy,15
+LRN-0011,Pedro Aquino,02-07-14,M,Davao City,Mabini Academy,5
+LRN-0012,Ana Reyes,05-23-11,M,Davao City,Bonifacio High School,18
+LRN-0013,Maria Dela Cruz,06-30-08,M,Taguig,Rizal Elementary School,15
+LRN-0014,Lisa Reyes,04-03-08,M,Manila,Cebu Central School,18
+LRN-0015,Antonio Garcia,06-08-10,F,,Mabini Academy,12
+LRN-0016,Lisa Aquino,04-20-10,M,Manila,Davao National High,7
+LRN-0017,,09-18-14,F,Davao City,Davao National High,16
+LRN-0018,Juan Wong,05-26-11,F,Makati,Mabini Academy,15
 LRN-0019,  pedro reyes  ,Invalid Date,M,Nowhere,Rizal Elementary School,6
-LRN-0020,Pedro Mendoza,2013-01-26,M,Taguig,Cebu Central School,16
-LRN-0021,Maria Lopez,2014-05-07,M,Makati,Rizal Elementary School,13
-LRN-0022,Lisa Mendoza,2014-12-07,M,Davao City,Bonifacio High School,5
-LRN-0023,Maria Wong,2007-08-30,F,Cebu City,Cebu Central School,5
-LRN-0024,Juan Santos,2009-05-17,F,Makati,Cebu Central School,8
-LRN-0025,Carlos Dela Cruz,2008-06-06,F,Cebu City,Cebu Central School,16
-LRN-0026,Lisa Bautista,2015-10-24,F,Pasig,Mabini Academy,15
-LRN-0027,Maria Dela Cruz,2010-01-22,M,Pasig,Mabini Academy,5
-LRN-0028,Juan Garcia,2014-03-24,F,Makati,Mabini Academy,18
-LRN-0029,Jose Mendoza,2008-03-14,F,Pasig,Rizal Elementary School,12
-LRN-0030,juan bautista,20/10/2012,F,Makati,Mabini Academy,16
-LRN-0031,Ana Reyes,2014-04-20,M,Pasig,Quezon Science High,6
-LRN-0032,Lisa Wong,2005-08-20,M,Quezon City,Quezon Science High,16
-LRN-0033,Antonio Villanueva,2010-12-18,M,Pasig,Rizal Elementary School,15
-LRN-0034,Rosa Santos,2011-01-28,F,Taguig,Cebu Central School,14
-LRN-0035,Maria Dela Cruz,2005-03-20,F,Pasig,Rizal Elementary School,15
-LRN-0036,Juan Santos,2010-10-10,F,Pasig,Rizal Elementary School,17
-LRN-0037,Rosa Mendoza,2015-04-25,F,Davao City,Cebu Central School,16
-LRN-0038,Antonio Dela Cruz,2012-05-08,M,Manila,Rizal Elementary School,5
-LRN-0039,Maria Lopez,2011-05-30,M,Manila,Bonifacio High School,5
-LRN-0040,Maria Bautista,2005-11-29,M,Quezon City,Quezon Science High,18
-LRN-0041,Maria Dela Cruz,2009-08-04,F,Quezon City,Davao National High,6
-LRN-0042,Rosa Garcia,2005-06-20,M,Taguig,Cebu Central School,10
-LRN-0043,Pedro Santos,2014-04-26,F,Makati,Quezon Science High,5
-LRN-0044,Jose Garcia,2015-01-09,M,Makati,Bonifacio High School,10
-LRN-0045,Juan Wong,2008-09-15,M,Pasig,Mabini Academy,9
-LRN-0046,Maria Villanueva,2010-06-17,M,Manila,Cebu Central School,5
-LRN-0047,Pedro Santos,2010-10-20,M,Taguig,Bonifacio High School,17
-LRN-0048,Elena Bautista,2007-06-30,F,Davao City,Cebu Central School,7
-LRN-0049,Antonio Bautista,2014-07-23,F,Pasig,Davao National High,17
-LRN-0050,Rosa Dela Cruz,2011-01-27,M,Taguig,Cebu Central School,14
-LRN-0051,Elena Santos,2009-12-23,M,Makati,Cebu Central School,13
-LRN-0046,Maria Villanueva,2010-06-17,M,Manila,Cebu Central School,5
-LRN-0021,Maria Lopez,2014-05-07,M,Makati,Rizal Elementary School,13
-LRN-0054,Lisa Reyes,2006-09-05,F,Davao City,Bonifacio High School,11
-LRN-0017,Jose Santos,2014-09-18,F,Davao City,Davao National High,16
-LRN-0056,Elena Wong,2013-10-04,F,Quezon City,Rizal Elementary School,6
-LRN-0057,Juan Garcia,2006-01-30,F,Davao City,Rizal Elementary School,7
-LRN-0058,Antonio Villanueva,2009-01-13,F,Pasig,Mabini Academy,7
-LRN-0059,Pedro Villanueva,2010-05-14,M,Cebu City,Davao National High,5
-LRN-0060,Rosa Santos,2013-04-22,M,Cebu City,Rizal Elementary School,5
-LRN-0061,antonio lopez,27/05/2012,M,Taguig,Cebu Central School,14
-LRN-0062,Ana Garcia,2010-01-22,M,Quezon City,Bonifacio High School,11
-LRN-0063,Elena Bautista,2015-07-01,F,Davao City,Rizal Elementary School,13
-LRN-0064,Antonio Mendoza,2014-02-23,M,Makati,Quezon Science High,18
-LRN-0065,Lisa Reyes,2010-01-12,F,Quezon City,Davao National High,5
-LRN-0066,Ana Bautista,2014-09-28,M,Pasig,Davao National High,9
-LRN-0067,Elena Bautista,2007-05-28,M,Davao City,Quezon Science High,10
-LRN-0068,Ana Dela Cruz,2013-01-25,M,Davao City,Bonifacio High School,5
-LRN-0069,Ana Bautista,2014-02-09,M,Taguig,Cebu Central School,15
-LRN-0070,Ana Garcia,2006-10-08,F,Quezon City,Davao National High,11
-LRN-0071,Juan Wong,2014-08-06,M,Davao City,Rizal Elementary School,15
-LRN-0072,rosa mendoza,29/03/2006,Unknown,Cebu City,Mabini Academy,6
-LRN-0073,Pedro Reyes,2015-08-25,M,Quezon City,Rizal Elementary School,10
-LRN-0074,Elena Garcia,2006-04-28,M,Manila,Quezon Science High,12
-LRN-0075,Elena Mendoza,2013-03-03,F,Quezon City,Cebu Central School,11
-LRN-0076,Elena Santos,2006-10-10,F,Taguig,Rizal Elementary School,14
-LRN-0077,Carlos Villanueva,2007-04-04,M,Taguig,Bonifacio High School,17
-LRN-0078,Maria Villanueva,2007-11-07,M,Pasig,Bonifacio High School,11
-LRN-0079,Carlos Aquino,2005-05-20,M,Cebu City,Quezon Science High,16
-LRN-0080,Maria Reyes,2006-07-18,F,Quezon City,Mabini Academy,9
-LRN-0081,Antonio Aquino,2006-01-26,M,Makati,Bonifacio High School,18
-LRN-0082,Carlos Mendoza,2013-10-23,M,Pasig,Davao National High,13
-LRN-0083,Lisa Reyes,2010-06-13,F,Cebu City,Mabini Academy,15
-LRN-0084,Elena Santos,2012-08-15,M,Cebu City,Quezon Science High,6
-LRN-0085,Carlos Bautista,2012-10-06,F,Davao City,Quezon Science High,12
+LRN-0020,Pedro Mendoza,01-26-13,M,Taguig,Cebu Central School,16
+LRN-0021,Maria Lopez,05-07-14,M,Makati,Rizal Elementary School,13
+LRN-0022,Lisa Mendoza,12-07-14,M,Davao City,Bonifacio High School,5
+LRN-0023,Maria Wong,08-30-07,F,Cebu City,Cebu Central School,5
+LRN-0024,Juan Santos,05-17-09,F,Makati,Cebu Central School,8
+LRN-0025,Carlos Dela Cruz,06-06-08,F,Cebu City,Cebu Central School,16
+LRN-0026,Lisa Bautista,10-24-15,F,Pasig,Mabini Academy,15
+LRN-0027,Maria Dela Cruz,01-22-10,M,Pasig,Mabini Academy,5
+LRN-0028,Juan Garcia,03-24-14,F,Makati,Mabini Academy,18
+LRN-0029,Jose Mendoza,03-14-08,F,Pasig,Rizal Elementary School,12
+LRN-0030,juan bautista,10-20-12,F,Makati,Mabini Academy,16
+LRN-0031,Ana Reyes,04-20-14,M,Pasig,Quezon Science High,6
+LRN-0032,Lisa Wong,08-20-05,M,Quezon City,Quezon Science High,16
+LRN-0033,Antonio Villanueva,12-18-10,M,Pasig,Rizal Elementary School,15
+LRN-0034,Rosa Santos,01-28-11,F,Taguig,Cebu Central School,14
+LRN-0035,Maria Dela Cruz,03-20-05,F,Pasig,Rizal Elementary School,15
+LRN-0036,Juan Santos,10-10-10,F,Pasig,Rizal Elementary School,17
+LRN-0037,Rosa Mendoza,04-25-15,F,Davao City,Cebu Central School,16
+LRN-0038,Antonio Dela Cruz,05-08-12,M,Manila,Rizal Elementary School,5
+LRN-0039,Maria Lopez,05-30-11,M,Manila,Bonifacio High School,5
+LRN-0040,Maria Bautista,11-29-05,M,Quezon City,Quezon Science High,18
+LRN-0041,Maria Dela Cruz,08-04-09,F,Quezon City,Davao National High,6
+LRN-0042,Rosa Garcia,06-20-05,M,Taguig,Cebu Central School,10
+LRN-0043,Pedro Santos,04-26-14,F,Makati,Quezon Science High,5
+LRN-0044,Jose Garcia,01-09-15,M,Makati,Bonifacio High School,10
+LRN-0045,Juan Wong,09-15-08,M,Pasig,Mabini Academy,9
+LRN-0046,Maria Villanueva,06-17-10,M,Manila,Cebu Central School,5
+LRN-0047,Pedro Santos,10-20-10,M,Taguig,Bonifacio High School,17
+LRN-0048,Elena Bautista,06-30-07,F,Davao City,Cebu Central School,7
+LRN-0049,Antonio Bautista,07-23-14,F,Pasig,Davao National High,17
+LRN-0050,Rosa Dela Cruz,01-27-11,M,Taguig,Cebu Central School,14
+LRN-0051,Elena Santos,12-23-09,M,Makati,Cebu Central School,13
+LRN-0046,Maria Villanueva,06-17-10,M,Manila,Cebu Central School,5
+LRN-0021,Maria Lopez,05-07-14,M,Makati,Rizal Elementary School,13
+LRN-0054,Lisa Reyes,09-05-06,F,Davao City,Bonifacio High School,11
+LRN-0017,Jose Santos,09-18-14,F,Davao City,Davao National High,16
+LRN-0056,Elena Wong,10-04-13,F,Quezon City,Rizal Elementary School,6
+LRN-0057,Juan Garcia,01-30-06,F,Davao City,Rizal Elementary School,7
+LRN-0058,Antonio Villanueva,01-13-09,F,Pasig,Mabini Academy,7
+LRN-0059,Pedro Villanueva,05-14-10,M,Cebu City,Davao National High,5
+LRN-0060,Rosa Santos,04-22-13,M,Cebu City,Rizal Elementary School,5
+LRN-0061,antonio lopez,05-27-12,M,Taguig,Cebu Central School,14
+LRN-0062,Ana Garcia,01-22-10,M,Quezon City,Bonifacio High School,11
+LRN-0063,Elena Bautista,07-01-15,F,Davao City,Rizal Elementary School,13
+LRN-0064,Antonio Mendoza,02-23-14,M,Makati,Quezon Science High,18
+LRN-0065,Lisa Reyes,01-12-10,F,Quezon City,Davao National High,5
+LRN-0066,Ana Bautista,09-28-14,M,Pasig,Davao National High,9
+LRN-0067,Elena Bautista,05-28-07,M,Davao City,Quezon Science High,10
+LRN-0068,Ana Dela Cruz,01-25-13,M,Davao City,Bonifacio High School,5
+LRN-0069,Ana Bautista,02-09-14,M,Taguig,Cebu Central School,15
+LRN-0070,Ana Garcia,10-08-06,F,Quezon City,Davao National High,11
+LRN-0071,Juan Wong,08-06-14,M,Davao City,Rizal Elementary School,15
+LRN-0072,rosa mendoza,03-29-06,Unknown,Cebu City,Mabini Academy,6
+LRN-0073,Pedro Reyes,08-25-15,M,Quezon City,Rizal Elementary School,10
+LRN-0074,Elena Garcia,04-28-06,M,Manila,Quezon Science High,12
+LRN-0075,Elena Mendoza,03-03-13,F,Quezon City,Cebu Central School,11
+LRN-0076,Elena Santos,10-10-06,F,Taguig,Rizal Elementary School,14
+LRN-0077,Carlos Villanueva,04-04-07,M,Taguig,Bonifacio High School,17
+LRN-0078,Maria Villanueva,11-07-07,M,Pasig,Bonifacio High School,11
+LRN-0079,Carlos Aquino,05-20-05,M,Cebu City,Quezon Science High,16
+LRN-0080,Maria Reyes,07-18-06,F,Quezon City,Mabini Academy,9
+LRN-0081,Antonio Aquino,01-26-06,M,Makati,Bonifacio High School,18
+LRN-0082,Carlos Mendoza,10-23-13,M,Pasig,Davao National High,13
+LRN-0083,Lisa Reyes,06-13-10,F,Cebu City,Mabini Academy,15
+LRN-0084,Elena Santos,08-15-12,M,Cebu City,Quezon Science High,6
+LRN-0085,Carlos Bautista,10-06-12,F,Davao City,Quezon Science High,12
 LRN-0086,  maria reyes  ,Invalid Date,f,Nowhere,Bonifacio High School,8
-LRN-0087,Antonio Villanueva,2009-10-28,F,Davao City,Rizal Elementary School,14
-LRN-0088,Carlos Reyes,2007-12-05,M,Pasig,Bonifacio High School,6
-LRN-0089,Carlos Lopez,2013-11-30,M,Cebu City,Davao National High,13
-LRN-0090,Pedro Lopez,2013-06-29,M,Taguig,Davao National High,13
-LRN-0091,Rosa Villanueva,2007-04-19,M,Quezon City,Rizal Elementary School,6
-LRN-0092,Pedro Garcia,2010-01-17,F,Quezon City,Rizal Elementary School,18
-LRN-0093,Elena Santos,2011-06-27,M,Pasig,Bonifacio High School,12
-LRN-0094,Pedro Santos,2009-01-01,M,Davao City,Cebu Central School,12
-LRN-0095,Rosa Wong,2012-02-03,M,Makati,Mabini Academy,11
-LRN-0096,Carlos Garcia,2012-07-13,F,Manila,Bonifacio High School,7
-LRN-0097,carlos wong,08/03/2007,f,Makati,Bonifacio High School,6
-LRN-0098,Antonio Lopez,2007-07-17,F,Makati,Bonifacio High School,12
-LRN-0099,Pedro Lopez,2008-05-19,M,Makati,Bonifacio High School,8
-LRN-0100,Elena Aquino,2009-03-16,M,Makati,Quezon Science High,5
-LRN-0101,Ana Santos,2007-12-11,M,Makati,Cebu Central School,17
-LRN-0102,Rosa Villanueva,2012-09-29,F,Manila,Quezon Science High,16
-LRN-0103,Rosa Aquino,2006-01-12,F,Makati,Mabini Academy,10
-LRN-0104,Lisa Wong,2014-01-24,F,Manila,Cebu Central School,12
-LRN-0105,Carlos Santos,2011-01-31,M,Taguig,Bonifacio High School,5
-LRN-0106,Jose Aquino,2005-07-26,F,Davao City,Rizal Elementary School,15
-LRN-0107,Lisa Garcia,2010-10-15,M,Davao City,Bonifacio High School,12
-LRN-0108,Rosa Aquino,2006-01-02,F,Cebu City,Rizal Elementary School,18
-LRN-0109,Maria Lopez,2010-08-19,F,Cebu City,Quezon Science High,7
-LRN-0110,Rosa Villanueva,2011-06-27,F,Taguig,Quezon Science High,13
-LRN-0111,lisa reyes,12/03/2005,f,Manila,Mabini Academy,15
-LRN-0112,Antonio Lopez,2006-09-14,F,Quezon City,Mabini Academy,9
-LRN-0113,Jose Aquino,2008-12-02,M,Makati,Cebu Central School,10
-LRN-0114,Rosa Bautista,2011-01-02,F,Cebu City,Davao National High,6
-LRN-0115,Lisa Villanueva,2008-06-27,M,Davao City,Mabini Academy,14
-LRN-0116,Juan Reyes,2015-03-29,F,Pasig,Bonifacio High School,13
-LRN-0117,Carlos Aquino,2015-06-11,F,Davao City,Rizal Elementary School,12
-LRN-0118,Elena Santos,2010-09-04,M,Quezon City,Rizal Elementary School,7
-LRN-0119,Ana Mendoza,2006-02-06,M,Makati,Quezon Science High,11
-LRN-0120,Elena Aquino,2012-06-28,M,Manila,Cebu Central School,17
-LRN-0121,Rosa Wong,2009-04-03,F,Pasig,Rizal Elementary School,5
-LRN-0122,Maria Reyes,2008-08-16,M,Davao City,Mabini Academy,7
-LRN-0123,Pedro Villanueva,2005-09-30,M,Manila,Mabini Academy,16
-LRN-0124,Pedro Santos,2008-04-09,M,Taguig,Rizal Elementary School,13
-LRN-0125,Elena Dela Cruz,2014-02-28,F,Cebu City,Rizal Elementary School,11
-LRN-0126,Elena Villanueva,2006-02-16,M,Taguig,Bonifacio High School,11
-LRN-0127,Maria Garcia,2012-09-15,M,Makati,Quezon Science High,10
-LRN-0128,Carlos Villanueva,2012-05-17,F,Makati,Davao National High,6
-LRN-0129,Juan Santos,2009-06-11,F,Cebu City,Quezon Science High,18
-LRN-0130,Juan Mendoza,2013-07-27,F,Manila,Rizal Elementary School,13
-LRN-0131,Antonio Villanueva,2006-12-08,M,Pasig,Davao National High,7
-LRN-0132,Carlos Dela Cruz,2005-09-19,M,Taguig,Rizal Elementary School,7
-LRN-0133,Elena Wong,2009-05-21,M,Makati,Rizal Elementary School,13
-LRN-0134,Jose Wong,2013-08-08,F,Manila,Quezon Science High,16
-LRN-0135,Ana Wong,2012-11-15,M,Cebu City,Rizal Elementary School,5
-LRN-0136,Jose Bautista,2007-01-14,M,Quezon City,Bonifacio High School,8
-LRN-0137,Pedro Mendoza,2010-06-03,F,Taguig,Bonifacio High School,15
-LRN-0138,Carlos Aquino,2010-03-13,M,Quezon City,Cebu Central School,11
-LRN-0139,Antonio Wong,2014-04-29,F,Makati,Rizal Elementary School,9
-LRN-0140,Jose Santos,2010-01-02,M,Manila,Mabini Academy,5
-LRN-0141,Elena Mendoza,2015-08-21,M,Taguig,Mabini Academy,13
-LRN-0142,Carlos Wong,2014-01-06,M,Quezon City,Bonifacio High School,14
-LRN-0143,Juan Bautista,2013-02-12,F,Cebu City,Rizal Elementary School,8
-LRN-0144,Pedro Mendoza,2007-04-14,M,Makati,Rizal Elementary School,10
-LRN-0111,lisa reyes,12/03/2005,f,Manila,Mabini Academy,15
-LRN-0146,pedro mendoza,13/10/2008,Unknown,Davao City,Bonifacio High School,18
-LRN-0147,Elena Santos,2008-08-22,F,Makati,Mabini Academy,8
-LRN-0148,Juan Reyes,2009-07-23,M,Cebu City,Cebu Central School,15
-LRN-0149,Elena Aquino,2007-06-08,M,Makati,Quezon Science High,14
-LRN-0150,Juan Dela Cruz,2007-08-22,F,Manila,Davao National High,12
-LRN-0151,Jose Bautista,2009-11-07,M,Cebu City,Rizal Elementary School,12
-LRN-0152,Juan Mendoza,2010-02-17,M,Quezon City,Rizal Elementary School,12
-LRN-0153,Lisa Bautista,2010-04-09,M,Quezon City,Mabini Academy,12
-LRN-0154,ana garcia,18/04/2007,f,Manila,Mabini Academy,16
-LRN-0155,Rosa Garcia,2012-02-26,F,Manila,Mabini Academy,7
-LRN-0156,Jose Reyes,2011-06-18,F,Pasig,Bonifacio High School,16
-LRN-0157,Elena Wong,2012-04-02,F,Davao City,Quezon Science High,15
-LRN-0158,Juan Dela Cruz,2006-10-30,F,Taguig,Cebu Central School,6
-LRN-0159,Maria Garcia,2013-06-21,F,Cebu City,Davao National High,10
-LRN-0160,Antonio Garcia,2012-02-14,F,Pasig,Cebu Central School,14
-LRN-0161,Maria Reyes,2013-06-05,F,Quezon City,Bonifacio High School,10
-LRN-0162,Maria Garcia,2008-12-25,F,Davao City,Quezon Science High,13
-LRN-0163,Rosa Aquino,2005-04-11,M,Makati,Bonifacio High School,12
-LRN-0164,Jose Aquino,2010-01-26,F,Davao City,Quezon Science High,14
-LRN-0157,Elena Wong,2012-04-02,F,Davao City,Quezon Science High,15
-LRN-0166,Jose Garcia,2007-06-06,F,Pasig,Bonifacio High School,17
-LRN-0167,Rosa Reyes,2010-04-06,M,Davao City,Rizal Elementary School,8
-LRN-0168,Ana Lopez,2005-04-11,F,Pasig,Mabini Academy,7
-LRN-0169,Juan Santos,2005-09-19,M,Makati,Davao National High,12
-LRN-0170,lisa lopez,30/03/2009,X,Davao City,Mabini Academy,10
-LRN-0171,Rosa Reyes,2013-06-30,M,Taguig,Davao National High,7
-LRN-0069,Ana Bautista,2014-02-09,M,Taguig,Cebu Central School,15
-LRN-0173,Elena Mendoza,2007-11-23,M,Taguig,Bonifacio High School,16
-LRN-0174,Antonio Santos,2005-08-25,F,Davao City,Bonifacio High School,8
-LRN-0175,Lisa Garcia,2008-05-31,M,Makati,Mabini Academy,14
-LRN-0176,Lisa Dela Cruz,2007-06-29,F,Pasig,Quezon Science High,16
-LRN-0177,Elena Reyes,2006-03-30,F,Makati,Quezon Science High,11
-LRN-0178,Elena Santos,2007-12-02,M,Taguig,Bonifacio High School,8
-LRN-0179,Elena Bautista,2007-02-03,F,Taguig,Rizal Elementary School,17
-LRN-0180,Carlos Reyes,2010-10-26,F,Davao City,Bonifacio High School,5
-LRN-0181,Carlos Garcia,2013-03-20,F,Taguig,Quezon Science High,8
-LRN-0182,Lisa Garcia,2009-05-29,M,Quezon City,Cebu Central School,6
-LRN-0183,Elena Bautista,2006-12-22,M,Davao City,Quezon Science High,5
-LRN-0184,Jose Mendoza,2013-05-30,M,Makati,Bonifacio High School,15
-LRN-0185,Ana Wong,2007-02-02,M,Makati,Mabini Academy,18
-LRN-0186,Jose Reyes,2014-06-30,F,Cebu City,Cebu Central School,18
-LRN-0187,Rosa Garcia,2010-01-02,M,Makati,Bonifacio High School,5
-LRN-0188,Jose Wong,2010-05-10,F,Cebu City,Mabini Academy,14
-LRN-0189,Rosa Reyes,2014-04-25,F,Taguig,Mabini Academy,13
-LRN-0190,Juan Bautista,2006-03-26,M,Manila,Davao National High,18
-LRN-0191,Ana Lopez,2015-12-01,F,Manila,Cebu Central School,5
-LRN-0192,Carlos Dela Cruz,2014-02-11,M,Davao City,Quezon Science High,17
-LRN-0193,Pedro Aquino,2014-01-31,M,Quezon City,Cebu Central School,9
-LRN-0194,Rosa Villanueva,2008-01-03,M,Cebu City,Davao National High,9
-LRN-0195,Pedro Villanueva,2014-06-06,F,Makati,Cebu Central School,16
-LRN-0196,Lisa Mendoza,2007-09-26,M,Cebu City,Bonifacio High School,10
-LRN-0197,maria villanueva,21/11/2011,F,Pasig,Rizal Elementary School,10
-LRN-0198,Lisa Wong,2011-02-04,M,Manila,Bonifacio High School,7
-LRN-0199,Carlos Wong,2012-01-31,M,Davao City,Davao National High,17
-LRN-0200,Carlos Mendoza,2013-06-13,F,Pasig,Bonifacio High School,12
-LRN-0201,Jose Garcia,2006-08-26,M,Manila,Bonifacio High School,17
-LRN-0202,Pedro Villanueva,2015-08-21,M,Pasig,Cebu Central School,18
-LRN-0203,Lisa Bautista,2008-05-17,M,Manila,Mabini Academy,11
-LRN-0204,Maria Wong,2008-11-04,F,Cebu City,Bonifacio High School,10
-LRN-0205,Juan Mendoza,2005-10-05,F,Quezon City,Cebu Central School,8
-LRN-0206,pedro bautista,13/06/2007,X,Pasig,Cebu Central School,18
-LRN-0207,Lisa Mendoza,2013-06-26,M,Davao City,Quezon Science High,11
-LRN-0208,Jose Lopez,2009-01-25,M,Manila,Davao National High,5
-LRN-0209,Elena Lopez,2006-09-02,F,Taguig,Cebu Central School,18
-LRN-0210,Ana Mendoza,2008-04-14,M,Davao City,Mabini Academy,11
-LRN-0211,Elena Aquino,2012-05-06,M,Taguig,Mabini Academy,9
-LRN-0212,Jose Lopez,2013-02-03,M,Pasig,Cebu Central School,18
-LRN-0072,rosa mendoza,29/03/2006,Unknown,Cebu City,Mabini Academy,6
-LRN-0214,Lisa Bautista,2008-02-22,M,Taguig,Mabini Academy,14
-LRN-0215,Elena Garcia,2013-03-10,M,Quezon City,Cebu Central School,18
-LRN-0216,Jose Santos,2013-11-19,M,Quezon City,Mabini Academy,6
-LRN-0217,Jose Aquino,2012-09-21,F,Cebu City,Quezon Science High,9
-LRN-0218,Elena Dela Cruz,2011-09-09,F,Cebu City,Quezon Science High,11
-LRN-0219,Rosa Aquino,2011-07-07,M,Cebu City,Rizal Elementary School,5
-LRN-0220,Maria Wong,2013-09-10,F,Cebu City,Davao National High,8
-LRN-0221,Pedro Santos,2006-06-29,F,Makati,Cebu Central School,16
-LRN-0222,Carlos Reyes,2009-08-13,F,Cebu City,Rizal Elementary School,5
-LRN-0083,Lisa Reyes,2010-06-13,F,Cebu City,Mabini Academy,15
-LRN-0224,Jose Villanueva,2009-05-30,M,Quezon City,Bonifacio High School,13
-LRN-0225,Elena Dela Cruz,2009-10-28,F,Taguig,Rizal Elementary School,18
-LRN-0226,Juan Dela Cruz,2011-04-22,M,Manila,Mabini Academy,10
-LRN-0227,Juan Santos,2015-10-16,F,Taguig,Rizal Elementary School,8
-LRN-0228,Elena Mendoza,2006-02-13,F,Taguig,Mabini Academy,12
-LRN-0229,Lisa Reyes,2011-08-16,F,Davao City,Cebu Central School,5
-LRN-0230,Elena Mendoza,2007-04-17,M,Quezon City,Bonifacio High School,15
-LRN-0231,Elena Aquino,2005-05-27,M,Cebu City,Rizal Elementary School,16
-LRN-0006,Pedro Villanueva,2011-09-27,F,Davao City,Davao National High,13
-LRN-0233,Lisa Reyes,2013-05-11,F,Manila,Bonifacio High School,18
-LRN-0234,Ana Wong,2012-09-27,M,Makati,Cebu Central School,13
+LRN-0087,Antonio Villanueva,10-28-09,F,Davao City,Rizal Elementary School,14
+LRN-0088,Carlos Reyes,12-05-07,M,Pasig,Bonifacio High School,6
+LRN-0089,Carlos Lopez,11-30-13,M,Cebu City,Davao National High,13
+LRN-0090,Pedro Lopez,06-29-13,M,Taguig,Davao National High,13
+LRN-0091,Rosa Villanueva,04-19-07,M,Quezon City,Rizal Elementary School,6
+LRN-0092,Pedro Garcia,01-17-10,F,Quezon City,Rizal Elementary School,18
+LRN-0093,Elena Santos,06-27-11,M,Pasig,Bonifacio High School,12
+LRN-0094,Pedro Santos,01-01-09,M,Davao City,Cebu Central School,12
+LRN-0095,Rosa Wong,02-03-12,M,Makati,Mabini Academy,11
+LRN-0096,Carlos Garcia,07-13-12,F,Manila,Bonifacio High School,7
+LRN-0097,carlos wong,08-03-07,f,Makati,Bonifacio High School,6
+LRN-0098,Antonio Lopez,07-17-07,F,Makati,Bonifacio High School,12
+LRN-0099,Pedro Lopez,05-19-08,M,Makati,Bonifacio High School,8
+LRN-0100,Elena Aquino,03-16-09,M,Makati,Quezon Science High,5
+LRN-0101,Ana Santos,12-11-07,M,Makati,Cebu Central School,17
+LRN-0102,Rosa Villanueva,09-29-12,F,Manila,Quezon Science High,16
+LRN-0103,Rosa Aquino,01-12-06,F,Makati,Mabini Academy,10
+LRN-0104,Lisa Wong,01-24-14,F,Manila,Cebu Central School,12
+LRN-0105,Carlos Santos,01-31-11,M,Taguig,Bonifacio High School,5
+LRN-0106,Jose Aquino,07-26-05,F,Davao City,Rizal Elementary School,15
+LRN-0107,Lisa Garcia,10-15-10,M,Davao City,Bonifacio High School,12
+LRN-0108,Rosa Aquino,01-02-06,F,Cebu City,Rizal Elementary School,18
+LRN-0109,Maria Lopez,08-19-10,F,Cebu City,Quezon Science High,7
+LRN-0110,Rosa Villanueva,06-27-11,F,Taguig,Quezon Science High,13
+LRN-0111,lisa reyes,12-03-05,f,Manila,Mabini Academy,15
+LRN-0112,Antonio Lopez,09-14-06,F,Quezon City,Mabini Academy,9
+LRN-0113,Jose Aquino,12-02-08,M,Makati,Cebu Central School,10
+LRN-0114,Rosa Bautista,01-02-11,F,Cebu City,Davao National High,6
+LRN-0115,Lisa Villanueva,06-27-08,M,Davao City,Mabini Academy,14
+LRN-0116,Juan Reyes,03-29-15,F,Pasig,Bonifacio High School,13
+LRN-0117,Carlos Aquino,06-11-15,F,Davao City,Rizal Elementary School,12
+LRN-0118,Elena Santos,09-04-10,M,Quezon City,Rizal Elementary School,7
+LRN-0119,Ana Mendoza,02-06-06,M,Makati,Quezon Science High,11
+LRN-0120,Elena Aquino,06-28-12,M,Manila,Cebu Central School,17
+LRN-0121,Rosa Wong,04-03-09,F,Pasig,Rizal Elementary School,5
+LRN-0122,Maria Reyes,08-16-08,M,Davao City,Mabini Academy,7
+LRN-0123,Pedro Villanueva,09-30-05,M,Manila,Mabini Academy,16
+LRN-0124,Pedro Santos,04-09-08,M,Taguig,Rizal Elementary School,13
+LRN-0125,Elena Dela Cruz,02-28-14,F,Cebu City,Rizal Elementary School,11
+LRN-0126,Elena Villanueva,02-16-06,M,Taguig,Bonifacio High School,11
+LRN-0127,Maria Garcia,09-15-12,M,Makati,Quezon Science High,10
+LRN-0128,Carlos Villanueva,05-17-12,F,Makati,Davao National High,6
+LRN-0129,Juan Santos,06-11-09,F,Cebu City,Quezon Science High,18
+LRN-0130,Juan Mendoza,07-27-13,F,Manila,Rizal Elementary School,13
+LRN-0131,Antonio Villanueva,12-08-06,M,Pasig,Davao National High,7
+LRN-0132,Carlos Dela Cruz,09-19-05,M,Taguig,Rizal Elementary School,7
+LRN-0133,Elena Wong,05-21-09,M,Makati,Rizal Elementary School,13
+LRN-0134,Jose Wong,08-08-13,F,Manila,Quezon Science High,16
+LRN-0135,Ana Wong,11-15-12,M,Cebu City,Rizal Elementary School,5
+LRN-0136,Jose Bautista,01-14-07,M,Quezon City,Bonifacio High School,8
+LRN-0137,Pedro Mendoza,06-03-10,F,Taguig,Bonifacio High School,15
+LRN-0138,Carlos Aquino,03-13-10,M,Quezon City,Cebu Central School,11
+LRN-0139,Antonio Wong,04-29-14,F,Makati,Rizal Elementary School,9
+LRN-0140,Jose Santos,01-02-10,M,Manila,Mabini Academy,5
+LRN-0141,Elena Mendoza,08-21-15,M,Taguig,Mabini Academy,13
+LRN-0142,Carlos Wong,01-06-14,M,Quezon City,Bonifacio High School,14
+LRN-0143,Juan Bautista,02-12-13,F,Cebu City,Rizal Elementary School,8
+LRN-0144,Pedro Mendoza,04-14-07,M,Makati,Rizal Elementary School,10
+LRN-0111,lisa reyes,12-03-05,f,Manila,Mabini Academy,15
+LRN-0146,pedro mendoza,10-13-08,Unknown,Davao City,Bonifacio High School,18
+LRN-0147,Elena Santos,08-22-08,F,Makati,Mabini Academy,8
+LRN-0148,Juan Reyes,07-23-09,M,Cebu City,Cebu Central School,15
+LRN-0149,Elena Aquino,06-08-07,M,Makati,Quezon Science High,14
+LRN-0150,Juan Dela Cruz,08-22-07,F,Manila,Davao National High,12
+LRN-0151,Jose Bautista,11-07-09,M,Cebu City,Rizal Elementary School,12
+LRN-0152,Juan Mendoza,02-17-10,M,Quezon City,Rizal Elementary School,12
+LRN-0153,Lisa Bautista,04-09-10,M,Quezon City,Mabini Academy,12
+LRN-0154,ana garcia,04-18-07,f,Manila,Mabini Academy,16
+LRN-0155,Rosa Garcia,02-26-12,F,Manila,Mabini Academy,7
+LRN-0156,Jose Reyes,06-18-11,F,Pasig,Bonifacio High School,16
+LRN-0157,Elena Wong,04-02-12,F,Davao City,Quezon Science High,15
+LRN-0158,Juan Dela Cruz,10-30-06,F,Taguig,Cebu Central School,6
+LRN-0159,Maria Garcia,06-21-13,F,Cebu City,Davao National High,10
+LRN-0160,Antonio Garcia,02-14-12,F,Pasig,Cebu Central School,14
+LRN-0161,Maria Reyes,06-05-13,F,Quezon City,Bonifacio High School,10
+LRN-0162,Maria Garcia,12-25-08,F,Davao City,Quezon Science High,13
+LRN-0163,Rosa Aquino,04-11-05,M,Makati,Bonifacio High School,12
+LRN-0164,Jose Aquino,01-26-10,F,Davao City,Quezon Science High,14
+LRN-0157,Elena Wong,04-02-12,F,Davao City,Quezon Science High,15
+LRN-0166,Jose Garcia,06-06-07,F,Pasig,Bonifacio High School,17
+LRN-0167,Rosa Reyes,04-06-10,M,Davao City,Rizal Elementary School,8
+LRN-0168,Ana Lopez,04-11-05,F,Pasig,Mabini Academy,7
+LRN-0169,Juan Santos,09-19-05,M,Makati,Davao National High,12
+LRN-0170,lisa lopez,03-30-09,X,Davao City,Mabini Academy,10
+LRN-0171,Rosa Reyes,06-30-13,M,Taguig,Davao National High,7
+LRN-0069,Ana Bautista,02-09-14,M,Taguig,Cebu Central School,15
+LRN-0173,Elena Mendoza,11-23-07,M,Taguig,Bonifacio High School,16
+LRN-0174,Antonio Santos,08-25-05,F,Davao City,Bonifacio High School,8
+LRN-0175,Lisa Garcia,05-31-08,M,Makati,Mabini Academy,14
+LRN-0176,Lisa Dela Cruz,06-29-07,F,Pasig,Quezon Science High,16
+LRN-0177,Elena Reyes,03-30-06,F,Makati,Quezon Science High,11
+LRN-0178,Elena Santos,12-02-07,M,Taguig,Bonifacio High School,8
+LRN-0179,Elena Bautista,02-03-07,F,Taguig,Rizal Elementary School,17
+LRN-0180,Carlos Reyes,10-26-10,F,Davao City,Bonifacio High School,5
+LRN-0181,Carlos Garcia,03-20-13,F,Taguig,Quezon Science High,8
+LRN-0182,Lisa Garcia,05-29-09,M,Quezon City,Cebu Central School,6
+LRN-0183,Elena Bautista,12-22-06,M,Davao City,Quezon Science High,5
+LRN-0184,Jose Mendoza,05-30-13,M,Makati,Bonifacio High School,15
+LRN-0185,Ana Wong,02-02-07,M,Makati,Mabini Academy,18
+LRN-0186,Jose Reyes,06-30-14,F,Cebu City,Cebu Central School,18
+LRN-0187,Rosa Garcia,01-02-10,M,Makati,Bonifacio High School,5
+LRN-0188,Jose Wong,05-10-10,F,Cebu City,Mabini Academy,14
+LRN-0189,Rosa Reyes,04-25-14,F,Taguig,Mabini Academy,13
+LRN-0190,Juan Bautista,03-26-06,M,Manila,Davao National High,18
+LRN-0191,Ana Lopez,12-01-15,F,Manila,Cebu Central School,5
+LRN-0192,Carlos Dela Cruz,02-11-14,M,Davao City,Quezon Science High,17
+LRN-0193,Pedro Aquino,01-31-14,M,Quezon City,Cebu Central School,9
+LRN-0194,Rosa Villanueva,01-03-08,M,Cebu City,Davao National High,9
+LRN-0195,Pedro Villanueva,06-06-14,F,Makati,Cebu Central School,16
+LRN-0196,Lisa Mendoza,09-26-07,M,Cebu City,Bonifacio High School,10
+LRN-0197,maria villanueva,11-21-11,F,Pasig,Rizal Elementary School,10
+LRN-0198,Lisa Wong,02-04-11,M,Manila,Bonifacio High School,7
+LRN-0199,Carlos Wong,01-31-12,M,Davao City,Davao National High,17
+LRN-0200,Carlos Mendoza,06-13-13,F,Pasig,Bonifacio High School,12
+LRN-0201,Jose Garcia,08-26-06,M,Manila,Bonifacio High School,17
+LRN-0202,Pedro Villanueva,08-21-15,M,Pasig,Cebu Central School,18
+LRN-0203,Lisa Bautista,05-17-08,M,Manila,Mabini Academy,11
+LRN-0204,Maria Wong,11-04-08,F,Cebu City,Bonifacio High School,10
+LRN-0205,Juan Mendoza,10-05-05,F,Quezon City,Cebu Central School,8
+LRN-0206,pedro bautista,06-13-07,X,Pasig,Cebu Central School,18
+LRN-0207,Lisa Mendoza,06-26-13,M,Davao City,Quezon Science High,11
+LRN-0208,Jose Lopez,01-25-09,M,Manila,Davao National High,5
+LRN-0209,Elena Lopez,09-02-06,F,Taguig,Cebu Central School,18
+LRN-0210,Ana Mendoza,04-14-08,M,Davao City,Mabini Academy,11
+LRN-0211,Elena Aquino,05-06-12,M,Taguig,Mabini Academy,9
+LRN-0212,Jose Lopez,02-03-13,M,Pasig,Cebu Central School,18
+LRN-0072,rosa mendoza,03-29-06,Unknown,Cebu City,Mabini Academy,6
+LRN-0214,Lisa Bautista,02-22-08,M,Taguig,Mabini Academy,14
+LRN-0215,Elena Garcia,03-10-13,M,Quezon City,Cebu Central School,18
+LRN-0216,Jose Santos,11-19-13,M,Quezon City,Mabini Academy,6
+LRN-0217,Jose Aquino,09-21-12,F,Cebu City,Quezon Science High,9
+LRN-0218,Elena Dela Cruz,09-09-11,F,Cebu City,Quezon Science High,11
+LRN-0219,Rosa Aquino,07-07-11,M,Cebu City,Rizal Elementary School,5
+LRN-0220,Maria Wong,09-10-13,F,Cebu City,Davao National High,8
+LRN-0221,Pedro Santos,06-29-06,F,Makati,Cebu Central School,16
+LRN-0222,Carlos Reyes,08-13-09,F,Cebu City,Rizal Elementary School,5
+LRN-0083,Lisa Reyes,06-13-10,F,Cebu City,Mabini Academy,15
+LRN-0224,Jose Villanueva,05-30-09,M,Quezon City,Bonifacio High School,13
+LRN-0225,Elena Dela Cruz,10-28-09,F,Taguig,Rizal Elementary School,18
+LRN-0226,Juan Dela Cruz,04-22-11,M,Manila,Mabini Academy,10
+LRN-0227,Juan Santos,10-16-15,F,Taguig,Rizal Elementary School,8
+LRN-0228,Elena Mendoza,02-13-06,F,Taguig,Mabini Academy,12
+LRN-0229,Lisa Reyes,08-16-11,F,Davao City,Cebu Central School,5
+LRN-0230,Elena Mendoza,04-17-07,M,Quezon City,Bonifacio High School,15
+LRN-0231,Elena Aquino,05-27-05,M,Cebu City,Rizal Elementary School,16
+LRN-0006,Pedro Villanueva,09-27-11,F,Davao City,Davao National High,13
+LRN-0233,Lisa Reyes,05-11-13,F,Manila,Bonifacio High School,18
+LRN-0234,Ana Wong,09-27-12,M,Makati,Cebu Central School,13
 LRN-0235,  juan mendoza  ,Invalid Date,f,Nowhere,Bonifacio High School,17
-LRN-0236,Elena Aquino,2011-09-08,F,Davao City,Quezon Science High,7
-LRN-0237,Antonio Dela Cruz,2007-12-19,M,Makati,Cebu Central School,8
-LRN-0238,Pedro Reyes,2008-05-14,F,Pasig,Davao National High,7
-LRN-0239,Lisa Mendoza,2014-11-02,F,Taguig,Bonifacio High School,12
-LRN-0240,Rosa Santos,2011-02-17,F,Makati,Davao National High,17
-LRN-0241,Antonio Wong,2008-09-15,F,Cebu City,Bonifacio High School,13
-LRN-0242,Antonio Villanueva,2014-05-08,M,Manila,Cebu Central School,9
-LRN-0243,Rosa Lopez,2011-05-07,M,Quezon City,Davao National High,9
-LRN-0244,Jose Mendoza,2005-10-14,M,Manila,Davao National High,8
-LRN-0245,Lisa Aquino,2005-10-15,M,Cebu City,Mabini Academy,10
-LRN-0246,Jose Garcia,2009-03-04,F,Davao City,Cebu Central School,16
-LRN-0247,Juan Reyes,2012-09-29,M,Quezon City,Bonifacio High School,10
-LRN-0248,Carlos Bautista,2013-08-20,F,Makati,Cebu Central School,7
-LRN-0249,Antonio Santos,2013-05-21,M,Davao City,Quezon Science High,12
-LRN-0250,Antonio Aquino,2006-07-17,F,Manila,Rizal Elementary School,13
+LRN-0236,Elena Aquino,09-08-11,F,Davao City,Quezon Science High,7
+LRN-0237,Antonio Dela Cruz,12-19-07,M,Makati,Cebu Central School,8
+LRN-0238,Pedro Reyes,05-14-08,F,Pasig,Davao National High,7
+LRN-0239,Lisa Mendoza,11-02-14,F,Taguig,Bonifacio High School,12
+LRN-0240,Rosa Santos,02-17-11,F,Makati,Davao National High,17
+LRN-0241,Antonio Wong,09-15-08,F,Cebu City,Bonifacio High School,13
+LRN-0242,Antonio Villanueva,05-08-14,M,Manila,Cebu Central School,9
+LRN-0243,Rosa Lopez,05-07-11,M,Quezon City,Davao National High,9
+LRN-0244,Jose Mendoza,10-14-05,M,Manila,Davao National High,8
+LRN-0245,Lisa Aquino,10-15-05,M,Cebu City,Mabini Academy,10
+LRN-0246,Jose Garcia,03-04-09,F,Davao City,Cebu Central School,16
+LRN-0247,Juan Reyes,09-29-12,M,Quezon City,Bonifacio High School,10
+LRN-0248,Carlos Bautista,08-20-13,F,Makati,Cebu Central School,7
+LRN-0249,Antonio Santos,05-21-13,M,Davao City,Quezon Science High,12
+LRN-0250,Antonio Aquino,07-17-06,F,Manila,Rizal Elementary School,13
 LRN-0251,  ana aquino  ,Invalid Date,Unknown,Nowhere,Cebu Central School,11
-LRN-0252,Pedro Villanueva,2014-06-13,M,Cebu City,Cebu Central School,18
-LRN-0253,Jose Lopez,2008-09-23,M,Pasig,Rizal Elementary School,15
+LRN-0252,Pedro Villanueva,06-13-14,M,Cebu City,Cebu Central School,18
+LRN-0253,Jose Lopez,09-23-08,M,Pasig,Rizal Elementary School,15
 LRN-0254,  ana aquino  ,Invalid Date,Unknown,Nowhere,Bonifacio High School,5
-LRN-0255,Elena Aquino,2005-10-29,F,Davao City,Rizal Elementary School,6
-LRN-0256,Maria Bautista,2007-02-10,F,Quezon City,Davao National High,17
-LRN-0147,Elena Santos,2008-08-22,F,Makati,Mabini Academy,8
-LRN-0258,Maria Mendoza,2013-03-14,M,Manila,Cebu Central School,7
-LRN-0259,Ana Santos,2006-09-06,M,Manila,Davao National High,9
-LRN-0260,Antonio Villanueva,2011-11-20,M,Taguig,Cebu Central School,13
-LRN-0261,Elena Bautista,2015-02-22,M,Cebu City,Rizal Elementary School,5
-LRN-0262,Elena Wong,2006-01-02,M,Cebu City,Davao National High,12
-LRN-0263,Elena Dela Cruz,2007-02-14,F,Davao City,Davao National High,18
-LRN-0264,Carlos Aquino,2005-02-13,M,Cebu City,Bonifacio High School,10
-LRN-0265,Jose Bautista,2015-12-19,F,Manila,Davao National High,11
-LRN-0266,Pedro Aquino,2013-03-11,F,Makati,Quezon Science High,10
-LRN-0267,Pedro Lopez,2009-07-04,F,Manila,Cebu Central School,10
-LRN-0268,Juan Lopez,2005-04-26,F,Pasig,Cebu Central School,9
-LRN-0269,Antonio Dela Cruz,2005-10-15,M,Pasig,Bonifacio High School,9
-LRN-0270,Elena Wong,2009-06-24,F,Quezon City,Quezon Science High,13
-LRN-0271,Antonio Reyes,2014-04-14,M,Cebu City,Bonifacio High School,13
-LRN-0272,Rosa Bautista,2013-01-24,M,Quezon City,Quezon Science High,9
-LRN-0273,Juan Dela Cruz,2008-04-09,M,Davao City,Rizal Elementary School,14
-LRN-0274,Jose Garcia,2005-12-15,M,Cebu City,Bonifacio High School,12
-LRN-0275,Juan Dela Cruz,2012-03-13,F,Pasig,Davao National High,15
-LRN-0276,Lisa Bautista,2013-01-29,M,Makati,Davao National High,6
-LRN-0277,Rosa Villanueva,2011-01-10,F,Makati,Bonifacio High School,10
-LRN-0278,Lisa Garcia,2015-03-17,M,Pasig,Quezon Science High,14
-LRN-0279,Lisa Aquino,2006-08-05,F,Taguig,Mabini Academy,9
-LRN-0280,Antonio Reyes,2009-11-03,F,Manila,Cebu Central School,18
-LRN-0281,Jose Santos,2008-06-04,M,Cebu City,Quezon Science High,5
-LRN-0282,Pedro Reyes,2013-08-19,F,Quezon City,Mabini Academy,18
-LRN-0283,Antonio Villanueva,2014-05-05,F,Davao City,Cebu Central School,10
-LRN-0284,Lisa Aquino,2008-07-05,M,Manila,Mabini Academy,6
-LRN-0285,juan garcia,08/09/2014,F,Davao City,Mabini Academy,8
-LRN-0286,Maria Mendoza,2005-03-15,F,Pasig,Davao National High,10
-LRN-0287,maria santos,28/11/2007,Unknown,Makati,Davao National High,15
-LRN-0288,Maria Reyes,2010-02-18,F,Makati,Davao National High,10
-LRN-0289,Maria Aquino,2005-02-08,F,Manila,Mabini Academy,6
-LRN-0290,Maria Mendoza,2005-06-25,M,Makati,Davao National High,15
-LRN-0291,Jose Bautista,2010-08-03,M,Manila,Davao National High,7
-LRN-0292,Pedro Lopez,2014-09-29,F,Taguig,Quezon Science High,9
-LRN-0293,Lisa Bautista,2006-04-03,F,Makati,Quezon Science High,14
-LRN-0294,rosa aquino,06/05/2014,X,Taguig,Davao National High,8
-LRN-0295,Juan Aquino,2006-09-28,M,Davao City,Cebu Central School,10
-LRN-0296,Ana Mendoza,2006-02-19,F,Taguig,Davao National High,12
-LRN-0297,elena aquino,29/11/2015,X,Pasig,Davao National High,17
-LRN-0298,Pedro Santos,2013-06-19,F,Makati,Rizal Elementary School,15
-LRN-0299,Juan Lopez,2009-06-06,M,Manila,Quezon Science High,11
-LRN-0300,Rosa Lopez,2014-04-27,M,Quezon City,Bonifacio High School,10
-LRN-0301,Elena Dela Cruz,2009-06-11,F,Pasig,Cebu Central School,17
-LRN-0302,Ana Bautista,2013-07-04,M,Manila,Davao National High,13
-LRN-0303,Antonio Santos,2006-07-08,F,Pasig,Rizal Elementary School,10
-LRN-0304,Carlos Bautista,2005-08-10,M,Davao City,Rizal Elementary School,13
-LRN-0305,Pedro Villanueva,2008-11-07,M,Makati,Davao National High,8
-LRN-0306,Antonio Aquino,2012-06-09,M,Davao City,Cebu Central School,15
-LRN-0307,Juan Santos,2012-06-20,M,Pasig,Cebu Central School,13
-LRN-0308,Lisa Aquino,2015-07-25,M,Manila,Rizal Elementary School,9
-LRN-0309,Ana Garcia,2013-08-24,M,Pasig,Rizal Elementary School,17
-LRN-0310,Lisa Dela Cruz,2005-06-16,M,Quezon City,Quezon Science High,8
-LRN-0311,Maria Garcia,2013-05-20,M,Cebu City,Cebu Central School,8
-LRN-0312,Pedro Dela Cruz,2010-09-16,F,Manila,Bonifacio High School,16
+LRN-0255,Elena Aquino,10-29-05,F,Davao City,Rizal Elementary School,6
+LRN-0256,Maria Bautista,02-10-07,F,Quezon City,Davao National High,17
+LRN-0147,Elena Santos,08-22-08,F,Makati,Mabini Academy,8
+LRN-0258,Maria Mendoza,03-14-13,M,Manila,Cebu Central School,7
+LRN-0259,Ana Santos,09-06-06,M,Manila,Davao National High,9
+LRN-0260,Antonio Villanueva,11-20-11,M,Taguig,Cebu Central School,13
+LRN-0261,Elena Bautista,02-22-15,M,Cebu City,Rizal Elementary School,5
+LRN-0262,Elena Wong,01-02-06,M,Cebu City,Davao National High,12
+LRN-0263,Elena Dela Cruz,02-14-07,F,Davao City,Davao National High,18
+LRN-0264,Carlos Aquino,02-13-05,M,Cebu City,Bonifacio High School,10
+LRN-0265,Jose Bautista,12-19-15,F,Manila,Davao National High,11
+LRN-0266,Pedro Aquino,03-11-13,F,Makati,Quezon Science High,10
+LRN-0267,Pedro Lopez,07-04-09,F,Manila,Cebu Central School,10
+LRN-0268,Juan Lopez,04-26-05,F,Pasig,Cebu Central School,9
+LRN-0269,Antonio Dela Cruz,10-15-05,M,Pasig,Bonifacio High School,9
+LRN-0270,Elena Wong,06-24-09,F,Quezon City,Quezon Science High,13
+LRN-0271,Antonio Reyes,04-14-14,M,Cebu City,Bonifacio High School,13
+LRN-0272,Rosa Bautista,01-24-13,M,Quezon City,Quezon Science High,9
+LRN-0273,Juan Dela Cruz,04-09-08,M,Davao City,Rizal Elementary School,14
+LRN-0274,Jose Garcia,12-15-05,M,Cebu City,Bonifacio High School,12
+LRN-0275,Juan Dela Cruz,03-13-12,F,Pasig,Davao National High,15
+LRN-0276,Lisa Bautista,01-29-13,M,Makati,Davao National High,6
+LRN-0277,Rosa Villanueva,01-10-11,F,Makati,Bonifacio High School,10
+LRN-0278,Lisa Garcia,03-17-15,M,Pasig,Quezon Science High,14
+LRN-0279,Lisa Aquino,08-05-06,F,Taguig,Mabini Academy,9
+LRN-0280,Antonio Reyes,11-03-09,F,Manila,Cebu Central School,18
+LRN-0281,Jose Santos,06-04-08,M,Cebu City,Quezon Science High,5
+LRN-0282,Pedro Reyes,08-19-13,F,Quezon City,Mabini Academy,18
+LRN-0283,Antonio Villanueva,05-05-14,F,Davao City,Cebu Central School,10
+LRN-0284,Lisa Aquino,07-05-08,M,Manila,Mabini Academy,6
+LRN-0285,juan garcia,08-09-14,F,Davao City,Mabini Academy,8
+LRN-0286,Maria Mendoza,03-15-05,F,Pasig,Davao National High,10
+LRN-0287,maria santos,11-28-07,Unknown,Makati,Davao National High,15
+LRN-0288,Maria Reyes,02-18-10,F,Makati,Davao National High,10
+LRN-0289,Maria Aquino,02-08-05,F,Manila,Mabini Academy,6
+LRN-0290,Maria Mendoza,06-25-05,M,Makati,Davao National High,15
+LRN-0291,Jose Bautista,08-03-10,M,Manila,Davao National High,7
+LRN-0292,Pedro Lopez,09-29-14,F,Taguig,Quezon Science High,9
+LRN-0293,Lisa Bautista,04-03-06,F,Makati,Quezon Science High,14
+LRN-0294,rosa aquino,06-05-14,X,Taguig,Davao National High,8
+LRN-0295,Juan Aquino,09-28-06,M,Davao City,Cebu Central School,10
+LRN-0296,Ana Mendoza,02-19-06,F,Taguig,Davao National High,12
+LRN-0297,elena aquino,11-29-15,X,Pasig,Davao National High,17
+LRN-0298,Pedro Santos,06-19-13,F,Makati,Rizal Elementary School,15
+LRN-0299,Juan Lopez,06-06-09,M,Manila,Quezon Science High,11
+LRN-0300,Rosa Lopez,04-27-14,M,Quezon City,Bonifacio High School,10
+LRN-0301,Elena Dela Cruz,06-11-09,F,Pasig,Cebu Central School,17
+LRN-0302,Ana Bautista,07-04-13,M,Manila,Davao National High,13
+LRN-0303,Antonio Santos,07-08-06,F,Pasig,Rizal Elementary School,10
+LRN-0304,Carlos Bautista,08-10-05,M,Davao City,Rizal Elementary School,13
+LRN-0305,Pedro Villanueva,11-07-08,M,Makati,Davao National High,8
+LRN-0306,Antonio Aquino,06-09-12,M,Davao City,Cebu Central School,15
+LRN-0307,Juan Santos,06-20-12,M,Pasig,Cebu Central School,13
+LRN-0308,Lisa Aquino,07-25-15,M,Manila,Rizal Elementary School,9
+LRN-0309,Ana Garcia,08-24-13,M,Pasig,Rizal Elementary School,17
+LRN-0310,Lisa Dela Cruz,06-16-05,M,Quezon City,Quezon Science High,8
+LRN-0311,Maria Garcia,05-20-13,M,Cebu City,Cebu Central School,8
+LRN-0312,Pedro Dela Cruz,09-16-10,F,Manila,Bonifacio High School,16
 LRN-0313,  juan reyes  ,Invalid Date,f,Nowhere,Cebu Central School,12
-LRN-0314,Antonio Dela Cruz,2014-06-18,M,Quezon City,Cebu Central School,16
-LRN-0315,Elena Garcia,2009-06-09,F,Taguig,Bonifacio High School,12
-LRN-0316,Antonio Mendoza,2009-05-14,M,Davao City,Rizal Elementary School,6
-LRN-0317,Elena Aquino,2009-09-07,M,Cebu City,Cebu Central School,16
+LRN-0314,Antonio Dela Cruz,06-18-14,M,Quezon City,Cebu Central School,16
+LRN-0315,Elena Garcia,06-09-09,F,Taguig,Bonifacio High School,12
+LRN-0316,Antonio Mendoza,05-14-09,M,Davao City,Rizal Elementary School,6
+LRN-0317,Elena Aquino,09-07-09,M,Cebu City,Cebu Central School,16
 LRN-0318,  antonio villanueva  ,Invalid Date,F,Nowhere,Bonifacio High School,6
-LRN-0319,Maria Aquino,2010-01-11,M,Makati,Quezon Science High,15
-LRN-0320,Jose Wong,2015-04-29,F,Cebu City,Cebu Central School,5
-LRN-0321,Carlos Villanueva,2014-10-25,F,Manila,Bonifacio High School,16
-LRN-0322,Ana Santos,2008-07-13,F,Quezon City,Davao National High,14
-LRN-0323,Jose Dela Cruz,2015-05-28,M,Davao City,Rizal Elementary School,9
-LRN-0324,Lisa Reyes,2011-02-18,F,Manila,Cebu Central School,6
-LRN-0325,Elena Lopez,2015-10-07,F,Quezon City,Bonifacio High School,6
-LRN-0326,Maria Garcia,2009-11-09,F,Cebu City,Mabini Academy,14
-LRN-0327,Maria Aquino,2012-08-02,M,Manila,Davao National High,17
-LRN-0328,Ana Wong,2014-09-11,M,Quezon City,Bonifacio High School,6
-LRN-0329,Antonio Mendoza,2012-11-30,M,Davao City,Bonifacio High School,9
-LRN-0330,Elena Mendoza,2013-05-20,M,Pasig,Bonifacio High School,9
-LRN-0331,Ana Santos,2013-06-30,M,Davao City,Rizal Elementary School,11
-LRN-0077,Carlos Villanueva,2007-04-04,M,Taguig,Bonifacio High School,17
-LRN-0333,Jose Lopez,2015-05-21,M,Makati,Rizal Elementary School,14
-LRN-0334,Ana Bautista,2008-10-15,F,Manila,Davao National High,10
-LRN-0335,Maria Wong,2013-12-30,F,Pasig,Quezon Science High,6
+LRN-0319,Maria Aquino,01-11-10,M,Makati,Quezon Science High,15
+LRN-0320,Jose Wong,04-29-15,F,Cebu City,Cebu Central School,5
+LRN-0321,Carlos Villanueva,10-25-14,F,Manila,Bonifacio High School,16
+LRN-0322,Ana Santos,07-13-08,F,Quezon City,Davao National High,14
+LRN-0323,Jose Dela Cruz,05-28-15,M,Davao City,Rizal Elementary School,9
+LRN-0324,Lisa Reyes,02-18-11,F,Manila,Cebu Central School,6
+LRN-0325,Elena Lopez,10-07-15,F,Quezon City,Bonifacio High School,6
+LRN-0326,Maria Garcia,11-09-09,F,Cebu City,Mabini Academy,14
+LRN-0327,Maria Aquino,08-02-12,M,Manila,Davao National High,17
+LRN-0328,Ana Wong,09-11-14,M,Quezon City,Bonifacio High School,6
+LRN-0329,Antonio Mendoza,11-30-12,M,Davao City,Bonifacio High School,9
+LRN-0330,Elena Mendoza,05-20-13,M,Pasig,Bonifacio High School,9
+LRN-0331,Ana Santos,06-30-13,M,Davao City,Rizal Elementary School,11
+LRN-0077,Carlos Villanueva,04-04-07,M,Taguig,Bonifacio High School,17
+LRN-0333,Jose Lopez,05-21-15,M,Makati,Rizal Elementary School,14
+LRN-0334,Ana Bautista,10-15-08,F,Manila,Davao National High,10
+LRN-0335,Maria Wong,12-30-13,F,Pasig,Quezon Science High,6
 LRN-0336,  rosa lopez  ,Invalid Date,m,Nowhere,Davao National High,18
-LRN-0337,antonio reyes,06/12/2015,m,Makati,Davao National High,5
-LRN-0338,Lisa Wong,2014-07-31,M,Cebu City,Bonifacio High School,8
-LRN-0339,Elena Santos,2007-02-12,F,Taguig,Quezon Science High,16
-LRN-0340,Juan Aquino,2005-09-20,M,Taguig,Davao National High,18
-LRN-0341,lisa dela cruz,15/11/2007,Unknown,Quezon City,Rizal Elementary School,9
-LRN-0342,Pedro Mendoza,2012-03-04,F,Manila,Mabini Academy,8
-LRN-0343,Juan Villanueva,2009-10-15,M,Quezon City,Bonifacio High School,5
-LRN-0344,Ana Garcia,2007-07-30,F,Taguig,Rizal Elementary School,11
-LRN-0345,Antonio Wong,2007-11-17,F,Taguig,Rizal Elementary School,9
-LRN-0346,Juan Villanueva,2006-04-27,M,Cebu City,Cebu Central School,14
-LRN-0347,Lisa Villanueva,2009-11-04,M,Manila,Cebu Central School,14
-LRN-0348,Maria Mendoza,2015-06-01,M,Pasig,Bonifacio High School,9
-LRN-0349,Elena Lopez,2012-05-28,F,Taguig,Quezon Science High,17
-LRN-0350,Ana Bautista,2011-09-18,M,Quezon City,Quezon Science High,9
-LRN-0351,Antonio Lopez,2009-02-01,F,Manila,Mabini Academy,11
-LRN-0352,Lisa Dela Cruz,2007-06-28,M,Cebu City,Davao National High,8
-LRN-0353,Antonio Aquino,2014-09-10,M,Taguig,Bonifacio High School,12
-LRN-0354,Elena Dela Cruz,2005-11-27,M,Quezon City,Mabini Academy,18
-LRN-0355,Antonio Lopez,2011-05-14,M,Manila,Cebu Central School,16
-LRN-0356,Juan Santos,2005-01-08,M,Pasig,Rizal Elementary School,11
-LRN-0357,Elena Garcia,2010-10-13,F,Quezon City,Rizal Elementary School,7
-LRN-0358,Maria Mendoza,2015-04-13,M,Taguig,Bonifacio High School,18
-LRN-0343,Juan Villanueva,2009-10-15,M,Quezon City,Bonifacio High School,5
-LRN-0360,Antonio Lopez,2006-06-30,M,Pasig,Rizal Elementary School,10
-LRN-0361,Jose Garcia,2013-03-19,F,Cebu City,Cebu Central School,17
-LRN-0362,Carlos Bautista,2014-12-01,M,Makati,Cebu Central School,15
-LRN-0363,Lisa Wong,2013-04-26,M,Pasig,Davao National High,7
+LRN-0337,antonio reyes,06-12-15,m,Makati,Davao National High,5
+LRN-0338,Lisa Wong,07-31-14,M,Cebu City,Bonifacio High School,8
+LRN-0339,Elena Santos,02-12-07,F,Taguig,Quezon Science High,16
+LRN-0340,Juan Aquino,09-20-05,M,Taguig,Davao National High,18
+LRN-0341,lisa dela cruz,11-15-07,Unknown,Quezon City,Rizal Elementary School,9
+LRN-0342,Pedro Mendoza,03-04-12,F,Manila,Mabini Academy,8
+LRN-0343,Juan Villanueva,10-15-09,M,Quezon City,Bonifacio High School,5
+LRN-0344,Ana Garcia,07-30-07,F,Taguig,Rizal Elementary School,11
+LRN-0345,Antonio Wong,11-17-07,F,Taguig,Rizal Elementary School,9
+LRN-0346,Juan Villanueva,04-27-06,M,Cebu City,Cebu Central School,14
+LRN-0347,Lisa Villanueva,11-04-09,M,Manila,Cebu Central School,14
+LRN-0348,Maria Mendoza,06-01-15,M,Pasig,Bonifacio High School,9
+LRN-0349,Elena Lopez,05-28-12,F,Taguig,Quezon Science High,17
+LRN-0350,Ana Bautista,09-18-11,M,Quezon City,Quezon Science High,9
+LRN-0351,Antonio Lopez,02-01-09,F,Manila,Mabini Academy,11
+LRN-0352,Lisa Dela Cruz,06-28-07,M,Cebu City,Davao National High,8
+LRN-0353,Antonio Aquino,09-10-14,M,Taguig,Bonifacio High School,12
+LRN-0354,Elena Dela Cruz,11-27-05,M,Quezon City,Mabini Academy,18
+LRN-0355,Antonio Lopez,05-14-11,M,Manila,Cebu Central School,16
+LRN-0356,Juan Santos,01-08-05,M,Pasig,Rizal Elementary School,11
+LRN-0357,Elena Garcia,10-13-10,F,Quezon City,Rizal Elementary School,7
+LRN-0358,Maria Mendoza,04-13-15,M,Taguig,Bonifacio High School,18
+LRN-0343,Juan Villanueva,10-15-09,M,Quezon City,Bonifacio High School,5
+LRN-0360,Antonio Lopez,06-30-06,M,Pasig,Rizal Elementary School,10
+LRN-0361,Jose Garcia,03-19-13,F,Cebu City,Cebu Central School,17
+LRN-0362,Carlos Bautista,12-01-14,M,Makati,Cebu Central School,15
+LRN-0363,Lisa Wong,04-26-13,M,Pasig,Davao National High,7
 LRN-0364,  lisa lopez  ,Invalid Date,F,Nowhere,Mabini Academy,15
-LRN-0365,Jose Lopez,2014-12-08,M,Pasig,Rizal Elementary School,15
-LRN-0366,Maria Reyes,2009-09-27,M,Makati,Cebu Central School,15
-LRN-0367,Antonio Lopez,2011-04-04,F,Pasig,Rizal Elementary School,11
-LRN-0368,Jose Villanueva,2005-05-13,F,Quezon City,Bonifacio High School,17
-LRN-0369,Elena Dela Cruz,2010-06-09,F,Manila,Cebu Central School,15
-LRN-0370,Maria Santos,2015-07-30,M,Quezon City,Bonifacio High School,16
-LRN-0371,Juan Lopez,2011-11-29,M,Pasig,Quezon Science High,11
-LRN-0372,Carlos Bautista,2012-09-10,F,Manila,Rizal Elementary School,5
-LRN-0373,Pedro Aquino,2008-09-04,M,Quezon City,Bonifacio High School,14
-LRN-0374,Juan Aquino,2012-08-18,F,Cebu City,Mabini Academy,7
-LRN-0375,Rosa Aquino,2015-10-04,M,Cebu City,Mabini Academy,8
-LRN-0376,Antonio Santos,2012-02-03,F,Quezon City,Davao National High,16
-LRN-0377,Carlos Mendoza,2010-11-03,F,Taguig,Davao National High,13
-LRN-0378,Maria Lopez,2010-11-08,M,Taguig,Rizal Elementary School,6
-LRN-0379,Carlos Villanueva,2011-12-30,F,Manila,Quezon Science High,9
-LRN-0380,Elena Aquino,2006-01-14,M,Pasig,Mabini Academy,6
-LRN-0381,Juan Villanueva,2005-12-20,M,Manila,Davao National High,10
-LRN-0382,Ana Reyes,2015-12-27,M,Taguig,Bonifacio High School,12
-LRN-0383,Ana Dela Cruz,2009-12-01,M,Pasig,Rizal Elementary School,13
-LRN-0384,Carlos Reyes,2011-10-17,F,Pasig,Quezon Science High,15
-LRN-0385,Jose Reyes,2010-07-08,F,Taguig,Quezon Science High,16
-LRN-0386,Maria Dela Cruz,2013-07-08,F,Pasig,Davao National High,16
-LRN-0387,Rosa Aquino,2015-09-16,F,Manila,Davao National High,17
-LRN-0388,Lisa Villanueva,2006-07-20,F,Makati,Bonifacio High School,14
-LRN-0389,Antonio Lopez,2014-09-08,F,Makati,Rizal Elementary School,6
-LRN-0390,Jose Reyes,2009-08-21,F,Taguig,Mabini Academy,15
-LRN-0391,Antonio Villanueva,2011-01-25,M,Quezon City,Bonifacio High School,18
-LRN-0392,Carlos Santos,2010-02-20,F,Makati,Bonifacio High School,5
-LRN-0393,Juan Wong,2008-04-19,M,Makati,Rizal Elementary School,12
-LRN-0394,Juan Aquino,2011-04-16,F,Quezon City,Bonifacio High School,10
-LRN-0395,Lisa Mendoza,2012-09-06,M,Taguig,Quezon Science High,18
-LRN-0396,Pedro Lopez,2014-11-10,F,Cebu City,Davao National High,16
-LRN-0397,Elena Lopez,2015-08-08,M,Manila,Davao National High,14
-LRN-0398,Ana Santos,2008-02-10,F,Makati,Bonifacio High School,17
-LRN-0399,Carlos Lopez,2012-09-03,F,Pasig,Mabini Academy,13
-LRN-0400,Pedro Wong,2015-11-18,F,Cebu City,Mabini Academy,18
-LRN-0401,Antonio Reyes,2014-05-20,M,Cebu City,Bonifacio High School,5
-LRN-0402,Elena Reyes,2013-05-08,M,Davao City,Davao National High,15
-LRN-0151,Jose Bautista,2009-11-07,M,Cebu City,Rizal Elementary School,12
+LRN-0365,Jose Lopez,12-08-14,M,Pasig,Rizal Elementary School,15
+LRN-0366,Maria Reyes,09-27-09,M,Makati,Cebu Central School,15
+LRN-0367,Antonio Lopez,04-04-11,F,Pasig,Rizal Elementary School,11
+LRN-0368,Jose Villanueva,05-13-05,F,Quezon City,Bonifacio High School,17
+LRN-0369,Elena Dela Cruz,06-09-10,F,Manila,Cebu Central School,15
+LRN-0370,Maria Santos,07-30-15,M,Quezon City,Bonifacio High School,16
+LRN-0371,Juan Lopez,11-29-11,M,Pasig,Quezon Science High,11
+LRN-0372,Carlos Bautista,09-10-12,F,Manila,Rizal Elementary School,5
+LRN-0373,Pedro Aquino,09-04-08,M,Quezon City,Bonifacio High School,14
+LRN-0374,Juan Aquino,08-18-12,F,Cebu City,Mabini Academy,7
+LRN-0375,Rosa Aquino,10-04-15,M,Cebu City,Mabini Academy,8
+LRN-0376,Antonio Santos,02-03-12,F,Quezon City,Davao National High,16
+LRN-0377,Carlos Mendoza,11-03-10,F,Taguig,Davao National High,13
+LRN-0378,Maria Lopez,11-08-10,M,Taguig,Rizal Elementary School,6
+LRN-0379,Carlos Villanueva,12-30-11,F,Manila,Quezon Science High,9
+LRN-0380,Elena Aquino,01-14-06,M,Pasig,Mabini Academy,6
+LRN-0381,Juan Villanueva,12-20-05,M,Manila,Davao National High,10
+LRN-0382,Ana Reyes,12-27-15,M,Taguig,Bonifacio High School,12
+LRN-0383,Ana Dela Cruz,12-01-09,M,Pasig,Rizal Elementary School,13
+LRN-0384,Carlos Reyes,10-17-11,F,Pasig,Quezon Science High,15
+LRN-0385,Jose Reyes,07-08-10,F,Taguig,Quezon Science High,16
+LRN-0386,Maria Dela Cruz,07-08-13,F,Pasig,Davao National High,16
+LRN-0387,Rosa Aquino,09-16-15,F,Manila,Davao National High,17
+LRN-0388,Lisa Villanueva,07-20-06,F,Makati,Bonifacio High School,14
+LRN-0389,Antonio Lopez,09-08-14,F,Makati,Rizal Elementary School,6
+LRN-0390,Jose Reyes,08-21-09,F,Taguig,Mabini Academy,15
+LRN-0391,Antonio Villanueva,01-25-11,M,Quezon City,Bonifacio High School,18
+LRN-0392,Carlos Santos,02-20-10,F,Makati,Bonifacio High School,5
+LRN-0393,Juan Wong,04-19-08,M,Makati,Rizal Elementary School,12
+LRN-0394,Juan Aquino,04-16-11,F,Quezon City,Bonifacio High School,10
+LRN-0395,Lisa Mendoza,09-06-12,M,Taguig,Quezon Science High,18
+LRN-0396,Pedro Lopez,11-10-14,F,Cebu City,Davao National High,16
+LRN-0397,Elena Lopez,08-08-15,M,Manila,Davao National High,14
+LRN-0398,Ana Santos,02-10-08,F,Makati,Bonifacio High School,17
+LRN-0399,Carlos Lopez,09-03-12,F,Pasig,Mabini Academy,13
+LRN-0400,Pedro Wong,11-18-15,F,Cebu City,Mabini Academy,18
+LRN-0401,Antonio Reyes,05-20-14,M,Cebu City,Bonifacio High School,5
+LRN-0402,Elena Reyes,05-08-13,M,Davao City,Davao National High,15
+LRN-0151,Jose Bautista,11-07-09,M,Cebu City,Rizal Elementary School,12
 LRN-0404,  pedro bautista  ,Invalid Date,M,Nowhere,Quezon Science High,7
-LRN-0405,Elena Lopez,2015-06-22,M,Davao City,Rizal Elementary School,6
-LRN-0406,Ana Villanueva,2011-10-14,M,Makati,Davao National High,13
-LRN-0292,Pedro Lopez,2014-09-29,F,Taguig,Quezon Science High,9
-LRN-0408,Lisa Santos,2007-12-09,F,Manila,Davao National High,14
-LRN-0409,Maria Reyes,2015-09-20,M,Taguig,Mabini Academy,7
-LRN-0410,Lisa Reyes,2015-01-22,M,Taguig,Quezon Science High,7
-LRN-0411,Maria Lopez,2006-01-15,F,Taguig,Mabini Academy,7
-LRN-0412,Juan Reyes,2009-11-15,M,Manila,Davao National High,18
-LRN-0413,Antonio Garcia,2010-10-01,F,Cebu City,Quezon Science High,8
-LRN-0414,ana garcia,24/11/2007,X,Quezon City,Mabini Academy,13
-LRN-0415,Rosa Wong,2010-02-20,F,Manila,Mabini Academy,14
-LRN-0416,Ana Mendoza,2006-04-02,M,Pasig,Bonifacio High School,13
-LRN-0417,Ana Wong,2005-07-07,F,Davao City,Mabini Academy,9
-LRN-0418,Juan Villanueva,2015-07-07,F,Cebu City,Davao National High,18
-LRN-0419,Lisa Lopez,2014-05-14,M,Cebu City,Bonifacio High School,5
-LRN-0420,Carlos Dela Cruz,2010-12-01,F,Manila,Bonifacio High School,13
-LRN-0421,Ana Santos,2015-01-07,M,Davao City,Bonifacio High School,6
-LRN-0422,Antonio Aquino,2012-11-03,M,Quezon City,Quezon Science High,14
-LRN-0423,Elena Reyes,2010-01-29,F,Davao City,Davao National High,12
-LRN-0424,Carlos Reyes,2012-05-15,F,Davao City,Quezon Science High,17
-LRN-0425,Lisa Santos,2014-10-07,F,Taguig,Quezon Science High,12
-LRN-0426,Elena Wong,2005-03-06,F,Davao City,Cebu Central School,15
-LRN-0427,Juan Dela Cruz,2013-06-01,M,Quezon City,Bonifacio High School,8
-LRN-0428,Lisa Garcia,2015-05-30,F,Pasig,Mabini Academy,10
-LRN-0429,Ana Mendoza,2007-10-24,F,Manila,Bonifacio High School,7
-LRN-0430,Carlos Aquino,2013-09-07,M,Davao City,Rizal Elementary School,17
-LRN-0431,Carlos Santos,2008-10-02,M,Davao City,Rizal Elementary School,18
-LRN-0432,Maria Santos,2011-05-14,F,Quezon City,Cebu Central School,12
-LRN-0433,Antonio Bautista,2010-05-06,M,Quezon City,Davao National High,12
-LRN-0434,Ana Villanueva,2010-12-18,M,Manila,Bonifacio High School,12
-LRN-0435,Rosa Lopez,2009-04-20,F,Cebu City,Quezon Science High,14
-LRN-0436,Antonio Bautista,2015-05-07,F,Makati,Cebu Central School,9
-LRN-0437,Jose Garcia,2015-09-29,M,Taguig,Bonifacio High School,13
-LRN-0438,Rosa Villanueva,2014-07-01,F,Cebu City,Bonifacio High School,8
+LRN-0405,Elena Lopez,06-22-15,M,Davao City,Rizal Elementary School,6
+LRN-0406,Ana Villanueva,10-14-11,M,Makati,Davao National High,13
+LRN-0292,Pedro Lopez,09-29-14,F,Taguig,Quezon Science High,9
+LRN-0408,Lisa Santos,12-09-07,F,Manila,Davao National High,14
+LRN-0409,Maria Reyes,09-20-15,M,Taguig,Mabini Academy,7
+LRN-0410,Lisa Reyes,01-22-15,M,Taguig,Quezon Science High,7
+LRN-0411,Maria Lopez,01-15-06,F,Taguig,Mabini Academy,7
+LRN-0412,Juan Reyes,11-15-09,M,Manila,Davao National High,18
+LRN-0413,Antonio Garcia,10-01-10,F,Cebu City,Quezon Science High,8
+LRN-0414,ana garcia,11-24-07,X,Quezon City,Mabini Academy,13
+LRN-0415,Rosa Wong,02-20-10,F,Manila,Mabini Academy,14
+LRN-0416,Ana Mendoza,04-02-06,M,Pasig,Bonifacio High School,13
+LRN-0417,Ana Wong,07-07-05,F,Davao City,Mabini Academy,9
+LRN-0418,Juan Villanueva,07-07-15,F,Cebu City,Davao National High,18
+LRN-0419,Lisa Lopez,05-14-14,M,Cebu City,Bonifacio High School,5
+LRN-0420,Carlos Dela Cruz,12-01-10,F,Manila,Bonifacio High School,13
+LRN-0421,Ana Santos,01-07-15,M,Davao City,Bonifacio High School,6
+LRN-0422,Antonio Aquino,11-03-12,M,Quezon City,Quezon Science High,14
+LRN-0423,Elena Reyes,01-29-10,F,Davao City,Davao National High,12
+LRN-0424,Carlos Reyes,05-15-12,F,Davao City,Quezon Science High,17
+LRN-0425,Lisa Santos,10-07-14,F,Taguig,Quezon Science High,12
+LRN-0426,Elena Wong,03-06-05,F,Davao City,Cebu Central School,15
+LRN-0427,Juan Dela Cruz,06-01-13,M,Quezon City,Bonifacio High School,8
+LRN-0428,Lisa Garcia,05-30-15,F,Pasig,Mabini Academy,10
+LRN-0429,Ana Mendoza,10-24-07,F,Manila,Bonifacio High School,7
+LRN-0430,Carlos Aquino,09-07-13,M,Davao City,Rizal Elementary School,17
+LRN-0431,Carlos Santos,10-02-08,M,Davao City,Rizal Elementary School,18
+LRN-0432,Maria Santos,05-14-11,F,Quezon City,Cebu Central School,12
+LRN-0433,Antonio Bautista,05-06-10,M,Quezon City,Davao National High,12
+LRN-0434,Ana Villanueva,12-18-10,M,Manila,Bonifacio High School,12
+LRN-0435,Rosa Lopez,04-20-09,F,Cebu City,Quezon Science High,14
+LRN-0436,Antonio Bautista,05-07-15,F,Makati,Cebu Central School,9
+LRN-0437,Jose Garcia,09-29-15,M,Taguig,Bonifacio High School,13
+LRN-0438,Rosa Villanueva,07-01-14,F,Cebu City,Bonifacio High School,8
 LRN-0439,  jose reyes  ,Invalid Date,m,Nowhere,Davao National High,7
-LRN-0440,Lisa Villanueva,2006-12-23,M,Manila,Quezon Science High,14
-LRN-0441,Jose Bautista,2009-01-03,F,Quezon City,Bonifacio High School,10
-LRN-0442,Lisa Reyes,2006-01-11,F,Quezon City,Cebu Central School,10
-LRN-0443,Rosa Wong,2006-05-21,M,Taguig,Quezon Science High,8
-LRN-0444,Carlos Villanueva,2014-01-29,F,Quezon City,Mabini Academy,6
-LRN-0445,Lisa Wong,2006-06-16,M,Taguig,Quezon Science High,9
-LRN-0446,Carlos Garcia,2012-03-28,M,Cebu City,Bonifacio High School,10
-LRN-0447,Rosa Garcia,2008-07-11,M,Taguig,Davao National High,18
-LRN-0448,Juan Bautista,2014-12-10,M,Cebu City,Cebu Central School,10
-LRN-0449,Lisa Garcia,2011-07-29,M,Makati,Quezon Science High,5
-LRN-0450,Maria Villanueva,2012-05-20,F,Pasig,Bonifacio High School,13
-LRN-0451,Antonio Dela Cruz,2014-07-25,M,Quezon City,Quezon Science High,11
-LRN-0452,Carlos Reyes,2014-02-20,F,Manila,Bonifacio High School,5
-LRN-0453,Rosa Garcia,2005-06-25,F,Taguig,Rizal Elementary School,16
-LRN-0454,Maria Lopez,2006-09-28,M,Cebu City,Rizal Elementary School,9
-LRN-0455,Rosa Lopez,2008-10-05,M,Pasig,Davao National High,16
-LRN-0456,Maria Dela Cruz,2015-12-26,M,Quezon City,Bonifacio High School,16
-LRN-0457,Pedro Reyes,2015-08-09,M,Manila,Mabini Academy,5
-LRN-0458,Pedro Aquino,2010-03-01,M,Manila,Cebu Central School,18
-LRN-0459,Elena Santos,2014-12-26,F,Cebu City,Rizal Elementary School,13
-LRN-0460,Rosa Garcia,2010-01-11,F,Makati,Cebu Central School,12
-LRN-0461,Antonio Bautista,2013-05-07,M,Cebu City,Mabini Academy,16
-LRN-0462,Lisa Aquino,2009-08-17,M,Cebu City,Quezon Science High,6
-LRN-0463,carlos lopez,23/11/2007,M,Manila,Cebu Central School,6
-LRN-0464,Jose Dela Cruz,2011-08-13,M,Pasig,Cebu Central School,9
-LRN-0465,Elena Santos,2010-08-01,F,Quezon City,Bonifacio High School,11
-LRN-0466,Maria Santos,2010-04-02,M,Pasig,Davao National High,5
-LRN-0467,Elena Santos,2007-12-16,F,Makati,Bonifacio High School,14
-LRN-0468,Carlos Bautista,2014-02-04,M,Taguig,Mabini Academy,9
-LRN-0469,Antonio Dela Cruz,2015-05-26,M,Manila,Rizal Elementary School,8
-LRN-0470,Maria Santos,2012-12-26,M,Taguig,Rizal Elementary School,7
-LRN-0471,Elena Reyes,2014-11-20,M,Davao City,Quezon Science High,11
-LRN-0472,Maria Wong,2005-10-20,M,Makati,Rizal Elementary School,12
-LRN-0473,Carlos Villanueva,2007-08-26,M,Cebu City,Mabini Academy,15
-LRN-0474,Elena Dela Cruz,2012-01-23,M,Quezon City,Davao National High,15
-LRN-0475,Pedro Dela Cruz,2005-09-08,M,Manila,Bonifacio High School,14
-LRN-0476,maria mendoza,07/02/2015,X,Makati,Bonifacio High School,10
-LRN-0477,Elena Wong,2006-05-01,F,Quezon City,Quezon Science High,15
-LRN-0478,Lisa Dela Cruz,2009-06-15,M,Davao City,Bonifacio High School,12
-LRN-0479,Pedro Reyes,2007-11-16,F,Pasig,Davao National High,6
-LRN-0480,Elena Garcia,2009-07-19,M,Quezon City,Bonifacio High School,15
-LRN-0481,Maria Dela Cruz,2011-02-13,M,Davao City,Cebu Central School,6
-LRN-0482,Rosa Reyes,2013-02-21,M,Makati,Rizal Elementary School,6
-LRN-0483,juan wong,09/08/2007,f,Pasig,Cebu Central School,16
-LRN-0484,Elena Reyes,2013-02-10,M,Manila,Rizal Elementary School,17
-LRN-0485,Juan Mendoza,2007-11-22,F,Pasig,Quezon Science High,6
-LRN-0486,Juan Reyes,2008-02-28,F,Davao City,Rizal Elementary School,5
-LRN-0487,Lisa Reyes,2011-12-09,F,Manila,Rizal Elementary School,18
-LRN-0488,Elena Santos,2015-12-05,F,Manila,Davao National High,18
-LRN-0489,Elena Bautista,2006-08-23,M,Cebu City,Bonifacio High School,13
-LRN-0490,Antonio Reyes,2010-04-23,F,Cebu City,Cebu Central School,11
+LRN-0440,Lisa Villanueva,12-23-06,M,Manila,Quezon Science High,14
+LRN-0441,Jose Bautista,01-03-09,F,Quezon City,Bonifacio High School,10
+LRN-0442,Lisa Reyes,01-11-06,F,Quezon City,Cebu Central School,10
+LRN-0443,Rosa Wong,05-21-06,M,Taguig,Quezon Science High,8
+LRN-0444,Carlos Villanueva,01-29-14,F,Quezon City,Mabini Academy,6
+LRN-0445,Lisa Wong,06-16-06,M,Taguig,Quezon Science High,9
+LRN-0446,Carlos Garcia,03-28-12,M,Cebu City,Bonifacio High School,10
+LRN-0447,Rosa Garcia,07-11-08,M,Taguig,Davao National High,18
+LRN-0448,Juan Bautista,12-10-14,M,Cebu City,Cebu Central School,10
+LRN-0449,Lisa Garcia,07-29-11,M,Makati,Quezon Science High,5
+LRN-0450,Maria Villanueva,05-20-12,F,Pasig,Bonifacio High School,13
+LRN-0451,Antonio Dela Cruz,07-25-14,M,Quezon City,Quezon Science High,11
+LRN-0452,Carlos Reyes,02-20-14,F,Manila,Bonifacio High School,5
+LRN-0453,Rosa Garcia,06-25-05,F,Taguig,Rizal Elementary School,16
+LRN-0454,Maria Lopez,09-28-06,M,Cebu City,Rizal Elementary School,9
+LRN-0455,Rosa Lopez,10-05-08,M,Pasig,Davao National High,16
+LRN-0456,Maria Dela Cruz,12-26-15,M,Quezon City,Bonifacio High School,16
+LRN-0457,Pedro Reyes,08-09-15,M,Manila,Mabini Academy,5
+LRN-0458,Pedro Aquino,03-01-10,M,Manila,Cebu Central School,18
+LRN-0459,Elena Santos,12-26-14,F,Cebu City,Rizal Elementary School,13
+LRN-0460,Rosa Garcia,01-11-10,F,Makati,Cebu Central School,12
+LRN-0461,Antonio Bautista,05-07-13,M,Cebu City,Mabini Academy,16
+LRN-0462,Lisa Aquino,08-17-09,M,Cebu City,Quezon Science High,6
+LRN-0463,carlos lopez,11-23-07,M,Manila,Cebu Central School,6
+LRN-0464,Jose Dela Cruz,08-13-11,M,Pasig,Cebu Central School,9
+LRN-0465,Elena Santos,08-01-10,F,Quezon City,Bonifacio High School,11
+LRN-0466,Maria Santos,04-02-10,M,Pasig,Davao National High,5
+LRN-0467,Elena Santos,12-16-07,F,Makati,Bonifacio High School,14
+LRN-0468,Carlos Bautista,02-04-14,M,Taguig,Mabini Academy,9
+LRN-0469,Antonio Dela Cruz,05-26-15,M,Manila,Rizal Elementary School,8
+LRN-0470,Maria Santos,12-26-12,M,Taguig,Rizal Elementary School,7
+LRN-0471,Elena Reyes,11-20-14,M,Davao City,Quezon Science High,11
+LRN-0472,Maria Wong,10-20-05,M,Makati,Rizal Elementary School,12
+LRN-0473,Carlos Villanueva,08-26-07,M,Cebu City,Mabini Academy,15
+LRN-0474,Elena Dela Cruz,01-23-12,M,Quezon City,Davao National High,15
+LRN-0475,Pedro Dela Cruz,09-08-05,M,Manila,Bonifacio High School,14
+LRN-0476,maria mendoza,07-02-15,X,Makati,Bonifacio High School,10
+LRN-0477,Elena Wong,05-01-06,F,Quezon City,Quezon Science High,15
+LRN-0478,Lisa Dela Cruz,06-15-09,M,Davao City,Bonifacio High School,12
+LRN-0479,Pedro Reyes,11-16-07,F,Pasig,Davao National High,6
+LRN-0480,Elena Garcia,07-19-09,M,Quezon City,Bonifacio High School,15
+LRN-0481,Maria Dela Cruz,02-13-11,M,Davao City,Cebu Central School,6
+LRN-0482,Rosa Reyes,02-21-13,M,Makati,Rizal Elementary School,6
+LRN-0483,juan wong,09-08-07,f,Pasig,Cebu Central School,16
+LRN-0484,Elena Reyes,02-10-13,M,Manila,Rizal Elementary School,17
+LRN-0485,Juan Mendoza,11-22-07,F,Pasig,Quezon Science High,6
+LRN-0486,Juan Reyes,02-28-08,F,Davao City,Rizal Elementary School,5
+LRN-0487,Lisa Reyes,12-09-11,F,Manila,Rizal Elementary School,18
+LRN-0488,Elena Santos,12-05-15,F,Manila,Davao National High,18
+LRN-0489,Elena Bautista,08-23-06,M,Cebu City,Bonifacio High School,13
+LRN-0490,Antonio Reyes,04-23-10,F,Cebu City,Cebu Central School,11
 LRN-0491,  elena mendoza  ,Invalid Date,m,Nowhere,Quezon Science High,14
-LRN-0492,Antonio Garcia,2007-04-03,M,Davao City,Cebu Central School,18
-LRN-0493,Juan Reyes,2007-09-15,F,Pasig,Mabini Academy,18
-LRN-0494,Ana Dela Cruz,2006-04-28,F,Pasig,Cebu Central School,13
-LRN-0495,Lisa Wong,2006-06-23,F,Quezon City,Cebu Central School,8
-LRN-0496,Jose Garcia,2007-08-10,M,Pasig,Rizal Elementary School,13
-LRN-0497,Jose Wong,2009-05-21,M,Makati,Davao National High,11
-LRN-0116,Juan Reyes,2015-03-29,F,Pasig,Bonifacio High School,13
-LRN-0499,Jose Bautista,2015-04-13,F,Quezon City,Rizal Elementary School,15
-LRN-0500,Juan Bautista,2015-07-16,M,Cebu City,Cebu Central School,6
-LRN-0501,Jose Aquino,2007-10-28,F,Pasig,Quezon Science High,6
-LRN-0502,Elena Aquino,2007-10-14,F,Cebu City,Rizal Elementary School,10
-LRN-0503,Lisa Garcia,2014-06-17,M,Manila,Cebu Central School,11
-LRN-0504,Jose Reyes,2012-03-19,F,Davao City,Bonifacio High School,10
+LRN-0492,Antonio Garcia,04-03-07,M,Davao City,Cebu Central School,18
+LRN-0493,Juan Reyes,09-15-07,F,Pasig,Mabini Academy,18
+LRN-0494,Ana Dela Cruz,04-28-06,F,Pasig,Cebu Central School,13
+LRN-0495,Lisa Wong,06-23-06,F,Quezon City,Cebu Central School,8
+LRN-0496,Jose Garcia,08-10-07,M,Pasig,Rizal Elementary School,13
+LRN-0497,Jose Wong,05-21-09,M,Makati,Davao National High,11
+LRN-0116,Juan Reyes,03-29-15,F,Pasig,Bonifacio High School,13
+LRN-0499,Jose Bautista,04-13-15,F,Quezon City,Rizal Elementary School,15
+LRN-0500,Juan Bautista,07-16-15,M,Cebu City,Cebu Central School,6
+LRN-0501,Jose Aquino,10-28-07,F,Pasig,Quezon Science High,6
+LRN-0502,Elena Aquino,10-14-07,F,Cebu City,Rizal Elementary School,10
+LRN-0503,Lisa Garcia,06-17-14,M,Manila,Cebu Central School,11
+LRN-0504,Jose Reyes,03-19-12,F,Davao City,Bonifacio High School,10
 LRN-0505,  maria dela cruz  ,Invalid Date,X,Nowhere,Quezon Science High,8
-LRN-0506,Maria Aquino,2013-06-17,F,Pasig,Bonifacio High School,8
-LRN-0507,Elena Garcia,2015-01-02,M,Pasig,Bonifacio High School,13
-LRN-0508,Juan Garcia,2013-05-11,M,Pasig,Mabini Academy,11
-LRN-0509,Lisa Dela Cruz,2014-02-09,M,Makati,Bonifacio High School,11
-LRN-0510,Elena Aquino,2011-05-13,F,Pasig,Bonifacio High School,6
-LRN-0511,Maria Mendoza,2006-03-24,F,Makati,Rizal Elementary School,5
-LRN-0512,Elena Reyes,2012-02-12,M,Taguig,Bonifacio High School,13
-LRN-0513,Pedro Aquino,2008-12-14,M,Pasig,Quezon Science High,12
-LRN-0514,Jose Bautista,2008-02-02,F,Davao City,Bonifacio High School,17
-LRN-0515,Elena Aquino,2006-11-28,M,Taguig,Bonifacio High School,10
-LRN-0516,Elena Aquino,2011-02-21,M,Pasig,Quezon Science High,16
-LRN-0517,Ana Mendoza,2007-01-07,M,Manila,Mabini Academy,15
-LRN-0518,Ana Bautista,2007-06-26,M,Taguig,Quezon Science High,16
-LRN-0519,Pedro Garcia,2008-01-21,F,Manila,Cebu Central School,13
-LRN-0520,Elena Garcia,2005-10-22,M,Cebu City,Mabini Academy,18
-LRN-0521,Antonio Garcia,2012-07-31,M,Cebu City,Mabini Academy,12
-LRN-0522,Lisa Bautista,2013-10-01,F,Davao City,Davao National High,18
-LRN-0523,Pedro Bautista,2009-12-13,F,Manila,Davao National High,18
-LRN-0524,Juan Aquino,2013-08-27,F,Quezon City,Cebu Central School,8
-LRN-0525,Ana Bautista,2011-01-12,M,Makati,Bonifacio High School,5
-LRN-0526,Maria Reyes,2010-08-07,F,Quezon City,Cebu Central School,8
-LRN-0527,Lisa Dela Cruz,2012-08-16,F,Makati,Bonifacio High School,5
-LRN-0528,Carlos Wong,2006-10-12,M,Taguig,Bonifacio High School,5
-LRN-0529,Lisa Aquino,2011-11-13,M,Cebu City,Rizal Elementary School,5
-LRN-0530,Maria Reyes,2010-08-12,M,Cebu City,Bonifacio High School,14
-LRN-0531,jose mendoza,08/06/2013,X,Davao City,Mabini Academy,17
-LRN-0532,Lisa Lopez,2014-09-28,M,Cebu City,Bonifacio High School,7
-LRN-0533,Rosa Lopez,2006-12-13,F,Cebu City,Rizal Elementary School,9
-LRN-0534,Juan Lopez,2012-01-10,F,Taguig,Bonifacio High School,5
-LRN-0535,Elena Wong,2012-08-18,M,Pasig,Rizal Elementary School,16
-LRN-0536,Rosa Wong,2007-06-27,M,Cebu City,Quezon Science High,15
+LRN-0506,Maria Aquino,06-17-13,F,Pasig,Bonifacio High School,8
+LRN-0507,Elena Garcia,01-02-15,M,Pasig,Bonifacio High School,13
+LRN-0508,Juan Garcia,05-11-13,M,Pasig,Mabini Academy,11
+LRN-0509,Lisa Dela Cruz,02-09-14,M,Makati,Bonifacio High School,11
+LRN-0510,Elena Aquino,05-13-11,F,Pasig,Bonifacio High School,6
+LRN-0511,Maria Mendoza,03-24-06,F,Makati,Rizal Elementary School,5
+LRN-0512,Elena Reyes,02-12-12,M,Taguig,Bonifacio High School,13
+LRN-0513,Pedro Aquino,12-14-08,M,Pasig,Quezon Science High,12
+LRN-0514,Jose Bautista,02-02-08,F,Davao City,Bonifacio High School,17
+LRN-0515,Elena Aquino,11-28-06,M,Taguig,Bonifacio High School,10
+LRN-0516,Elena Aquino,02-21-11,M,Pasig,Quezon Science High,16
+LRN-0517,Ana Mendoza,01-07-07,M,Manila,Mabini Academy,15
+LRN-0518,Ana Bautista,06-26-07,M,Taguig,Quezon Science High,16
+LRN-0519,Pedro Garcia,01-21-08,F,Manila,Cebu Central School,13
+LRN-0520,Elena Garcia,10-22-05,M,Cebu City,Mabini Academy,18
+LRN-0521,Antonio Garcia,07-31-12,M,Cebu City,Mabini Academy,12
+LRN-0522,Lisa Bautista,10-01-13,F,Davao City,Davao National High,18
+LRN-0523,Pedro Bautista,12-13-09,F,Manila,Davao National High,18
+LRN-0524,Juan Aquino,08-27-13,F,Quezon City,Cebu Central School,8
+LRN-0525,Ana Bautista,01-12-11,M,Makati,Bonifacio High School,5
+LRN-0526,Maria Reyes,08-07-10,F,Quezon City,Cebu Central School,8
+LRN-0527,Lisa Dela Cruz,08-16-12,F,Makati,Bonifacio High School,5
+LRN-0528,Carlos Wong,10-12-06,M,Taguig,Bonifacio High School,5
+LRN-0529,Lisa Aquino,11-13-11,M,Cebu City,Rizal Elementary School,5
+LRN-0530,Maria Reyes,08-12-10,M,Cebu City,Bonifacio High School,14
+LRN-0531,jose mendoza,08-06-13,X,Davao City,Mabini Academy,17
+LRN-0532,Lisa Lopez,09-28-14,M,Cebu City,Bonifacio High School,7
+LRN-0533,Rosa Lopez,12-13-06,F,Cebu City,Rizal Elementary School,9
+LRN-0534,Juan Lopez,01-10-12,F,Taguig,Bonifacio High School,5
+LRN-0535,Elena Wong,08-18-12,M,Pasig,Rizal Elementary School,16
+LRN-0536,Rosa Wong,06-27-07,M,Cebu City,Quezon Science High,15
 LRN-0537,  carlos garcia  ,Invalid Date,F,Nowhere,Bonifacio High School,15
-LRN-0538,Antonio Dela Cruz,2013-02-15,M,Davao City,Quezon Science High,12
-LRN-0539,Antonio Mendoza,2013-01-23,F,Quezon City,Davao National High,15
-LRN-0540,Jose Wong,2009-12-28,F,Makati,Davao National High,5
-LRN-0541,Pedro Dela Cruz,2008-03-08,M,Manila,Mabini Academy,15
-LRN-0542,Ana Bautista,2010-11-09,M,Makati,Cebu Central School,6
-LRN-0543,Lisa Santos,2006-12-26,F,Makati,Quezon Science High,14
-LRN-0544,Carlos Wong,2008-10-22,M,Makati,Quezon Science High,6
-LRN-0545,Juan Villanueva,2009-04-28,M,Cebu City,Bonifacio High School,16
-LRN-0546,Elena Aquino,2010-08-16,M,Davao City,Quezon Science High,11
-LRN-0547,Elena Reyes,2010-04-29,F,Quezon City,Bonifacio High School,8
-LRN-0548,Pedro Reyes,2005-09-08,F,Davao City,Bonifacio High School,5
-LRN-0549,Antonio Bautista,2006-07-23,M,Manila,Rizal Elementary School,7
-LRN-0550,Jose Lopez,2012-05-24,F,Manila,Bonifacio High School,6
-LRN-0551,Pedro Mendoza,2005-10-15,M,Manila,Bonifacio High School,10
-LRN-0552,rosa bautista,06/07/2009,f,Manila,Davao National High,16
-LRN-0553,Jose Bautista,2011-02-17,F,Cebu City,Bonifacio High School,7
-LRN-0554,Elena Garcia,2012-08-02,F,Cebu City,Quezon Science High,17
-LRN-0555,Rosa Wong,2014-06-26,M,Makati,Cebu Central School,8
-LRN-0556,Juan Dela Cruz,2010-12-03,M,Taguig,Davao National High,16
-LRN-0557,Antonio Bautista,2006-04-21,F,Quezon City,Bonifacio High School,8
-LRN-0558,Carlos Lopez,2013-02-06,M,Davao City,Mabini Academy,9
-LRN-0559,Lisa Aquino,2005-04-21,M,Taguig,Cebu Central School,10
-LRN-0560,Juan Wong,2012-08-14,F,Manila,Mabini Academy,13
-LRN-0561,jose lopez,30/10/2015,M,Makati,Rizal Elementary School,18
-LRN-0562,Ana Reyes,2005-08-17,M,Taguig,Davao National High,9
-LRN-0563,Rosa Reyes,2014-04-25,F,Davao City,Rizal Elementary School,6
-LRN-0107,Lisa Garcia,2010-10-15,M,Davao City,Bonifacio High School,12
-LRN-0565,Antonio Dela Cruz,2010-02-12,M,Quezon City,Mabini Academy,18
-LRN-0566,Carlos Reyes,2008-09-09,F,Davao City,Bonifacio High School,7
+LRN-0538,Antonio Dela Cruz,02-15-13,M,Davao City,Quezon Science High,12
+LRN-0539,Antonio Mendoza,01-23-13,F,Quezon City,Davao National High,15
+LRN-0540,Jose Wong,12-28-09,F,Makati,Davao National High,5
+LRN-0541,Pedro Dela Cruz,03-08-08,M,Manila,Mabini Academy,15
+LRN-0542,Ana Bautista,11-09-10,M,Makati,Cebu Central School,6
+LRN-0543,Lisa Santos,12-26-06,F,Makati,Quezon Science High,14
+LRN-0544,Carlos Wong,10-22-08,M,Makati,Quezon Science High,6
+LRN-0545,Juan Villanueva,04-28-09,M,Cebu City,Bonifacio High School,16
+LRN-0546,Elena Aquino,08-16-10,M,Davao City,Quezon Science High,11
+LRN-0547,Elena Reyes,04-29-10,F,Quezon City,Bonifacio High School,8
+LRN-0548,Pedro Reyes,09-08-05,F,Davao City,Bonifacio High School,5
+LRN-0549,Antonio Bautista,07-23-06,M,Manila,Rizal Elementary School,7
+LRN-0550,Jose Lopez,05-24-12,F,Manila,Bonifacio High School,6
+LRN-0551,Pedro Mendoza,10-15-05,M,Manila,Bonifacio High School,10
+LRN-0552,rosa bautista,06-07-09,f,Manila,Davao National High,16
+LRN-0553,Jose Bautista,02-17-11,F,Cebu City,Bonifacio High School,7
+LRN-0554,Elena Garcia,08-02-12,F,Cebu City,Quezon Science High,17
+LRN-0555,Rosa Wong,06-26-14,M,Makati,Cebu Central School,8
+LRN-0556,Juan Dela Cruz,12-03-10,M,Taguig,Davao National High,16
+LRN-0557,Antonio Bautista,04-21-06,F,Quezon City,Bonifacio High School,8
+LRN-0558,Carlos Lopez,02-06-13,M,Davao City,Mabini Academy,9
+LRN-0559,Lisa Aquino,04-21-05,M,Taguig,Cebu Central School,10
+LRN-0560,Juan Wong,08-14-12,F,Manila,Mabini Academy,13
+LRN-0561,jose lopez,10-30-15,M,Makati,Rizal Elementary School,18
+LRN-0562,Ana Reyes,08-17-05,M,Taguig,Davao National High,9
+LRN-0563,Rosa Reyes,04-25-14,F,Davao City,Rizal Elementary School,6
+LRN-0107,Lisa Garcia,10-15-10,M,Davao City,Bonifacio High School,12
+LRN-0565,Antonio Dela Cruz,02-12-10,M,Quezon City,Mabini Academy,18
+LRN-0566,Carlos Reyes,09-09-08,F,Davao City,Bonifacio High School,7
 LRN-0567,  lisa santos  ,Invalid Date,X,Nowhere,Mabini Academy,8
-LRN-0568,Pedro Reyes,2013-07-21,F,Manila,Cebu Central School,6
-LRN-0569,Pedro Aquino,2015-02-22,F,Quezon City,Mabini Academy,12
-LRN-0570,Carlos Reyes,2014-02-02,M,Taguig,Rizal Elementary School,11
-LRN-0571,Pedro Lopez,2005-07-10,M,Makati,Quezon Science High,14
-LRN-0572,Jose Bautista,2009-03-03,F,Cebu City,Mabini Academy,18
-LRN-0573,Elena Lopez,2005-05-20,M,Davao City,Cebu Central School,8
-LRN-0574,Juan Mendoza,2008-04-30,F,Manila,Rizal Elementary School,5
-LRN-0575,Antonio Wong,2007-04-01,F,Taguig,Mabini Academy,9
-LRN-0576,Pedro Mendoza,2007-03-17,M,Davao City,Quezon Science High,14
-LRN-0577,Rosa Lopez,2009-03-01,F,Davao City,Mabini Academy,17
-LRN-0578,Elena Villanueva,2012-07-24,F,Taguig,Bonifacio High School,14
-LRN-0579,Ana Dela Cruz,2011-03-29,F,Manila,Cebu Central School,11
-LRN-0580,Elena Santos,2012-11-13,M,Manila,Mabini Academy,16
-LRN-0581,Antonio Bautista,2008-05-21,F,Pasig,Bonifacio High School,9
-LRN-0582,Lisa Mendoza,2005-11-13,F,Taguig,Mabini Academy,15
-LRN-0583,Antonio Aquino,2006-10-31,F,Cebu City,Quezon Science High,18
-LRN-0542,Ana Bautista,2010-11-09,M,Makati,Cebu Central School,6
-LRN-0585,Antonio Garcia,2008-04-08,M,Makati,Davao National High,13
-LRN-0586,Ana Garcia,2005-12-13,M,Taguig,Quezon Science High,17
-LRN-0587,Pedro Dela Cruz,2005-09-28,M,Manila,Rizal Elementary School,18
-LRN-0588,Carlos Mendoza,2007-05-30,F,Taguig,Mabini Academy,16
-LRN-0589,Juan Lopez,2007-04-03,F,Cebu City,Rizal Elementary School,14
-LRN-0590,Ana Santos,2012-09-19,M,Quezon City,Cebu Central School,9
-LRN-0591,Jose Reyes,2006-03-21,F,Manila,Cebu Central School,12
-LRN-0592,Carlos Santos,2008-11-10,F,Quezon City,Quezon Science High,15
-LRN-0593,Elena Garcia,2014-07-21,M,Taguig,Rizal Elementary School,9
-LRN-0594,Ana Santos,2011-07-18,F,Davao City,Quezon Science High,10
-LRN-0595,Maria Aquino,2015-11-05,M,Cebu City,Mabini Academy,7
-LRN-0596,Carlos Garcia,2009-10-12,F,Pasig,Mabini Academy,9
-LRN-0597,Carlos Wong,2013-11-27,F,Taguig,Quezon Science High,5
-LRN-0598,Carlos Dela Cruz,2011-12-05,M,Davao City,Quezon Science High,10
-LRN-0599,antonio wong,20/04/2013,F,Makati,Mabini Academy,10
-LRN-0600,Jose Mendoza,2006-10-31,M,Makati,Davao National High,5
-LRN-0601,Maria Santos,2015-12-18,F,Pasig,Quezon Science High,16
-LRN-0602,Ana Garcia,2011-08-03,F,Cebu City,Davao National High,11
-LRN-0603,Pedro Garcia,2007-01-05,M,Quezon City,Mabini Academy,10
-LRN-0604,Pedro Bautista,2012-01-08,M,Cebu City,Bonifacio High School,11
-LRN-0605,Jose Garcia,2010-06-10,M,Pasig,Quezon Science High,9
-LRN-0606,Juan Garcia,2007-04-04,F,Davao City,Mabini Academy,15
-LRN-0607,Juan Lopez,2009-01-17,F,Quezon City,Rizal Elementary School,13
-LRN-0608,Antonio Mendoza,2012-09-18,M,Cebu City,Mabini Academy,7
-LRN-0609,Jose Dela Cruz,2014-04-06,F,Manila,Rizal Elementary School,15
-LRN-0610,Juan Bautista,2013-01-09,F,Cebu City,Davao National High,16
-LRN-0611,ana dela cruz,27/02/2013,m,Davao City,Quezon Science High,7
-LRN-0612,Maria Lopez,2006-02-08,M,Davao City,Mabini Academy,17
-LRN-0613,jose lopez,21/02/2010,F,Makati,Quezon Science High,16
-LRN-0614,Antonio Villanueva,2005-02-12,M,Cebu City,Cebu Central School,16
-LRN-0615,Rosa Garcia,2007-09-18,F,Quezon City,Davao National High,9
-LRN-0616,Antonio Reyes,2007-12-17,M,Pasig,Mabini Academy,7
-LRN-0617,Maria Bautista,2010-03-17,F,Manila,Bonifacio High School,11
-LRN-0618,Pedro Villanueva,2009-11-27,M,Makati,Bonifacio High School,18
-LRN-0619,Jose Mendoza,2012-08-01,F,Makati,Quezon Science High,14
-LRN-0620,Carlos Aquino,2010-04-10,F,Makati,Bonifacio High School,9
-LRN-0621,Antonio Dela Cruz,2013-02-03,F,Quezon City,Cebu Central School,14
-LRN-0622,Lisa Lopez,2006-09-06,M,Manila,Rizal Elementary School,5
-LRN-0623,Pedro Garcia,2014-05-07,F,Quezon City,Cebu Central School,13
-LRN-0624,Pedro Santos,2011-10-22,F,Davao City,Bonifacio High School,14
-LRN-0625,Ana Santos,2007-05-21,M,Davao City,Quezon Science High,5
-LRN-0626,Antonio Reyes,2011-05-18,M,Taguig,Rizal Elementary School,11
-LRN-0627,Rosa Aquino,2012-12-26,F,Quezon City,Cebu Central School,16
-LRN-0628,Juan Wong,2015-10-28,M,Pasig,Rizal Elementary School,8
-LRN-0629,Ana Aquino,2005-01-06,M,Quezon City,Rizal Elementary School,17
-LRN-0630,Pedro Dela Cruz,2007-12-25,M,Manila,Davao National High,16
-LRN-0631,Juan Aquino,2005-07-10,M,Davao City,Quezon Science High,13
-LRN-0632,Lisa Villanueva,2015-10-29,F,Pasig,Bonifacio High School,7
-LRN-0633,Maria Dela Cruz,2015-05-28,M,Makati,Davao National High,11
-LRN-0634,Ana Villanueva,2009-01-25,F,Manila,Mabini Academy,14
-LRN-0635,Pedro Bautista,2014-08-15,M,Quezon City,Mabini Academy,9
-LRN-0636,Elena Santos,2014-11-17,M,Pasig,Davao National High,17
-LRN-0637,Rosa Wong,2015-06-01,M,Davao City,Bonifacio High School,8
-LRN-0638,Maria Wong,2011-04-10,M,Manila,Quezon Science High,5
-LRN-0639,Juan Bautista,2006-02-22,F,Cebu City,Davao National High,6
-LRN-0640,Carlos Aquino,2013-06-21,M,Quezon City,Bonifacio High School,5
-LRN-0641,Pedro Aquino,2009-11-20,F,Cebu City,Rizal Elementary School,12
-LRN-0642,Juan Wong,2009-07-17,M,Makati,Rizal Elementary School,12
-LRN-0643,Antonio Santos,2014-03-09,M,Makati,Cebu Central School,8
-LRN-0644,Lisa Garcia,2006-04-26,F,Quezon City,Bonifacio High School,12
-LRN-0645,Jose Bautista,2012-07-04,F,Makati,Mabini Academy,9
-LRN-0646,Antonio Bautista,2011-05-17,F,Cebu City,Mabini Academy,8
-LRN-0647,Maria Bautista,2006-10-07,M,Manila,Mabini Academy,14
-LRN-0648,Jose Santos,2014-06-30,M,Taguig,Cebu Central School,15
-LRN-0649,Pedro Lopez,2014-12-22,F,Taguig,Bonifacio High School,5
-LRN-0650,Carlos Bautista,2005-01-01,M,Pasig,Rizal Elementary School,13
-LRN-0651,antonio mendoza,15/07/2007,X,Pasig,Quezon Science High,7
-LRN-0652,Carlos Lopez,2008-05-05,M,Quezon City,Quezon Science High,10
-LRN-0433,Antonio Bautista,2010-05-06,M,Quezon City,Davao National High,12
-LRN-0654,Ana Bautista,2015-12-26,M,Pasig,Cebu Central School,11
-LRN-0655,Lisa Wong,2012-08-08,F,Makati,Cebu Central School,6
-LRN-0656,Juan Santos,2007-08-16,F,Manila,Bonifacio High School,9
-LRN-0657,Ana Villanueva,2009-06-21,M,Davao City,Rizal Elementary School,9
-LRN-0658,Rosa Reyes,2007-01-16,M,Taguig,Cebu Central School,6
-LRN-0659,Ana Aquino,2008-01-08,F,Davao City,Davao National High,5
-LRN-0660,Elena Wong,2005-05-20,F,Cebu City,Bonifacio High School,11
-LRN-0661,Carlos Mendoza,2015-10-21,M,Davao City,Mabini Academy,11
-LRN-0662,Elena Garcia,2013-07-02,F,Makati,Rizal Elementary School,13
-LRN-0663,Juan Santos,2008-04-27,M,Pasig,Davao National High,11
-LRN-0664,Maria Reyes,2008-03-03,F,Pasig,Quezon Science High,17
-LRN-0665,Rosa Garcia,2005-08-18,M,Taguig,Quezon Science High,11
-LRN-0666,Pedro Dela Cruz,2008-06-02,F,Cebu City,Davao National High,12
-LRN-0667,Ana Garcia,2013-05-16,M,Manila,Davao National High,13
-LRN-0668,Lisa Reyes,2013-12-08,F,Makati,Cebu Central School,17
-LRN-0658,Rosa Reyes,2007-01-16,M,Taguig,Cebu Central School,6
-LRN-0670,Antonio Dela Cruz,2008-08-30,M,Manila,Cebu Central School,16
-LRN-0671,Jose Bautista,2011-07-15,F,Taguig,Quezon Science High,6
-LRN-0672,Juan Reyes,2005-07-28,M,Pasig,Davao National High,18
-LRN-0673,Lisa Santos,2009-04-23,M,Cebu City,Quezon Science High,6
-LRN-0674,Maria Garcia,2005-04-24,M,Quezon City,Davao National High,9
-LRN-0675,Pedro Bautista,2009-03-24,F,Taguig,Davao National High,10
-LRN-0676,Antonio Wong,2007-05-26,M,Manila,Mabini Academy,10
-LRN-0677,Antonio Villanueva,2008-09-15,M,Quezon City,Bonifacio High School,5
-LRN-0678,Ana Wong,2006-05-10,M,Makati,Bonifacio High School,8
-LRN-0679,Juan Bautista,2010-10-16,M,Davao City,Davao National High,7
-LRN-0680,Ana Aquino,2005-04-18,M,Makati,Mabini Academy,12
-LRN-0681,Jose Lopez,2006-07-19,M,Makati,Mabini Academy,17
-LRN-0682,Jose Santos,2007-04-15,F,Cebu City,Cebu Central School,15
-LRN-0683,Pedro Wong,2013-06-01,F,Quezon City,Davao National High,10
-LRN-0684,Lisa Villanueva,2005-01-13,M,Cebu City,Davao National High,12
-LRN-0685,Pedro Mendoza,2015-07-20,M,Taguig,Mabini Academy,7
-LRN-0686,Lisa Dela Cruz,2006-10-04,M,Manila,Quezon Science High,5
-LRN-0687,Rosa Wong,2015-10-27,M,Cebu City,Mabini Academy,17
-LRN-0688,Maria Mendoza,2013-11-19,F,Davao City,Mabini Academy,8
-LRN-0689,Elena Mendoza,2005-02-24,F,Manila,Quezon Science High,16
-LRN-0690,Antonio Mendoza,2005-04-30,F,Davao City,Davao National High,11
-LRN-0691,Ana Santos,2012-09-04,M,Makati,Rizal Elementary School,18
-LRN-0692,Elena Reyes,2010-10-26,F,Pasig,Cebu Central School,12
-LRN-0693,Lisa Dela Cruz,2014-04-25,F,Cebu City,Rizal Elementary School,11
-LRN-0694,Carlos Aquino,2013-12-10,M,Makati,Quezon Science High,16
-LRN-0695,Carlos Bautista,2009-09-30,F,Manila,Cebu Central School,9
-LRN-0696,Elena Aquino,2010-04-15,M,Cebu City,Rizal Elementary School,17
-LRN-0697,Carlos Bautista,2015-04-26,M,Quezon City,Rizal Elementary School,6
-LRN-0698,Ana Lopez,2012-07-07,M,Quezon City,Rizal Elementary School,10
-LRN-0699,Carlos Bautista,2013-01-28,M,Pasig,Mabini Academy,7
-LRN-0700,Lisa Aquino,2013-07-01,F,Manila,Mabini Academy,14
-LRN-0701,Lisa Mendoza,2005-05-08,M,Manila,Bonifacio High School,7
-LRN-0702,carlos santos,29/06/2007,m,Davao City,Davao National High,15
-LRN-0703,jose aquino,13/10/2006,m,Davao City,Cebu Central School,7
-LRN-0704,rosa aquino,25/07/2009,f,Manila,Rizal Elementary School,12
-LRN-0705,Jose Dela Cruz,2015-03-27,F,Makati,Mabini Academy,13
-LRN-0706,Carlos Lopez,2006-12-23,F,Pasig,Quezon Science High,5
-LRN-0707,Rosa Reyes,2011-07-09,M,Makati,Rizal Elementary School,7
-LRN-0708,Rosa Mendoza,2013-04-24,M,Manila,Davao National High,12
-LRN-0709,juan wong,28/07/2005,m,Quezon City,Cebu Central School,13
-LRN-0710,Juan Villanueva,2012-08-18,M,Taguig,Cebu Central School,5
-LRN-0711,Lisa Dela Cruz,2010-08-23,M,Manila,Davao National High,9
-LRN-0712,Pedro Garcia,2013-12-12,F,Quezon City,Cebu Central School,15
-LRN-0713,Jose Mendoza,2014-04-29,M,Taguig,Davao National High,7
-LRN-0714,elena aquino,12/08/2006,Unknown,Manila,Cebu Central School,16
-LRN-0715,carlos santos,16/09/2014,Unknown,Taguig,Mabini Academy,12
-LRN-0716,Rosa Dela Cruz,2006-03-02,M,Pasig,Quezon Science High,7
-LRN-0717,Elena Mendoza,2014-10-30,M,Manila,Mabini Academy,7
-LRN-0718,Lisa Dela Cruz,2011-12-31,M,Makati,Quezon Science High,15
-LRN-0719,Pedro Garcia,2015-02-09,M,Taguig,Davao National High,16
-LRN-0720,Elena Reyes,2005-06-24,F,Pasig,Bonifacio High School,18
-LRN-0721,Maria Aquino,2005-04-13,F,Taguig,Quezon Science High,18
-LRN-0722,Ana Dela Cruz,2015-11-11,M,Pasig,Cebu Central School,17
-LRN-0723,Rosa Bautista,2011-03-06,M,Davao City,Rizal Elementary School,13
-LRN-0724,Elena Wong,2013-07-16,F,Davao City,Rizal Elementary School,9
-LRN-0725,Maria Villanueva,2006-05-01,F,Quezon City,Davao National High,9
-LRN-0726,Jose Villanueva,2012-05-23,F,Pasig,Rizal Elementary School,13
-LRN-0727,Carlos Garcia,2015-11-04,M,Taguig,Mabini Academy,17
-LRN-0728,Jose Mendoza,2011-02-22,F,Manila,Cebu Central School,17
-LRN-0729,Lisa Santos,2012-09-13,M,Makati,Rizal Elementary School,16
-LRN-0730,Jose Wong,2006-12-26,F,Quezon City,Mabini Academy,15
-LRN-0731,Pedro Reyes,2009-05-21,M,Cebu City,Quezon Science High,8
-LRN-0732,Rosa Santos,2007-10-01,F,Taguig,Davao National High,11
-LRN-0733,Juan Wong,2006-06-09,F,Pasig,Cebu Central School,8
-LRN-0734,Lisa Santos,2005-03-13,M,Cebu City,Cebu Central School,17
-LRN-0735,Lisa Santos,2012-07-26,F,Quezon City,Cebu Central School,17
-LRN-0736,Carlos Garcia,2014-08-08,M,Quezon City,Cebu Central School,12
+LRN-0568,Pedro Reyes,07-21-13,F,Manila,Cebu Central School,6
+LRN-0569,Pedro Aquino,02-22-15,F,Quezon City,Mabini Academy,12
+LRN-0570,Carlos Reyes,02-02-14,M,Taguig,Rizal Elementary School,11
+LRN-0571,Pedro Lopez,07-10-05,M,Makati,Quezon Science High,14
+LRN-0572,Jose Bautista,03-03-09,F,Cebu City,Mabini Academy,18
+LRN-0573,Elena Lopez,05-20-05,M,Davao City,Cebu Central School,8
+LRN-0574,Juan Mendoza,04-30-08,F,Manila,Rizal Elementary School,5
+LRN-0575,Antonio Wong,04-01-07,F,Taguig,Mabini Academy,9
+LRN-0576,Pedro Mendoza,03-17-07,M,Davao City,Quezon Science High,14
+LRN-0577,Rosa Lopez,03-01-09,F,Davao City,Mabini Academy,17
+LRN-0578,Elena Villanueva,07-24-12,F,Taguig,Bonifacio High School,14
+LRN-0579,Ana Dela Cruz,03-29-11,F,Manila,Cebu Central School,11
+LRN-0580,Elena Santos,11-13-12,M,Manila,Mabini Academy,16
+LRN-0581,Antonio Bautista,05-21-08,F,Pasig,Bonifacio High School,9
+LRN-0582,Lisa Mendoza,11-13-05,F,Taguig,Mabini Academy,15
+LRN-0583,Antonio Aquino,10-31-06,F,Cebu City,Quezon Science High,18
+LRN-0542,Ana Bautista,11-09-10,M,Makati,Cebu Central School,6
+LRN-0585,Antonio Garcia,04-08-08,M,Makati,Davao National High,13
+LRN-0586,Ana Garcia,12-13-05,M,Taguig,Quezon Science High,17
+LRN-0587,Pedro Dela Cruz,09-28-05,M,Manila,Rizal Elementary School,18
+LRN-0588,Carlos Mendoza,05-30-07,F,Taguig,Mabini Academy,16
+LRN-0589,Juan Lopez,04-03-07,F,Cebu City,Rizal Elementary School,14
+LRN-0590,Ana Santos,09-19-12,M,Quezon City,Cebu Central School,9
+LRN-0591,Jose Reyes,03-21-06,F,Manila,Cebu Central School,12
+LRN-0592,Carlos Santos,11-10-08,F,Quezon City,Quezon Science High,15
+LRN-0593,Elena Garcia,07-21-14,M,Taguig,Rizal Elementary School,9
+LRN-0594,Ana Santos,07-18-11,F,Davao City,Quezon Science High,10
+LRN-0595,Maria Aquino,11-05-15,M,Cebu City,Mabini Academy,7
+LRN-0596,Carlos Garcia,10-12-09,F,Pasig,Mabini Academy,9
+LRN-0597,Carlos Wong,11-27-13,F,Taguig,Quezon Science High,5
+LRN-0598,Carlos Dela Cruz,12-05-11,M,Davao City,Quezon Science High,10
+LRN-0599,antonio wong,04-20-13,F,Makati,Mabini Academy,10
+LRN-0600,Jose Mendoza,10-31-06,M,Makati,Davao National High,5
+LRN-0601,Maria Santos,12-18-15,F,Pasig,Quezon Science High,16
+LRN-0602,Ana Garcia,08-03-11,F,Cebu City,Davao National High,11
+LRN-0603,Pedro Garcia,01-05-07,M,Quezon City,Mabini Academy,10
+LRN-0604,Pedro Bautista,01-08-12,M,Cebu City,Bonifacio High School,11
+LRN-0605,Jose Garcia,06-10-10,M,Pasig,Quezon Science High,9
+LRN-0606,Juan Garcia,04-04-07,F,Davao City,Mabini Academy,15
+LRN-0607,Juan Lopez,01-17-09,F,Quezon City,Rizal Elementary School,13
+LRN-0608,Antonio Mendoza,09-18-12,M,Cebu City,Mabini Academy,7
+LRN-0609,Jose Dela Cruz,04-06-14,F,Manila,Rizal Elementary School,15
+LRN-0610,Juan Bautista,01-09-13,F,Cebu City,Davao National High,16
+LRN-0611,ana dela cruz,02-27-13,m,Davao City,Quezon Science High,7
+LRN-0612,Maria Lopez,02-08-06,M,Davao City,Mabini Academy,17
+LRN-0613,jose lopez,02-21-10,F,Makati,Quezon Science High,16
+LRN-0614,Antonio Villanueva,02-12-05,M,Cebu City,Cebu Central School,16
+LRN-0615,Rosa Garcia,09-18-07,F,Quezon City,Davao National High,9
+LRN-0616,Antonio Reyes,12-17-07,M,Pasig,Mabini Academy,7
+LRN-0617,Maria Bautista,03-17-10,F,Manila,Bonifacio High School,11
+LRN-0618,Pedro Villanueva,11-27-09,M,Makati,Bonifacio High School,18
+LRN-0619,Jose Mendoza,08-01-12,F,Makati,Quezon Science High,14
+LRN-0620,Carlos Aquino,04-10-10,F,Makati,Bonifacio High School,9
+LRN-0621,Antonio Dela Cruz,02-03-13,F,Quezon City,Cebu Central School,14
+LRN-0622,Lisa Lopez,09-06-06,M,Manila,Rizal Elementary School,5
+LRN-0623,Pedro Garcia,05-07-14,F,Quezon City,Cebu Central School,13
+LRN-0624,Pedro Santos,10-22-11,F,Davao City,Bonifacio High School,14
+LRN-0625,Ana Santos,05-21-07,M,Davao City,Quezon Science High,5
+LRN-0626,Antonio Reyes,05-18-11,M,Taguig,Rizal Elementary School,11
+LRN-0627,Rosa Aquino,12-26-12,F,Quezon City,Cebu Central School,16
+LRN-0628,Juan Wong,10-28-15,M,Pasig,Rizal Elementary School,8
+LRN-0629,Ana Aquino,01-06-05,M,Quezon City,Rizal Elementary School,17
+LRN-0630,Pedro Dela Cruz,12-25-07,M,Manila,Davao National High,16
+LRN-0631,Juan Aquino,07-10-05,M,Davao City,Quezon Science High,13
+LRN-0632,Lisa Villanueva,10-29-15,F,Pasig,Bonifacio High School,7
+LRN-0633,Maria Dela Cruz,05-28-15,M,Makati,Davao National High,11
+LRN-0634,Ana Villanueva,01-25-09,F,Manila,Mabini Academy,14
+LRN-0635,Pedro Bautista,08-15-14,M,Quezon City,Mabini Academy,9
+LRN-0636,Elena Santos,11-17-14,M,Pasig,Davao National High,17
+LRN-0637,Rosa Wong,06-01-15,M,Davao City,Bonifacio High School,8
+LRN-0638,Maria Wong,04-10-11,M,Manila,Quezon Science High,5
+LRN-0639,Juan Bautista,02-22-06,F,Cebu City,Davao National High,6
+LRN-0640,Carlos Aquino,06-21-13,M,Quezon City,Bonifacio High School,5
+LRN-0641,Pedro Aquino,11-20-09,F,Cebu City,Rizal Elementary School,12
+LRN-0642,Juan Wong,07-17-09,M,Makati,Rizal Elementary School,12
+LRN-0643,Antonio Santos,03-09-14,M,Makati,Cebu Central School,8
+LRN-0644,Lisa Garcia,04-26-06,F,Quezon City,Bonifacio High School,12
+LRN-0645,Jose Bautista,07-04-12,F,Makati,Mabini Academy,9
+LRN-0646,Antonio Bautista,05-17-11,F,Cebu City,Mabini Academy,8
+LRN-0647,Maria Bautista,10-07-06,M,Manila,Mabini Academy,14
+LRN-0648,Jose Santos,06-30-14,M,Taguig,Cebu Central School,15
+LRN-0649,Pedro Lopez,12-22-14,F,Taguig,Bonifacio High School,5
+LRN-0650,Carlos Bautista,01-01-05,M,Pasig,Rizal Elementary School,13
+LRN-0651,antonio mendoza,07-15-07,X,Pasig,Quezon Science High,7
+LRN-0652,Carlos Lopez,05-05-08,M,Quezon City,Quezon Science High,10
+LRN-0433,Antonio Bautista,05-06-10,M,Quezon City,Davao National High,12
+LRN-0654,Ana Bautista,12-26-15,M,Pasig,Cebu Central School,11
+LRN-0655,Lisa Wong,08-08-12,F,Makati,Cebu Central School,6
+LRN-0656,Juan Santos,08-16-07,F,Manila,Bonifacio High School,9
+LRN-0657,Ana Villanueva,06-21-09,M,Davao City,Rizal Elementary School,9
+LRN-0658,Rosa Reyes,01-16-07,M,Taguig,Cebu Central School,6
+LRN-0659,Ana Aquino,01-08-08,F,Davao City,Davao National High,5
+LRN-0660,Elena Wong,05-20-05,F,Cebu City,Bonifacio High School,11
+LRN-0661,Carlos Mendoza,10-21-15,M,Davao City,Mabini Academy,11
+LRN-0662,Elena Garcia,07-02-13,F,Makati,Rizal Elementary School,13
+LRN-0663,Juan Santos,04-27-08,M,Pasig,Davao National High,11
+LRN-0664,Maria Reyes,03-03-08,F,Pasig,Quezon Science High,17
+LRN-0665,Rosa Garcia,08-18-05,M,Taguig,Quezon Science High,11
+LRN-0666,Pedro Dela Cruz,06-02-08,F,Cebu City,Davao National High,12
+LRN-0667,Ana Garcia,05-16-13,M,Manila,Davao National High,13
+LRN-0668,Lisa Reyes,12-08-13,F,Makati,Cebu Central School,17
+LRN-0658,Rosa Reyes,01-16-07,M,Taguig,Cebu Central School,6
+LRN-0670,Antonio Dela Cruz,08-30-08,M,Manila,Cebu Central School,16
+LRN-0671,Jose Bautista,07-15-11,F,Taguig,Quezon Science High,6
+LRN-0672,Juan Reyes,07-28-05,M,Pasig,Davao National High,18
+LRN-0673,Lisa Santos,04-23-09,M,Cebu City,Quezon Science High,6
+LRN-0674,Maria Garcia,04-24-05,M,Quezon City,Davao National High,9
+LRN-0675,Pedro Bautista,03-24-09,F,Taguig,Davao National High,10
+LRN-0676,Antonio Wong,05-26-07,M,Manila,Mabini Academy,10
+LRN-0677,Antonio Villanueva,09-15-08,M,Quezon City,Bonifacio High School,5
+LRN-0678,Ana Wong,05-10-06,M,Makati,Bonifacio High School,8
+LRN-0679,Juan Bautista,10-16-10,M,Davao City,Davao National High,7
+LRN-0680,Ana Aquino,04-18-05,M,Makati,Mabini Academy,12
+LRN-0681,Jose Lopez,07-19-06,M,Makati,Mabini Academy,17
+LRN-0682,Jose Santos,04-15-07,F,Cebu City,Cebu Central School,15
+LRN-0683,Pedro Wong,06-01-13,F,Quezon City,Davao National High,10
+LRN-0684,Lisa Villanueva,01-13-05,M,Cebu City,Davao National High,12
+LRN-0685,Pedro Mendoza,07-20-15,M,Taguig,Mabini Academy,7
+LRN-0686,Lisa Dela Cruz,10-04-06,M,Manila,Quezon Science High,5
+LRN-0687,Rosa Wong,10-27-15,M,Cebu City,Mabini Academy,17
+LRN-0688,Maria Mendoza,11-19-13,F,Davao City,Mabini Academy,8
+LRN-0689,Elena Mendoza,02-24-05,F,Manila,Quezon Science High,16
+LRN-0690,Antonio Mendoza,04-30-05,F,Davao City,Davao National High,11
+LRN-0691,Ana Santos,09-04-12,M,Makati,Rizal Elementary School,18
+LRN-0692,Elena Reyes,10-26-10,F,Pasig,Cebu Central School,12
+LRN-0693,Lisa Dela Cruz,04-25-14,F,Cebu City,Rizal Elementary School,11
+LRN-0694,Carlos Aquino,12-10-13,M,Makati,Quezon Science High,16
+LRN-0695,Carlos Bautista,09-30-09,F,Manila,Cebu Central School,9
+LRN-0696,Elena Aquino,04-15-10,M,Cebu City,Rizal Elementary School,17
+LRN-0697,Carlos Bautista,04-26-15,M,Quezon City,Rizal Elementary School,6
+LRN-0698,Ana Lopez,07-07-12,M,Quezon City,Rizal Elementary School,10
+LRN-0699,Carlos Bautista,01-28-13,M,Pasig,Mabini Academy,7
+LRN-0700,Lisa Aquino,07-01-13,F,Manila,Mabini Academy,14
+LRN-0701,Lisa Mendoza,05-08-05,M,Manila,Bonifacio High School,7
+LRN-0702,carlos santos,06-29-07,m,Davao City,Davao National High,15
+LRN-0703,jose aquino,10-13-06,m,Davao City,Cebu Central School,7
+LRN-0704,rosa aquino,07-25-09,f,Manila,Rizal Elementary School,12
+LRN-0705,Jose Dela Cruz,03-27-15,F,Makati,Mabini Academy,13
+LRN-0706,Carlos Lopez,12-23-06,F,Pasig,Quezon Science High,5
+LRN-0707,Rosa Reyes,07-09-11,M,Makati,Rizal Elementary School,7
+LRN-0708,Rosa Mendoza,04-24-13,M,Manila,Davao National High,12
+LRN-0709,juan wong,07-28-05,m,Quezon City,Cebu Central School,13
+LRN-0710,Juan Villanueva,08-18-12,M,Taguig,Cebu Central School,5
+LRN-0711,Lisa Dela Cruz,08-23-10,M,Manila,Davao National High,9
+LRN-0712,Pedro Garcia,12-12-13,F,Quezon City,Cebu Central School,15
+LRN-0713,Jose Mendoza,04-29-14,M,Taguig,Davao National High,7
+LRN-0714,elena aquino,12-08-06,Unknown,Manila,Cebu Central School,16
+LRN-0715,carlos santos,09-16-14,Unknown,Taguig,Mabini Academy,12
+LRN-0716,Rosa Dela Cruz,03-02-06,M,Pasig,Quezon Science High,7
+LRN-0717,Elena Mendoza,10-30-14,M,Manila,Mabini Academy,7
+LRN-0718,Lisa Dela Cruz,12-31-11,M,Makati,Quezon Science High,15
+LRN-0719,Pedro Garcia,02-09-15,M,Taguig,Davao National High,16
+LRN-0720,Elena Reyes,06-24-05,F,Pasig,Bonifacio High School,18
+LRN-0721,Maria Aquino,04-13-05,F,Taguig,Quezon Science High,18
+LRN-0722,Ana Dela Cruz,11-11-15,M,Pasig,Cebu Central School,17
+LRN-0723,Rosa Bautista,03-06-11,M,Davao City,Rizal Elementary School,13
+LRN-0724,Elena Wong,07-16-13,F,Davao City,Rizal Elementary School,9
+LRN-0725,Maria Villanueva,05-01-06,F,Quezon City,Davao National High,9
+LRN-0726,Jose Villanueva,05-23-12,F,Pasig,Rizal Elementary School,13
+LRN-0727,Carlos Garcia,11-04-15,M,Taguig,Mabini Academy,17
+LRN-0728,Jose Mendoza,02-22-11,F,Manila,Cebu Central School,17
+LRN-0729,Lisa Santos,09-13-12,M,Makati,Rizal Elementary School,16
+LRN-0730,Jose Wong,12-26-06,F,Quezon City,Mabini Academy,15
+LRN-0731,Pedro Reyes,05-21-09,M,Cebu City,Quezon Science High,8
+LRN-0732,Rosa Santos,10-01-07,F,Taguig,Davao National High,11
+LRN-0733,Juan Wong,06-09-06,F,Pasig,Cebu Central School,8
+LRN-0734,Lisa Santos,03-13-05,M,Cebu City,Cebu Central School,17
+LRN-0735,Lisa Santos,07-26-12,F,Quezon City,Cebu Central School,17
+LRN-0736,Carlos Garcia,08-08-14,M,Quezon City,Cebu Central School,12
 LRN-0737,  maria bautista  ,Invalid Date,f,Nowhere,Davao National High,9
-LRN-0738,Elena Lopez,2010-11-26,F,Makati,Davao National High,6
-LRN-0739,Maria Santos,2014-01-11,M,Makati,Rizal Elementary School,18
-LRN-0740,Jose Wong,2010-08-10,M,Pasig,Bonifacio High School,15
-LRN-0741,Carlos Garcia,2005-06-14,F,Pasig,Bonifacio High School,9
-LRN-0742,Ana Santos,2009-11-07,M,Cebu City,Cebu Central School,7
-LRN-0743,Elena Reyes,2007-11-02,F,Pasig,Cebu Central School,9
-LRN-0744,Pedro Santos,2008-04-21,F,Davao City,Bonifacio High School,14
-LRN-0745,Jose Mendoza,2013-07-29,F,Manila,Mabini Academy,13
-LRN-0746,Pedro Villanueva,2005-01-22,F,Quezon City,Bonifacio High School,6
-LRN-0747,Elena Mendoza,2012-08-31,F,Pasig,Rizal Elementary School,11
-LRN-0748,Lisa Reyes,2015-12-04,F,Makati,Rizal Elementary School,5
-LRN-0749,Juan Villanueva,2010-11-06,M,Manila,Rizal Elementary School,10
-LRN-0750,Maria Dela Cruz,2006-08-03,M,Pasig,Quezon Science High,11
-LRN-0751,Juan Wong,2009-11-21,F,Manila,Quezon Science High,18
-LRN-0752,Antonio Mendoza,2005-12-27,M,Manila,Rizal Elementary School,15
-LRN-0753,carlos bautista,20/05/2014,M,Taguig,Davao National High,11
-LRN-0754,Jose Aquino,2006-12-22,F,Davao City,Quezon Science High,12
-LRN-0755,Lisa Wong,2007-05-19,M,Taguig,Quezon Science High,5
-LRN-0756,Juan Bautista,2005-03-13,F,Cebu City,Bonifacio High School,12
-LRN-0757,maria wong,12/01/2012,M,Manila,Cebu Central School,14
-LRN-0758,Jose Villanueva,2011-07-30,M,Makati,Davao National High,11
-LRN-0759,Rosa Dela Cruz,2014-08-23,F,Davao City,Bonifacio High School,14
-LRN-0760,Pedro Wong,2007-03-04,M,Davao City,Cebu Central School,12
-LRN-0761,Jose Lopez,2012-08-10,F,Taguig,Davao National High,10
-LRN-0762,Lisa Wong,2009-07-14,M,Makati,Bonifacio High School,13
-LRN-0763,Pedro Garcia,2007-09-17,M,Davao City,Davao National High,6
-LRN-0764,Antonio Santos,2010-07-27,M,Quezon City,Quezon Science High,11
-LRN-0765,Pedro Wong,2013-06-19,M,Quezon City,Davao National High,8
-LRN-0766,Juan Reyes,2008-06-27,M,Cebu City,Davao National High,8
-LRN-0767,Carlos Reyes,2005-07-19,F,Pasig,Bonifacio High School,7
-LRN-0768,Carlos Mendoza,2009-09-06,M,Davao City,Rizal Elementary School,14
-LRN-0769,Elena Garcia,2008-01-11,F,Manila,Cebu Central School,6
-LRN-0770,Carlos Santos,2005-01-18,M,Manila,Bonifacio High School,9
-LRN-0771,Lisa Santos,2008-10-27,F,Taguig,Rizal Elementary School,17
-LRN-0772,antonio dela cruz,22/12/2007,m,Taguig,Quezon Science High,7
+LRN-0738,Elena Lopez,11-26-10,F,Makati,Davao National High,6
+LRN-0739,Maria Santos,01-11-14,M,Makati,Rizal Elementary School,18
+LRN-0740,Jose Wong,08-10-10,M,Pasig,Bonifacio High School,15
+LRN-0741,Carlos Garcia,06-14-05,F,Pasig,Bonifacio High School,9
+LRN-0742,Ana Santos,11-07-09,M,Cebu City,Cebu Central School,7
+LRN-0743,Elena Reyes,11-02-07,F,Pasig,Cebu Central School,9
+LRN-0744,Pedro Santos,04-21-08,F,Davao City,Bonifacio High School,14
+LRN-0745,Jose Mendoza,07-29-13,F,Manila,Mabini Academy,13
+LRN-0746,Pedro Villanueva,01-22-05,F,Quezon City,Bonifacio High School,6
+LRN-0747,Elena Mendoza,08-31-12,F,Pasig,Rizal Elementary School,11
+LRN-0748,Lisa Reyes,12-04-15,F,Makati,Rizal Elementary School,5
+LRN-0749,Juan Villanueva,11-06-10,M,Manila,Rizal Elementary School,10
+LRN-0750,Maria Dela Cruz,08-03-06,M,Pasig,Quezon Science High,11
+LRN-0751,Juan Wong,11-21-09,F,Manila,Quezon Science High,18
+LRN-0752,Antonio Mendoza,12-27-05,M,Manila,Rizal Elementary School,15
+LRN-0753,carlos bautista,05-20-14,M,Taguig,Davao National High,11
+LRN-0754,Jose Aquino,12-22-06,F,Davao City,Quezon Science High,12
+LRN-0755,Lisa Wong,05-19-07,M,Taguig,Quezon Science High,5
+LRN-0756,Juan Bautista,03-13-05,F,Cebu City,Bonifacio High School,12
+LRN-0757,maria wong,12-01-12,M,Manila,Cebu Central School,14
+LRN-0758,Jose Villanueva,07-30-11,M,Makati,Davao National High,11
+LRN-0759,Rosa Dela Cruz,08-23-14,F,Davao City,Bonifacio High School,14
+LRN-0760,Pedro Wong,03-04-07,M,Davao City,Cebu Central School,12
+LRN-0761,Jose Lopez,08-10-12,F,Taguig,Davao National High,10
+LRN-0762,Lisa Wong,07-14-09,M,Makati,Bonifacio High School,13
+LRN-0763,Pedro Garcia,09-17-07,M,Davao City,Davao National High,6
+LRN-0764,Antonio Santos,07-27-10,M,Quezon City,Quezon Science High,11
+LRN-0765,Pedro Wong,06-19-13,M,Quezon City,Davao National High,8
+LRN-0766,Juan Reyes,06-27-08,M,Cebu City,Davao National High,8
+LRN-0767,Carlos Reyes,07-19-05,F,Pasig,Bonifacio High School,7
+LRN-0768,Carlos Mendoza,09-06-09,M,Davao City,Rizal Elementary School,14
+LRN-0769,Elena Garcia,01-11-08,F,Manila,Cebu Central School,6
+LRN-0770,Carlos Santos,01-18-05,M,Manila,Bonifacio High School,9
+LRN-0771,Lisa Santos,10-27-08,F,Taguig,Rizal Elementary School,17
+LRN-0772,antonio dela cruz,12-22-07,m,Taguig,Quezon Science High,7
 LRN-0773,  maria aquino  ,Invalid Date,X,Nowhere,Davao National High,16
-LRN-0774,antonio reyes,13/12/2014,F,Makati,Bonifacio High School,9
-LRN-0578,Elena Villanueva,2012-07-24,F,Taguig,Bonifacio High School,14
-LRN-0776,Rosa Dela Cruz,2006-12-21,M,Manila,Bonifacio High School,14
-LRN-0777,Jose Dela Cruz,2007-07-30,F,Cebu City,Mabini Academy,7
-LRN-0778,Carlos Dela Cruz,2006-10-05,M,Quezon City,Cebu Central School,7
-LRN-0779,Carlos Aquino,2005-12-20,F,Pasig,Mabini Academy,17
-LRN-0780,Maria Bautista,2013-06-05,F,Quezon City,Cebu Central School,8
-LRN-0781,Elena Lopez,2012-10-20,F,Davao City,Cebu Central School,13
-LRN-0782,Carlos Aquino,2005-09-29,F,Manila,Bonifacio High School,11
-LRN-0783,Pedro Villanueva,2006-02-22,F,Taguig,Bonifacio High School,5
-LRN-0784,Juan Bautista,2014-08-20,M,Cebu City,Cebu Central School,11
-LRN-0785,Elena Dela Cruz,2014-01-15,M,Cebu City,Rizal Elementary School,17
-LRN-0786,Juan Dela Cruz,2013-08-07,F,Quezon City,Quezon Science High,17
-LRN-0787,Lisa Dela Cruz,2015-05-09,F,Manila,Cebu Central School,12
-LRN-0649,Pedro Lopez,2014-12-22,F,Taguig,Bonifacio High School,5
-LRN-0789,Carlos Wong,2013-01-12,M,Quezon City,Davao National High,18
-LRN-0790,Jose Villanueva,2008-02-10,M,Davao City,Cebu Central School,9
-LRN-0791,Juan Lopez,2010-05-06,M,Taguig,Cebu Central School,6
-LRN-0792,Maria Wong,2009-08-07,M,Manila,Cebu Central School,16
-LRN-0793,Carlos Lopez,2010-10-31,F,Davao City,Cebu Central School,11
-LRN-0794,Ana Lopez,2006-07-21,M,Davao City,Cebu Central School,8
-LRN-0795,Rosa Wong,2008-09-26,M,Pasig,Rizal Elementary School,14
-LRN-0796,Antonio Garcia,2013-11-04,F,Makati,Rizal Elementary School,13
-LRN-0797,Maria Bautista,2006-03-28,F,Cebu City,Cebu Central School,17
-LRN-0798,Ana Villanueva,2015-10-07,F,Makati,Cebu Central School,5
-LRN-0799,lisa wong,10/09/2005,X,Makati,Cebu Central School,5
-LRN-0800,Ana Lopez,2009-10-12,F,Manila,Mabini Academy,8
-LRN-0801,Ana Reyes,2013-12-14,F,Manila,Bonifacio High School,9
-LRN-0802,Carlos Bautista,2012-01-21,M,Taguig,Cebu Central School,10
-LRN-0803,Antonio Mendoza,2010-05-28,M,Manila,Davao National High,12
-LRN-0804,Antonio Wong,2007-08-20,F,Quezon City,Bonifacio High School,10
-LRN-0805,Juan Reyes,2013-07-11,M,Quezon City,Rizal Elementary School,16
-LRN-0806,Carlos Dela Cruz,2011-04-30,M,Davao City,Mabini Academy,11
-LRN-0807,Pedro Villanueva,2006-10-23,M,Quezon City,Mabini Academy,18
-LRN-0808,Carlos Dela Cruz,2015-07-17,M,Cebu City,Mabini Academy,15
-LRN-0809,Maria Reyes,2012-03-20,M,Quezon City,Quezon Science High,11
-LRN-0810,Lisa Villanueva,2015-05-01,M,Manila,Mabini Academy,15
-LRN-0811,Pedro Wong,2005-05-20,F,Cebu City,Quezon Science High,18
-LRN-0812,Pedro Bautista,2009-06-23,F,Manila,Cebu Central School,15
-LRN-0813,Ana Santos,2005-05-21,F,Cebu City,Quezon Science High,18
-LRN-0814,Rosa Aquino,2010-03-12,F,Makati,Bonifacio High School,5
-LRN-0815,Jose Lopez,2012-06-09,M,Makati,Quezon Science High,8
-LRN-0816,Ana Mendoza,2013-11-12,F,Quezon City,Quezon Science High,18
-LRN-0817,Ana Aquino,2010-01-17,F,Quezon City,Quezon Science High,7
-LRN-0818,Maria Aquino,2013-11-15,F,Davao City,Mabini Academy,14
-LRN-0819,Carlos Garcia,2015-09-25,M,Cebu City,Davao National High,6
-LRN-0820,Carlos Lopez,2008-05-30,F,Quezon City,Davao National High,6
-LRN-0821,Pedro Bautista,2006-11-08,F,Manila,Davao National High,17
-LRN-0822,Elena Dela Cruz,2015-12-13,F,Quezon City,Rizal Elementary School,12
-LRN-0823,Ana Dela Cruz,2006-02-04,F,Quezon City,Davao National High,7
-LRN-0824,Pedro Aquino,2015-02-13,M,Manila,Quezon Science High,10
-LRN-0825,lisa reyes,16/02/2011,X,Manila,Rizal Elementary School,7
-LRN-0826,Pedro Bautista,2015-01-22,F,Quezon City,Mabini Academy,12
-LRN-0827,Pedro Dela Cruz,2013-08-02,M,Manila,Rizal Elementary School,14
-LRN-0828,lisa bautista,22/07/2007,M,Pasig,Cebu Central School,12
-LRN-0829,Elena Reyes,2007-12-31,M,Manila,Rizal Elementary School,15
-LRN-0830,Juan Bautista,2007-03-13,F,Quezon City,Mabini Academy,5
-LRN-0831,Elena Mendoza,2008-07-07,M,Manila,Bonifacio High School,16
-LRN-0832,maria garcia,09/04/2009,f,Taguig,Cebu Central School,9
-LRN-0833,Carlos Bautista,2008-07-16,F,Makati,Bonifacio High School,15
-LRN-0834,Jose Aquino,2011-04-15,M,Quezon City,Bonifacio High School,9
-LRN-0835,Lisa Lopez,2007-03-07,M,Quezon City,Rizal Elementary School,10
-LRN-0836,pedro garcia,19/12/2015,m,Cebu City,Davao National High,15
-LRN-0837,Maria Bautista,2015-06-12,M,Quezon City,Cebu Central School,11
-LRN-0838,Elena Reyes,2013-09-18,F,Taguig,Quezon Science High,12
-LRN-0839,Ana Garcia,2015-09-11,F,Quezon City,Quezon Science High,17
-LRN-0840,Elena Garcia,2007-07-06,F,Manila,Cebu Central School,16
-LRN-0841,Carlos Mendoza,2015-11-09,M,Davao City,Rizal Elementary School,6
-LRN-0842,Pedro Wong,2011-01-09,M,Makati,Davao National High,16
-LRN-0843,Ana Wong,2006-07-20,M,Pasig,Davao National High,5
-LRN-0844,Elena Dela Cruz,2009-05-24,F,Pasig,Quezon Science High,11
-LRN-0845,Ana Aquino,2013-08-31,M,Makati,Rizal Elementary School,17
-LRN-0846,Maria Bautista,2013-05-11,M,Quezon City,Davao National High,7
-LRN-0847,Lisa Wong,2010-12-19,M,Makati,Cebu Central School,14
-LRN-0848,Antonio Reyes,2012-08-24,F,Cebu City,Bonifacio High School,7
-LRN-0849,Elena Garcia,2012-03-06,F,Pasig,Mabini Academy,10
-LRN-0850,Rosa Garcia,2008-06-02,F,Davao City,Bonifacio High School,17
-LRN-0851,Carlos Lopez,2006-03-03,F,Davao City,Quezon Science High,5
-LRN-0852,Pedro Santos,2013-10-12,M,Manila,Mabini Academy,9
-LRN-0853,Carlos Santos,2013-01-12,M,Taguig,Davao National High,7
-LRN-0854,Ana Bautista,2010-03-03,F,Manila,Rizal Elementary School,6
-LRN-0855,Carlos Aquino,2011-10-23,M,Makati,Cebu Central School,14
-LRN-0856,Ana Garcia,2009-12-16,F,Pasig,Quezon Science High,16
-LRN-0857,Juan Reyes,2006-06-18,F,Makati,Bonifacio High School,16
-LRN-0858,Lisa Bautista,2014-07-11,F,Pasig,Davao National High,18
-LRN-0286,Maria Mendoza,2005-03-15,F,Pasig,Davao National High,10
-LRN-0860,Antonio Bautista,2012-04-24,M,Pasig,Cebu Central School,18
-LRN-0861,Jose Dela Cruz,2007-09-21,F,Cebu City,Davao National High,17
-LRN-0862,Maria Aquino,2006-10-02,F,Manila,Bonifacio High School,9
-LRN-0863,juan wong,26/11/2010,m,Quezon City,Cebu Central School,17
-LRN-0864,pedro dela cruz,17/05/2013,m,Manila,Mabini Academy,5
-LRN-0865,Carlos Mendoza,2013-08-14,F,Manila,Mabini Academy,13
-LRN-0866,Ana Lopez,2010-07-29,F,Pasig,Davao National High,5
-LRN-0867,Maria Aquino,2010-03-05,F,Cebu City,Rizal Elementary School,6
-LRN-0868,Maria Bautista,2014-10-14,M,Quezon City,Quezon Science High,6
-LRN-0869,Elena Santos,2007-07-19,M,Quezon City,Davao National High,17
-LRN-0870,Antonio Garcia,2006-08-14,F,Makati,Quezon Science High,18
-LRN-0871,Antonio Garcia,2013-07-04,F,Quezon City,Quezon Science High,10
-LRN-0872,Ana Reyes,2014-10-08,M,Makati,Rizal Elementary School,7
-LRN-0873,Elena Bautista,2010-08-15,F,Manila,Mabini Academy,6
-LRN-0874,Elena Aquino,2007-12-12,F,Cebu City,Bonifacio High School,13
-LRN-0875,Carlos Mendoza,2006-03-29,M,Makati,Mabini Academy,16
-LRN-0876,Elena Aquino,2015-10-25,F,Taguig,Davao National High,17
-LRN-0877,Jose Wong,2009-02-13,M,Taguig,Quezon Science High,6
-LRN-0878,Carlos Mendoza,2012-01-14,M,Manila,Rizal Elementary School,5
-LRN-0879,Carlos Villanueva,2012-05-24,M,Pasig,Cebu Central School,15
-LRN-0880,Elena Reyes,2006-09-15,F,Pasig,Bonifacio High School,11
-LRN-0881,Ana Lopez,2015-10-16,F,Makati,Mabini Academy,14
-LRN-0882,Carlos Aquino,2010-12-11,F,Cebu City,Bonifacio High School,17
-LRN-0883,Carlos Aquino,2013-12-16,M,Pasig,Bonifacio High School,12
-LRN-0884,Pedro Villanueva,2006-07-21,F,Cebu City,Rizal Elementary School,15
-LRN-0885,Lisa Dela Cruz,2010-03-25,M,Cebu City,Rizal Elementary School,13
-LRN-0886,Maria Wong,2009-09-03,M,Manila,Cebu Central School,14
-LRN-0887,Lisa Garcia,2011-11-23,M,Taguig,Rizal Elementary School,7
-LRN-0888,Juan Santos,2015-02-09,F,Manila,Rizal Elementary School,7
-LRN-0889,Antonio Villanueva,2015-12-14,M,Davao City,Bonifacio High School,9
-LRN-0890,Ana Santos,2012-05-24,M,Quezon City,Mabini Academy,12
-LRN-0891,antonio reyes,22/10/2009,M,Quezon City,Mabini Academy,18
-LRN-0892,Elena Mendoza,2009-08-11,M,Quezon City,Cebu Central School,10
-LRN-0893,Jose Garcia,2015-08-22,F,Pasig,Quezon Science High,5
-LRN-0894,Lisa Villanueva,2007-08-17,M,Davao City,Mabini Academy,10
-LRN-0895,Rosa Mendoza,2006-08-25,F,Pasig,Rizal Elementary School,7
-LRN-0896,Juan Reyes,2013-12-19,F,Pasig,Bonifacio High School,10
-LRN-0897,Rosa Villanueva,2013-07-17,F,Pasig,Cebu Central School,12
-LRN-0898,Ana Santos,2012-11-24,M,Makati,Cebu Central School,12
-LRN-0899,Juan Aquino,2006-02-25,F,Cebu City,Quezon Science High,13
-LRN-0900,Rosa Bautista,2013-10-25,F,Taguig,Bonifacio High School,11
-LRN-0901,Juan Lopez,2013-05-12,F,Makati,Rizal Elementary School,6
-LRN-0902,Juan Santos,2007-12-01,F,Taguig,Quezon Science High,16
-LRN-0903,Juan Santos,2012-09-19,M,Manila,Davao National High,13
-LRN-0904,Jose Villanueva,2006-02-16,M,Quezon City,Mabini Academy,7
-LRN-0905,Maria Reyes,2006-12-21,M,Davao City,Bonifacio High School,5
-LRN-0906,Elena Villanueva,2006-10-07,M,Pasig,Mabini Academy,9
-LRN-0907,Rosa Garcia,2006-01-11,F,Taguig,Davao National High,14
-LRN-0908,Carlos Garcia,2009-10-14,M,Cebu City,Quezon Science High,9
-LRN-0909,Jose Wong,2014-04-27,M,Davao City,Rizal Elementary School,9
-LRN-0910,Carlos Villanueva,2006-01-19,F,Makati,Cebu Central School,7
-LRN-0911,Juan Mendoza,2012-09-20,F,Makati,Davao National High,9
-LRN-0912,Ana Villanueva,2010-12-18,F,Manila,Davao National High,9
-LRN-0913,Lisa Villanueva,2007-09-27,F,Davao City,Mabini Academy,6
-LRN-0914,elena dela cruz,25/06/2013,m,Cebu City,Bonifacio High School,14
-LRN-0915,Antonio Dela Cruz,2010-03-12,F,Cebu City,Mabini Academy,15
-LRN-0916,Jose Lopez,2010-12-13,F,Cebu City,Davao National High,11
-LRN-0917,Antonio Mendoza,2011-12-15,M,Pasig,Quezon Science High,6
-LRN-0918,Lisa Santos,2012-08-09,M,Quezon City,Mabini Academy,18
-LRN-0919,Antonio Villanueva,2015-06-23,F,Makati,Bonifacio High School,8
-LRN-0920,Jose Villanueva,2014-03-20,M,Davao City,Davao National High,5
-LRN-0921,Lisa Lopez,2006-02-24,M,Taguig,Bonifacio High School,12
-LRN-0922,Maria Mendoza,2011-04-13,M,Manila,Rizal Elementary School,16
-LRN-0923,Ana Lopez,2013-10-09,F,Davao City,Mabini Academy,10
-LRN-0924,Jose Wong,2006-07-18,F,Cebu City,Cebu Central School,7
-LRN-0925,Juan Villanueva,2011-07-02,F,Manila,Davao National High,12
-LRN-0926,Antonio Santos,2006-11-16,F,Makati,Quezon Science High,18
-LRN-0927,Jose Dela Cruz,2015-09-10,F,Manila,Mabini Academy,13
-LRN-0928,Pedro Garcia,2011-09-09,M,Makati,Mabini Academy,15
-LRN-0929,Pedro Wong,2008-07-25,F,Quezon City,Bonifacio High School,10
-LRN-0930,Jose Villanueva,2015-11-14,M,Manila,Cebu Central School,11
-LRN-0931,Elena Lopez,2011-08-14,F,Taguig,Rizal Elementary School,9
-LRN-0932,Jose Wong,2010-09-02,M,Taguig,Cebu Central School,6
-LRN-0933,Jose Garcia,2012-02-13,F,Davao City,Rizal Elementary School,18
-LRN-0934,Lisa Mendoza,2013-08-19,M,Makati,Rizal Elementary School,8
-LRN-0935,Maria Dela Cruz,2009-02-01,F,Davao City,Cebu Central School,12
-LRN-0936,Lisa Villanueva,2015-07-11,M,Makati,Bonifacio High School,18
-LRN-0937,Maria Santos,2015-01-26,F,Makati,Bonifacio High School,13
-LRN-0938,Juan Villanueva,2015-12-07,M,Pasig,Quezon Science High,13
-LRN-0939,Rosa Bautista,2009-09-29,M,Manila,Quezon Science High,14
-LRN-0940,Elena Garcia,2012-04-27,M,Cebu City,Rizal Elementary School,8
-LRN-0941,Antonio Dela Cruz,2015-04-03,F,Taguig,Quezon Science High,7
-LRN-0942,Lisa Reyes,2009-01-27,F,Davao City,Mabini Academy,13
-LRN-0943,Juan Lopez,2007-09-16,M,Pasig,Davao National High,6
-LRN-0944,Rosa Dela Cruz,2010-11-29,M,Quezon City,Davao National High,13
-LRN-0945,Maria Aquino,2006-06-20,F,Manila,Cebu Central School,16
-LRN-0946,Carlos Bautista,2014-12-12,F,Makati,Quezon Science High,10
-LRN-0197,maria villanueva,21/11/2011,F,Pasig,Rizal Elementary School,10
-LRN-0948,Maria Reyes,2012-08-17,M,Makati,Mabini Academy,14
-LRN-0949,Ana Wong,2014-04-09,F,Cebu City,Bonifacio High School,8
-LRN-0950,rosa mendoza,28/04/2015,Unknown,Manila,Davao National High,18
-LRN-0951,Antonio Garcia,2007-12-02,M,Taguig,Quezon Science High,17
-LRN-0952,Rosa Garcia,2015-10-24,M,Makati,Mabini Academy,14
-LRN-0953,Juan Wong,2008-05-28,M,Davao City,Quezon Science High,13
-LRN-0954,Jose Mendoza,2012-02-04,F,Quezon City,Quezon Science High,14
-LRN-0955,Maria Lopez,2013-07-16,F,Makati,Davao National High,14
-LRN-0956,Lisa Wong,2008-02-03,F,Taguig,Quezon Science High,15
-LRN-0957,Antonio Villanueva,2006-07-09,M,Davao City,Mabini Academy,8
-LRN-0958,Ana Mendoza,2014-10-30,M,Quezon City,Quezon Science High,18
-LRN-0959,Antonio Villanueva,2015-02-27,F,Makati,Rizal Elementary School,5
-LRN-0960,Maria Wong,2005-10-15,F,Cebu City,Bonifacio High School,9
-LRN-0961,Antonio Mendoza,2013-06-11,F,Cebu City,Quezon Science High,8
-LRN-0962,Maria Mendoza,2007-06-17,F,Pasig,Davao National High,9
-LRN-0963,Lisa Mendoza,2006-12-08,F,Makati,Mabini Academy,14
-LRN-0964,Ana Aquino,2007-01-27,M,Pasig,Mabini Academy,6
-LRN-0965,Ana Reyes,2014-05-08,M,Taguig,Mabini Academy,17
-LRN-0966,Maria Aquino,2010-03-04,F,Pasig,Davao National High,16
-LRN-0967,Antonio Mendoza,2007-08-23,F,Quezon City,Bonifacio High School,8
-LRN-0968,Pedro Santos,2008-06-16,M,Davao City,Davao National High,16
-LRN-0969,Jose Lopez,2005-04-02,F,Pasig,Quezon Science High,9
-LRN-0970,Pedro Garcia,2006-05-21,F,Davao City,Davao National High,10
-LRN-0971,Ana Villanueva,2010-12-18,F,Pasig,Mabini Academy,14
-LRN-0972,Carlos Bautista,2015-09-01,M,Taguig,Bonifacio High School,16
-LRN-0973,Elena Villanueva,2011-04-25,M,Pasig,Bonifacio High School,11
-LRN-0974,Maria Bautista,2006-11-21,M,Makati,Bonifacio High School,5
-LRN-0975,Maria Mendoza,2014-12-08,M,Pasig,Bonifacio High School,5
-LRN-0976,Juan Villanueva,2010-09-19,M,Davao City,Rizal Elementary School,8
-LRN-0977,Juan Bautista,2014-11-27,F,Davao City,Cebu Central School,10
-LRN-0978,Elena Garcia,2006-09-14,F,Pasig,Mabini Academy,16
-LRN-0979,Elena Dela Cruz,2012-01-10,M,Manila,Cebu Central School,12
-LRN-0980,Antonio Aquino,2006-01-04,M,Taguig,Davao National High,10
-LRN-0981,Juan Villanueva,2013-08-09,F,Quezon City,Bonifacio High School,12
-LRN-0982,carlos villanueva,20/06/2014,Unknown,Pasig,Quezon Science High,7
-LRN-0983,Juan Aquino,2006-03-08,M,Quezon City,Rizal Elementary School,5
-LRN-0984,Rosa Villanueva,2011-08-23,F,Manila,Quezon Science High,13
-LRN-0985,Pedro Wong,2006-11-12,M,Manila,Quezon Science High,12
-LRN-0986,Lisa Bautista,2009-02-15,M,Davao City,Mabini Academy,12
-LRN-0987,Rosa Garcia,2009-01-31,F,Makati,Mabini Academy,5
-LRN-0988,Elena Garcia,2014-12-07,M,Manila,Cebu Central School,12
-LRN-0449,Lisa Garcia,2011-07-29,M,Makati,Quezon Science High,5
-LRN-0990,Elena Lopez,2007-01-22,M,Makati,Quezon Science High,10
-LRN-0991,Juan Mendoza,2009-04-13,F,Pasig,Quezon Science High,16
-LRN-0992,Antonio Dela Cruz,2005-06-20,M,Taguig,Davao National High,16
-LRN-0993,Ana Reyes,2013-03-09,M,Pasig,Mabini Academy,5
-LRN-0994,Rosa Santos,2006-06-28,M,Davao City,Bonifacio High School,17
-LRN-0995,Rosa Wong,2015-12-10,F,Cebu City,Davao National High,9
-LRN-0996,lisa garcia,21/12/2008,M,Taguig,Davao National High,5
-LRN-0997,Elena Mendoza,2009-12-05,M,Davao City,Mabini Academy,7
-LRN-0998,Juan Aquino,2008-04-24,F,Taguig,Davao National High,9
-LRN-0999,carlos dela cruz,18/02/2007,Unknown,Cebu City,Davao National High,13
-LRN-1000,Elena Garcia,2010-08-07,F,Quezon City,Davao National High,7
-LRN-1001,Antonio Santos,2009-12-14,M,Cebu City,Mabini Academy,13
-LRN-1002,Juan Aquino,2007-04-13,M,Makati,Rizal Elementary School,10
-LRN-1003,Carlos Villanueva,2015-02-12,F,Makati,Cebu Central School,12
-LRN-1004,Pedro Villanueva,2005-06-26,M,Makati,Bonifacio High School,10
-LRN-1005,Rosa Santos,2015-04-08,M,Makati,Rizal Elementary School,12
-LRN-1006,Antonio Reyes,2009-02-18,F,Cebu City,Cebu Central School,18
-LRN-1007,Carlos Dela Cruz,2010-05-20,F,Manila,Bonifacio High School,5
-LRN-1008,Maria Garcia,2007-01-16,M,Manila,Bonifacio High School,6
-LRN-1009,rosa bautista,17/10/2013,M,Quezon City,Cebu Central School,9
-LRN-1010,maria mendoza,20/01/2007,X,Pasig,Bonifacio High School,10
-LRN-1011,Lisa Reyes,2011-07-10,M,Davao City,Bonifacio High School,18
-LRN-1012,Antonio Villanueva,2010-07-21,F,Quezon City,Cebu Central School,10
-LRN-1013,Lisa Aquino,2005-10-12,M,Pasig,Bonifacio High School,5
-LRN-1014,maria mendoza,23/06/2006,X,Taguig,Cebu Central School,11
-LRN-1015,Carlos Dela Cruz,2011-05-18,M,Cebu City,Mabini Academy,10
-LRN-1016,Maria Lopez,2010-05-14,F,Cebu City,Mabini Academy,7
-LRN-1017,Elena Aquino,2006-01-02,M,Makati,Rizal Elementary School,15
-LRN-1018,Lisa Bautista,2013-07-29,M,Taguig,Bonifacio High School,12
-LRN-1019,Elena Villanueva,2013-04-12,F,Makati,Davao National High,16
-LRN-1020,Pedro Wong,2007-06-01,F,Quezon City,Rizal Elementary School,5
-LRN-1021,Maria Reyes,2015-11-21,M,Pasig,Cebu Central School,7
-LRN-1022,Maria Wong,2007-03-17,M,Makati,Davao National High,8
-LRN-1023,Elena Dela Cruz,2005-04-30,F,Cebu City,Quezon Science High,11
-LRN-1024,Carlos Santos,2015-08-19,M,Davao City,Mabini Academy,12
-LRN-1025,Jose Bautista,2005-10-02,F,Manila,Mabini Academy,6
-LRN-1026,Elena Santos,2009-07-14,M,Makati,Quezon Science High,9
-LRN-1027,Juan Dela Cruz,2005-07-23,M,Makati,Davao National High,14
-LRN-1028,juan lopez,11/02/2014,f,Taguig,Cebu Central School,17
-LRN-1029,Elena Mendoza,2015-05-02,M,Manila,Davao National High,10
-LRN-1030,Elena Garcia,2008-04-11,M,Cebu City,Bonifacio High School,13
-LRN-1031,Jose Wong,2008-10-26,M,Quezon City,Cebu Central School,14
-LRN-1032,Rosa Bautista,2012-02-28,M,Pasig,Mabini Academy,8
-LRN-1033,Maria Reyes,2014-07-28,M,Makati,Bonifacio High School,9
+LRN-0774,antonio reyes,12-13-14,F,Makati,Bonifacio High School,9
+LRN-0578,Elena Villanueva,07-24-12,F,Taguig,Bonifacio High School,14
+LRN-0776,Rosa Dela Cruz,12-21-06,M,Manila,Bonifacio High School,14
+LRN-0777,Jose Dela Cruz,07-30-07,F,Cebu City,Mabini Academy,7
+LRN-0778,Carlos Dela Cruz,10-05-06,M,Quezon City,Cebu Central School,7
+LRN-0779,Carlos Aquino,12-20-05,F,Pasig,Mabini Academy,17
+LRN-0780,Maria Bautista,06-05-13,F,Quezon City,Cebu Central School,8
+LRN-0781,Elena Lopez,10-20-12,F,Davao City,Cebu Central School,13
+LRN-0782,Carlos Aquino,09-29-05,F,Manila,Bonifacio High School,11
+LRN-0783,Pedro Villanueva,02-22-06,F,Taguig,Bonifacio High School,5
+LRN-0784,Juan Bautista,08-20-14,M,Cebu City,Cebu Central School,11
+LRN-0785,Elena Dela Cruz,01-15-14,M,Cebu City,Rizal Elementary School,17
+LRN-0786,Juan Dela Cruz,08-07-13,F,Quezon City,Quezon Science High,17
+LRN-0787,Lisa Dela Cruz,05-09-15,F,Manila,Cebu Central School,12
+LRN-0649,Pedro Lopez,12-22-14,F,Taguig,Bonifacio High School,5
+LRN-0789,Carlos Wong,01-12-13,M,Quezon City,Davao National High,18
+LRN-0790,Jose Villanueva,02-10-08,M,Davao City,Cebu Central School,9
+LRN-0791,Juan Lopez,05-06-10,M,Taguig,Cebu Central School,6
+LRN-0792,Maria Wong,08-07-09,M,Manila,Cebu Central School,16
+LRN-0793,Carlos Lopez,10-31-10,F,Davao City,Cebu Central School,11
+LRN-0794,Ana Lopez,07-21-06,M,Davao City,Cebu Central School,8
+LRN-0795,Rosa Wong,09-26-08,M,Pasig,Rizal Elementary School,14
+LRN-0796,Antonio Garcia,11-04-13,F,Makati,Rizal Elementary School,13
+LRN-0797,Maria Bautista,03-28-06,F,Cebu City,Cebu Central School,17
+LRN-0798,Ana Villanueva,10-07-15,F,Makati,Cebu Central School,5
+LRN-0799,lisa wong,10-09-05,X,Makati,Cebu Central School,5
+LRN-0800,Ana Lopez,10-12-09,F,Manila,Mabini Academy,8
+LRN-0801,Ana Reyes,12-14-13,F,Manila,Bonifacio High School,9
+LRN-0802,Carlos Bautista,01-21-12,M,Taguig,Cebu Central School,10
+LRN-0803,Antonio Mendoza,05-28-10,M,Manila,Davao National High,12
+LRN-0804,Antonio Wong,08-20-07,F,Quezon City,Bonifacio High School,10
+LRN-0805,Juan Reyes,07-11-13,M,Quezon City,Rizal Elementary School,16
+LRN-0806,Carlos Dela Cruz,04-30-11,M,Davao City,Mabini Academy,11
+LRN-0807,Pedro Villanueva,10-23-06,M,Quezon City,Mabini Academy,18
+LRN-0808,Carlos Dela Cruz,07-17-15,M,Cebu City,Mabini Academy,15
+LRN-0809,Maria Reyes,03-20-12,M,Quezon City,Quezon Science High,11
+LRN-0810,Lisa Villanueva,05-01-15,M,Manila,Mabini Academy,15
+LRN-0811,Pedro Wong,05-20-05,F,Cebu City,Quezon Science High,18
+LRN-0812,Pedro Bautista,06-23-09,F,Manila,Cebu Central School,15
+LRN-0813,Ana Santos,05-21-05,F,Cebu City,Quezon Science High,18
+LRN-0814,Rosa Aquino,03-12-10,F,Makati,Bonifacio High School,5
+LRN-0815,Jose Lopez,06-09-12,M,Makati,Quezon Science High,8
+LRN-0816,Ana Mendoza,11-12-13,F,Quezon City,Quezon Science High,18
+LRN-0817,Ana Aquino,01-17-10,F,Quezon City,Quezon Science High,7
+LRN-0818,Maria Aquino,11-15-13,F,Davao City,Mabini Academy,14
+LRN-0819,Carlos Garcia,09-25-15,M,Cebu City,Davao National High,6
+LRN-0820,Carlos Lopez,05-30-08,F,Quezon City,Davao National High,6
+LRN-0821,Pedro Bautista,11-08-06,F,Manila,Davao National High,17
+LRN-0822,Elena Dela Cruz,12-13-15,F,Quezon City,Rizal Elementary School,12
+LRN-0823,Ana Dela Cruz,02-04-06,F,Quezon City,Davao National High,7
+LRN-0824,Pedro Aquino,02-13-15,M,Manila,Quezon Science High,10
+LRN-0825,lisa reyes,02-16-11,X,Manila,Rizal Elementary School,7
+LRN-0826,Pedro Bautista,01-22-15,F,Quezon City,Mabini Academy,12
+LRN-0827,Pedro Dela Cruz,08-02-13,M,Manila,Rizal Elementary School,14
+LRN-0828,lisa bautista,07-22-07,M,Pasig,Cebu Central School,12
+LRN-0829,Elena Reyes,12-31-07,M,Manila,Rizal Elementary School,15
+LRN-0830,Juan Bautista,03-13-07,F,Quezon City,Mabini Academy,5
+LRN-0831,Elena Mendoza,07-07-08,M,Manila,Bonifacio High School,16
+LRN-0832,maria garcia,09-04-09,f,Taguig,Cebu Central School,9
+LRN-0833,Carlos Bautista,07-16-08,F,Makati,Bonifacio High School,15
+LRN-0834,Jose Aquino,04-15-11,M,Quezon City,Bonifacio High School,9
+LRN-0835,Lisa Lopez,03-07-07,M,Quezon City,Rizal Elementary School,10
+LRN-0836,pedro garcia,12-19-15,m,Cebu City,Davao National High,15
+LRN-0837,Maria Bautista,06-12-15,M,Quezon City,Cebu Central School,11
+LRN-0838,Elena Reyes,09-18-13,F,Taguig,Quezon Science High,12
+LRN-0839,Ana Garcia,09-11-15,F,Quezon City,Quezon Science High,17
+LRN-0840,Elena Garcia,07-06-07,F,Manila,Cebu Central School,16
+LRN-0841,Carlos Mendoza,11-09-15,M,Davao City,Rizal Elementary School,6
+LRN-0842,Pedro Wong,01-09-11,M,Makati,Davao National High,16
+LRN-0843,Ana Wong,07-20-06,M,Pasig,Davao National High,5
+LRN-0844,Elena Dela Cruz,05-24-09,F,Pasig,Quezon Science High,11
+LRN-0845,Ana Aquino,08-31-13,M,Makati,Rizal Elementary School,17
+LRN-0846,Maria Bautista,05-11-13,M,Quezon City,Davao National High,7
+LRN-0847,Lisa Wong,12-19-10,M,Makati,Cebu Central School,14
+LRN-0848,Antonio Reyes,08-24-12,F,Cebu City,Bonifacio High School,7
+LRN-0849,Elena Garcia,03-06-12,F,Pasig,Mabini Academy,10
+LRN-0850,Rosa Garcia,06-02-08,F,Davao City,Bonifacio High School,17
+LRN-0851,Carlos Lopez,03-03-06,F,Davao City,Quezon Science High,5
+LRN-0852,Pedro Santos,10-12-13,M,Manila,Mabini Academy,9
+LRN-0853,Carlos Santos,01-12-13,M,Taguig,Davao National High,7
+LRN-0854,Ana Bautista,03-03-10,F,Manila,Rizal Elementary School,6
+LRN-0855,Carlos Aquino,10-23-11,M,Makati,Cebu Central School,14
+LRN-0856,Ana Garcia,12-16-09,F,Pasig,Quezon Science High,16
+LRN-0857,Juan Reyes,06-18-06,F,Makati,Bonifacio High School,16
+LRN-0858,Lisa Bautista,07-11-14,F,Pasig,Davao National High,18
+LRN-0286,Maria Mendoza,03-15-05,F,Pasig,Davao National High,10
+LRN-0860,Antonio Bautista,04-24-12,M,Pasig,Cebu Central School,18
+LRN-0861,Jose Dela Cruz,09-21-07,F,Cebu City,Davao National High,17
+LRN-0862,Maria Aquino,10-02-06,F,Manila,Bonifacio High School,9
+LRN-0863,juan wong,11-26-10,m,Quezon City,Cebu Central School,17
+LRN-0864,pedro dela cruz,05-17-13,m,Manila,Mabini Academy,5
+LRN-0865,Carlos Mendoza,08-14-13,F,Manila,Mabini Academy,13
+LRN-0866,Ana Lopez,07-29-10,F,Pasig,Davao National High,5
+LRN-0867,Maria Aquino,03-05-10,F,Cebu City,Rizal Elementary School,6
+LRN-0868,Maria Bautista,10-14-14,M,Quezon City,Quezon Science High,6
+LRN-0869,Elena Santos,07-19-07,M,Quezon City,Davao National High,17
+LRN-0870,Antonio Garcia,08-14-06,F,Makati,Quezon Science High,18
+LRN-0871,Antonio Garcia,07-04-13,F,Quezon City,Quezon Science High,10
+LRN-0872,Ana Reyes,10-08-14,M,Makati,Rizal Elementary School,7
+LRN-0873,Elena Bautista,08-15-10,F,Manila,Mabini Academy,6
+LRN-0874,Elena Aquino,12-12-07,F,Cebu City,Bonifacio High School,13
+LRN-0875,Carlos Mendoza,03-29-06,M,Makati,Mabini Academy,16
+LRN-0876,Elena Aquino,10-25-15,F,Taguig,Davao National High,17
+LRN-0877,Jose Wong,02-13-09,M,Taguig,Quezon Science High,6
+LRN-0878,Carlos Mendoza,01-14-12,M,Manila,Rizal Elementary School,5
+LRN-0879,Carlos Villanueva,05-24-12,M,Pasig,Cebu Central School,15
+LRN-0880,Elena Reyes,09-15-06,F,Pasig,Bonifacio High School,11
+LRN-0881,Ana Lopez,10-16-15,F,Makati,Mabini Academy,14
+LRN-0882,Carlos Aquino,12-11-10,F,Cebu City,Bonifacio High School,17
+LRN-0883,Carlos Aquino,12-16-13,M,Pasig,Bonifacio High School,12
+LRN-0884,Pedro Villanueva,07-21-06,F,Cebu City,Rizal Elementary School,15
+LRN-0885,Lisa Dela Cruz,03-25-10,M,Cebu City,Rizal Elementary School,13
+LRN-0886,Maria Wong,09-03-09,M,Manila,Cebu Central School,14
+LRN-0887,Lisa Garcia,11-23-11,M,Taguig,Rizal Elementary School,7
+LRN-0888,Juan Santos,02-09-15,F,Manila,Rizal Elementary School,7
+LRN-0889,Antonio Villanueva,12-14-15,M,Davao City,Bonifacio High School,9
+LRN-0890,Ana Santos,05-24-12,M,Quezon City,Mabini Academy,12
+LRN-0891,antonio reyes,10-22-09,M,Quezon City,Mabini Academy,18
+LRN-0892,Elena Mendoza,08-11-09,M,Quezon City,Cebu Central School,10
+LRN-0893,Jose Garcia,08-22-15,F,Pasig,Quezon Science High,5
+LRN-0894,Lisa Villanueva,08-17-07,M,Davao City,Mabini Academy,10
+LRN-0895,Rosa Mendoza,08-25-06,F,Pasig,Rizal Elementary School,7
+LRN-0896,Juan Reyes,12-19-13,F,Pasig,Bonifacio High School,10
+LRN-0897,Rosa Villanueva,07-17-13,F,Pasig,Cebu Central School,12
+LRN-0898,Ana Santos,11-24-12,M,Makati,Cebu Central School,12
+LRN-0899,Juan Aquino,02-25-06,F,Cebu City,Quezon Science High,13
+LRN-0900,Rosa Bautista,10-25-13,F,Taguig,Bonifacio High School,11
+LRN-0901,Juan Lopez,05-12-13,F,Makati,Rizal Elementary School,6
+LRN-0902,Juan Santos,12-01-07,F,Taguig,Quezon Science High,16
+LRN-0903,Juan Santos,09-19-12,M,Manila,Davao National High,13
+LRN-0904,Jose Villanueva,02-16-06,M,Quezon City,Mabini Academy,7
+LRN-0905,Maria Reyes,12-21-06,M,Davao City,Bonifacio High School,5
+LRN-0906,Elena Villanueva,10-07-06,M,Pasig,Mabini Academy,9
+LRN-0907,Rosa Garcia,01-11-06,F,Taguig,Davao National High,14
+LRN-0908,Carlos Garcia,10-14-09,M,Cebu City,Quezon Science High,9
+LRN-0909,Jose Wong,04-27-14,M,Davao City,Rizal Elementary School,9
+LRN-0910,Carlos Villanueva,01-19-06,F,Makati,Cebu Central School,7
+LRN-0911,Juan Mendoza,09-20-12,F,Makati,Davao National High,9
+LRN-0912,Ana Villanueva,12-18-10,F,Manila,Davao National High,9
+LRN-0913,Lisa Villanueva,09-27-07,F,Davao City,Mabini Academy,6
+LRN-0914,elena dela cruz,06-25-13,m,Cebu City,Bonifacio High School,14
+LRN-0915,Antonio Dela Cruz,03-12-10,F,Cebu City,Mabini Academy,15
+LRN-0916,Jose Lopez,12-13-10,F,Cebu City,Davao National High,11
+LRN-0917,Antonio Mendoza,12-15-11,M,Pasig,Quezon Science High,6
+LRN-0918,Lisa Santos,08-09-12,M,Quezon City,Mabini Academy,18
+LRN-0919,Antonio Villanueva,06-23-15,F,Makati,Bonifacio High School,8
+LRN-0920,Jose Villanueva,03-20-14,M,Davao City,Davao National High,5
+LRN-0921,Lisa Lopez,02-24-06,M,Taguig,Bonifacio High School,12
+LRN-0922,Maria Mendoza,04-13-11,M,Manila,Rizal Elementary School,16
+LRN-0923,Ana Lopez,10-09-13,F,Davao City,Mabini Academy,10
+LRN-0924,Jose Wong,07-18-06,F,Cebu City,Cebu Central School,7
+LRN-0925,Juan Villanueva,07-02-11,F,Manila,Davao National High,12
+LRN-0926,Antonio Santos,11-16-06,F,Makati,Quezon Science High,18
+LRN-0927,Jose Dela Cruz,09-10-15,F,Manila,Mabini Academy,13
+LRN-0928,Pedro Garcia,09-09-11,M,Makati,Mabini Academy,15
+LRN-0929,Pedro Wong,07-25-08,F,Quezon City,Bonifacio High School,10
+LRN-0930,Jose Villanueva,11-14-15,M,Manila,Cebu Central School,11
+LRN-0931,Elena Lopez,08-14-11,F,Taguig,Rizal Elementary School,9
+LRN-0932,Jose Wong,09-02-10,M,Taguig,Cebu Central School,6
+LRN-0933,Jose Garcia,02-13-12,F,Davao City,Rizal Elementary School,18
+LRN-0934,Lisa Mendoza,08-19-13,M,Makati,Rizal Elementary School,8
+LRN-0935,Maria Dela Cruz,02-01-09,F,Davao City,Cebu Central School,12
+LRN-0936,Lisa Villanueva,07-11-15,M,Makati,Bonifacio High School,18
+LRN-0937,Maria Santos,01-26-15,F,Makati,Bonifacio High School,13
+LRN-0938,Juan Villanueva,12-07-15,M,Pasig,Quezon Science High,13
+LRN-0939,Rosa Bautista,09-29-09,M,Manila,Quezon Science High,14
+LRN-0940,Elena Garcia,04-27-12,M,Cebu City,Rizal Elementary School,8
+LRN-0941,Antonio Dela Cruz,04-03-15,F,Taguig,Quezon Science High,7
+LRN-0942,Lisa Reyes,01-27-09,F,Davao City,Mabini Academy,13
+LRN-0943,Juan Lopez,09-16-07,M,Pasig,Davao National High,6
+LRN-0944,Rosa Dela Cruz,11-29-10,M,Quezon City,Davao National High,13
+LRN-0945,Maria Aquino,06-20-06,F,Manila,Cebu Central School,16
+LRN-0946,Carlos Bautista,12-12-14,F,Makati,Quezon Science High,10
+LRN-0197,maria villanueva,11-21-11,F,Pasig,Rizal Elementary School,10
+LRN-0948,Maria Reyes,08-17-12,M,Makati,Mabini Academy,14
+LRN-0949,Ana Wong,04-09-14,F,Cebu City,Bonifacio High School,8
+LRN-0950,rosa mendoza,04-28-15,Unknown,Manila,Davao National High,18
+LRN-0951,Antonio Garcia,12-02-07,M,Taguig,Quezon Science High,17
+LRN-0952,Rosa Garcia,10-24-15,M,Makati,Mabini Academy,14
+LRN-0953,Juan Wong,05-28-08,M,Davao City,Quezon Science High,13
+LRN-0954,Jose Mendoza,02-04-12,F,Quezon City,Quezon Science High,14
+LRN-0955,Maria Lopez,07-16-13,F,Makati,Davao National High,14
+LRN-0956,Lisa Wong,02-03-08,F,Taguig,Quezon Science High,15
+LRN-0957,Antonio Villanueva,07-09-06,M,Davao City,Mabini Academy,8
+LRN-0958,Ana Mendoza,10-30-14,M,Quezon City,Quezon Science High,18
+LRN-0959,Antonio Villanueva,02-27-15,F,Makati,Rizal Elementary School,5
+LRN-0960,Maria Wong,10-15-05,F,Cebu City,Bonifacio High School,9
+LRN-0961,Antonio Mendoza,06-11-13,F,Cebu City,Quezon Science High,8
+LRN-0962,Maria Mendoza,06-17-07,F,Pasig,Davao National High,9
+LRN-0963,Lisa Mendoza,12-08-06,F,Makati,Mabini Academy,14
+LRN-0964,Ana Aquino,01-27-07,M,Pasig,Mabini Academy,6
+LRN-0965,Ana Reyes,05-08-14,M,Taguig,Mabini Academy,17
+LRN-0966,Maria Aquino,03-04-10,F,Pasig,Davao National High,16
+LRN-0967,Antonio Mendoza,08-23-07,F,Quezon City,Bonifacio High School,8
+LRN-0968,Pedro Santos,06-16-08,M,Davao City,Davao National High,16
+LRN-0969,Jose Lopez,04-02-05,F,Pasig,Quezon Science High,9
+LRN-0970,Pedro Garcia,05-21-06,F,Davao City,Davao National High,10
+LRN-0971,Ana Villanueva,12-18-10,F,Pasig,Mabini Academy,14
+LRN-0972,Carlos Bautista,09-01-15,M,Taguig,Bonifacio High School,16
+LRN-0973,Elena Villanueva,04-25-11,M,Pasig,Bonifacio High School,11
+LRN-0974,Maria Bautista,11-21-06,M,Makati,Bonifacio High School,5
+LRN-0975,Maria Mendoza,12-08-14,M,Pasig,Bonifacio High School,5
+LRN-0976,Juan Villanueva,09-19-10,M,Davao City,Rizal Elementary School,8
+LRN-0977,Juan Bautista,11-27-14,F,Davao City,Cebu Central School,10
+LRN-0978,Elena Garcia,09-14-06,F,Pasig,Mabini Academy,16
+LRN-0979,Elena Dela Cruz,01-10-12,M,Manila,Cebu Central School,12
+LRN-0980,Antonio Aquino,01-04-06,M,Taguig,Davao National High,10
+LRN-0981,Juan Villanueva,08-09-13,F,Quezon City,Bonifacio High School,12
+LRN-0982,carlos villanueva,06-20-14,Unknown,Pasig,Quezon Science High,7
+LRN-0983,Juan Aquino,03-08-06,M,Quezon City,Rizal Elementary School,5
+LRN-0984,Rosa Villanueva,08-23-11,F,Manila,Quezon Science High,13
+LRN-0985,Pedro Wong,11-12-06,M,Manila,Quezon Science High,12
+LRN-0986,Lisa Bautista,02-15-09,M,Davao City,Mabini Academy,12
+LRN-0987,Rosa Garcia,01-31-09,F,Makati,Mabini Academy,5
+LRN-0988,Elena Garcia,12-07-14,M,Manila,Cebu Central School,12
+LRN-0449,Lisa Garcia,07-29-11,M,Makati,Quezon Science High,5
+LRN-0990,Elena Lopez,01-22-07,M,Makati,Quezon Science High,10
+LRN-0991,Juan Mendoza,04-13-09,F,Pasig,Quezon Science High,16
+LRN-0992,Antonio Dela Cruz,06-20-05,M,Taguig,Davao National High,16
+LRN-0993,Ana Reyes,03-09-13,M,Pasig,Mabini Academy,5
+LRN-0994,Rosa Santos,06-28-06,M,Davao City,Bonifacio High School,17
+LRN-0995,Rosa Wong,12-10-15,F,Cebu City,Davao National High,9
+LRN-0996,lisa garcia,12-21-08,M,Taguig,Davao National High,5
+LRN-0997,Elena Mendoza,12-05-09,M,Davao City,Mabini Academy,7
+LRN-0998,Juan Aquino,04-24-08,F,Taguig,Davao National High,9
+LRN-0999,carlos dela cruz,02-18-07,Unknown,Cebu City,Davao National High,13
+LRN-1000,Elena Garcia,08-07-10,F,Quezon City,Davao National High,7
+LRN-1001,Antonio Santos,12-14-09,M,Cebu City,Mabini Academy,13
+LRN-1002,Juan Aquino,04-13-07,M,Makati,Rizal Elementary School,10
+LRN-1003,Carlos Villanueva,02-12-15,F,Makati,Cebu Central School,12
+LRN-1004,Pedro Villanueva,06-26-05,M,Makati,Bonifacio High School,10
+LRN-1005,Rosa Santos,04-08-15,M,Makati,Rizal Elementary School,12
+LRN-1006,Antonio Reyes,02-18-09,F,Cebu City,Cebu Central School,18
+LRN-1007,Carlos Dela Cruz,05-20-10,F,Manila,Bonifacio High School,5
+LRN-1008,Maria Garcia,01-16-07,M,Manila,Bonifacio High School,6
+LRN-1009,rosa bautista,10-17-13,M,Quezon City,Cebu Central School,9
+LRN-1010,maria mendoza,01-20-07,X,Pasig,Bonifacio High School,10
+LRN-1011,Lisa Reyes,07-10-11,M,Davao City,Bonifacio High School,18
+LRN-1012,Antonio Villanueva,07-21-10,F,Quezon City,Cebu Central School,10
+LRN-1013,Lisa Aquino,10-12-05,M,Pasig,Bonifacio High School,5
+LRN-1014,maria mendoza,06-23-06,X,Taguig,Cebu Central School,11
+LRN-1015,Carlos Dela Cruz,05-18-11,M,Cebu City,Mabini Academy,10
+LRN-1016,Maria Lopez,05-14-10,F,Cebu City,Mabini Academy,7
+LRN-1017,Elena Aquino,01-02-06,M,Makati,Rizal Elementary School,15
+LRN-1018,Lisa Bautista,07-29-13,M,Taguig,Bonifacio High School,12
+LRN-1019,Elena Villanueva,04-12-13,F,Makati,Davao National High,16
+LRN-1020,Pedro Wong,06-01-07,F,Quezon City,Rizal Elementary School,5
+LRN-1021,Maria Reyes,11-21-15,M,Pasig,Cebu Central School,7
+LRN-1022,Maria Wong,03-17-07,M,Makati,Davao National High,8
+LRN-1023,Elena Dela Cruz,04-30-05,F,Cebu City,Quezon Science High,11
+LRN-1024,Carlos Santos,08-19-15,M,Davao City,Mabini Academy,12
+LRN-1025,Jose Bautista,10-02-05,F,Manila,Mabini Academy,6
+LRN-1026,Elena Santos,07-14-09,M,Makati,Quezon Science High,9
+LRN-1027,Juan Dela Cruz,07-23-05,M,Makati,Davao National High,14
+LRN-1028,juan lopez,11-02-14,f,Taguig,Cebu Central School,17
+LRN-1029,Elena Mendoza,05-02-15,M,Manila,Davao National High,10
+LRN-1030,Elena Garcia,04-11-08,M,Cebu City,Bonifacio High School,13
+LRN-1031,Jose Wong,10-26-08,M,Quezon City,Cebu Central School,14
+LRN-1032,Rosa Bautista,02-28-12,M,Pasig,Mabini Academy,8
+LRN-1033,Maria Reyes,07-28-14,M,Makati,Bonifacio High School,9
 LRN-1034,  jose lopez  ,Invalid Date,F,Nowhere,Mabini Academy,5
-LRN-1035,Rosa Dela Cruz,2014-04-25,M,Manila,Quezon Science High,12
-LRN-1036,Rosa Wong,2005-08-31,M,Davao City,Quezon Science High,17
+LRN-1035,Rosa Dela Cruz,04-25-14,M,Manila,Quezon Science High,12
+LRN-1036,Rosa Wong,08-31-05,M,Davao City,Quezon Science High,17
 LRN-1037,  juan mendoza  ,Invalid Date,f,Nowhere,Rizal Elementary School,17
-LRN-1038,Lisa Wong,2008-11-22,M,Pasig,Mabini Academy,18
-LRN-1039,Antonio Aquino,2014-01-18,F,Quezon City,Cebu Central School,11
-LRN-1040,Pedro Santos,2011-09-25,F,Makati,Quezon Science High,13
-LRN-1041,Elena Reyes,2010-10-04,M,Quezon City,Quezon Science High,18
-LRN-1042,Maria Garcia,2006-11-03,M,Quezon City,Cebu Central School,15
-LRN-1043,Jose Garcia,2006-02-14,F,Pasig,Quezon Science High,14
-LRN-1044,maria garcia,28/03/2006,F,Davao City,Bonifacio High School,17
-LRN-1045,Jose Bautista,2007-12-19,M,Manila,Rizal Elementary School,15
-LRN-1046,Pedro Villanueva,2013-05-10,M,Makati,Quezon Science High,13
-LRN-1047,Ana Garcia,2010-06-23,F,Taguig,Quezon Science High,16
-LRN-1048,Maria Aquino,2012-11-26,M,Manila,Bonifacio High School,9
-LRN-1049,Maria Mendoza,2011-06-28,F,Quezon City,Cebu Central School,15
-LRN-1050,Antonio Aquino,2011-10-07,F,Pasig,Mabini Academy,8
-LRN-1051,Carlos Lopez,2012-02-29,M,Cebu City,Rizal Elementary School,11
-LRN-1052,Juan Garcia,2014-01-23,M,Quezon City,Quezon Science High,16
-LRN-1053,Pedro Reyes,2014-03-25,F,Manila,Davao National High,15
-LRN-1054,Maria Aquino,2012-12-10,F,Makati,Bonifacio High School,13
-LRN-1055,Rosa Lopez,2014-02-04,F,Makati,Quezon Science High,17
-LRN-1056,Lisa Santos,2010-02-23,F,Manila,Bonifacio High School,7
-LRN-1057,Antonio Dela Cruz,2014-06-06,F,Cebu City,Bonifacio High School,12
-LRN-1058,Ana Aquino,2013-11-10,F,Manila,Cebu Central School,8
-LRN-1059,Lisa Lopez,2006-05-14,F,Manila,Mabini Academy,14
-LRN-1060,Antonio Dela Cruz,2007-06-05,M,Makati,Quezon Science High,5
-LRN-1061,Elena Reyes,2008-09-12,F,Davao City,Mabini Academy,12
-LRN-1062,Jose Lopez,2014-08-25,F,Taguig,Bonifacio High School,12
-LRN-0067,Elena Bautista,2007-05-28,M,Davao City,Quezon Science High,10
-LRN-1064,Maria Reyes,2012-09-02,F,Cebu City,Rizal Elementary School,15
-LRN-1065,Carlos Bautista,2015-01-14,M,Quezon City,Quezon Science High,17
-LRN-1066,Pedro Reyes,2009-01-09,M,Quezon City,Davao National High,10
-LRN-1067,Antonio Santos,2013-12-30,F,Makati,Cebu Central School,18
-LRN-1068,Pedro Lopez,2010-07-16,M,Taguig,Bonifacio High School,18
-LRN-1069,Carlos Lopez,2008-12-21,F,Davao City,Bonifacio High School,7
-LRN-1070,Jose Garcia,2015-12-01,M,Pasig,Mabini Academy,12
-LRN-1071,Elena Mendoza,2014-03-11,F,Pasig,Mabini Academy,11
-LRN-1072,Carlos Bautista,2008-01-09,M,Manila,Bonifacio High School,5
-LRN-1073,Lisa Garcia,2006-05-02,M,Makati,Rizal Elementary School,6
-LRN-1074,Juan Santos,2008-09-20,F,Pasig,Rizal Elementary School,8
-LRN-1075,Ana Wong,2005-12-31,M,Quezon City,Mabini Academy,13
-LRN-1076,Carlos Garcia,2015-07-23,F,Cebu City,Bonifacio High School,6
-LRN-1077,Lisa Aquino,2014-10-23,F,Davao City,Davao National High,9
-LRN-1078,Ana Santos,2009-09-19,F,Pasig,Davao National High,9
+LRN-1038,Lisa Wong,11-22-08,M,Pasig,Mabini Academy,18
+LRN-1039,Antonio Aquino,01-18-14,F,Quezon City,Cebu Central School,11
+LRN-1040,Pedro Santos,09-25-11,F,Makati,Quezon Science High,13
+LRN-1041,Elena Reyes,10-04-10,M,Quezon City,Quezon Science High,18
+LRN-1042,Maria Garcia,11-03-06,M,Quezon City,Cebu Central School,15
+LRN-1043,Jose Garcia,02-14-06,F,Pasig,Quezon Science High,14
+LRN-1044,maria garcia,03-28-06,F,Davao City,Bonifacio High School,17
+LRN-1045,Jose Bautista,12-19-07,M,Manila,Rizal Elementary School,15
+LRN-1046,Pedro Villanueva,05-10-13,M,Makati,Quezon Science High,13
+LRN-1047,Ana Garcia,06-23-10,F,Taguig,Quezon Science High,16
+LRN-1048,Maria Aquino,11-26-12,M,Manila,Bonifacio High School,9
+LRN-1049,Maria Mendoza,06-28-11,F,Quezon City,Cebu Central School,15
+LRN-1050,Antonio Aquino,10-07-11,F,Pasig,Mabini Academy,8
+LRN-1051,Carlos Lopez,02-29-12,M,Cebu City,Rizal Elementary School,11
+LRN-1052,Juan Garcia,01-23-14,M,Quezon City,Quezon Science High,16
+LRN-1053,Pedro Reyes,03-25-14,F,Manila,Davao National High,15
+LRN-1054,Maria Aquino,12-10-12,F,Makati,Bonifacio High School,13
+LRN-1055,Rosa Lopez,02-04-14,F,Makati,Quezon Science High,17
+LRN-1056,Lisa Santos,02-23-10,F,Manila,Bonifacio High School,7
+LRN-1057,Antonio Dela Cruz,06-06-14,F,Cebu City,Bonifacio High School,12
+LRN-1058,Ana Aquino,11-10-13,F,Manila,Cebu Central School,8
+LRN-1059,Lisa Lopez,05-14-06,F,Manila,Mabini Academy,14
+LRN-1060,Antonio Dela Cruz,06-05-07,M,Makati,Quezon Science High,5
+LRN-1061,Elena Reyes,09-12-08,F,Davao City,Mabini Academy,12
+LRN-1062,Jose Lopez,08-25-14,F,Taguig,Bonifacio High School,12
+LRN-0067,Elena Bautista,05-28-07,M,Davao City,Quezon Science High,10
+LRN-1064,Maria Reyes,09-02-12,F,Cebu City,Rizal Elementary School,15
+LRN-1065,Carlos Bautista,01-14-15,M,Quezon City,Quezon Science High,17
+LRN-1066,Pedro Reyes,01-09-09,M,Quezon City,Davao National High,10
+LRN-1067,Antonio Santos,12-30-13,F,Makati,Cebu Central School,18
+LRN-1068,Pedro Lopez,07-16-10,M,Taguig,Bonifacio High School,18
+LRN-1069,Carlos Lopez,12-21-08,F,Davao City,Bonifacio High School,7
+LRN-1070,Jose Garcia,12-01-15,M,Pasig,Mabini Academy,12
+LRN-1071,Elena Mendoza,03-11-14,F,Pasig,Mabini Academy,11
+LRN-1072,Carlos Bautista,01-09-08,M,Manila,Bonifacio High School,5
+LRN-1073,Lisa Garcia,05-02-06,M,Makati,Rizal Elementary School,6
+LRN-1074,Juan Santos,09-20-08,F,Pasig,Rizal Elementary School,8
+LRN-1075,Ana Wong,12-31-05,M,Quezon City,Mabini Academy,13
+LRN-1076,Carlos Garcia,07-23-15,F,Cebu City,Bonifacio High School,6
+LRN-1077,Lisa Aquino,10-23-14,F,Davao City,Davao National High,9
+LRN-1078,Ana Santos,09-19-09,F,Pasig,Davao National High,9
 LRN-1079,  antonio aquino  ,Invalid Date,m,Nowhere,Mabini Academy,18
-LRN-1080,Jose Villanueva,2006-11-11,M,Cebu City,Mabini Academy,7
-LRN-1081,Lisa Santos,2005-05-11,M,Taguig,Quezon Science High,18
-LRN-1082,Carlos Villanueva,2011-11-29,F,Quezon City,Quezon Science High,17
-LRN-1083,Carlos Lopez,2013-07-28,F,Pasig,Bonifacio High School,17
-LRN-1084,Pedro Dela Cruz,2013-07-30,F,Manila,Quezon Science High,6
-LRN-1085,Juan Lopez,2012-07-07,F,Cebu City,Rizal Elementary School,15
-LRN-1086,Jose Bautista,2005-12-12,F,Manila,Cebu Central School,14
-LRN-1087,Jose Garcia,2014-07-04,M,Manila,Rizal Elementary School,8
-LRN-1088,Antonio Aquino,2015-08-10,F,Cebu City,Bonifacio High School,11
-LRN-1089,Maria Mendoza,2011-10-28,M,Pasig,Quezon Science High,14
-LRN-1090,Pedro Lopez,2006-04-29,F,Quezon City,Mabini Academy,14
-LRN-1091,Juan Garcia,2012-12-25,F,Makati,Bonifacio High School,10
-LRN-1092,Pedro Bautista,2009-12-05,M,Taguig,Rizal Elementary School,11
-LRN-1093,Pedro Reyes,2005-01-31,M,Pasig,Mabini Academy,10
-LRN-1094,Carlos Bautista,2009-07-24,F,Pasig,Davao National High,18
-LRN-1095,jose bautista,02/07/2005,f,Pasig,Cebu Central School,15
+LRN-1080,Jose Villanueva,11-11-06,M,Cebu City,Mabini Academy,7
+LRN-1081,Lisa Santos,05-11-05,M,Taguig,Quezon Science High,18
+LRN-1082,Carlos Villanueva,11-29-11,F,Quezon City,Quezon Science High,17
+LRN-1083,Carlos Lopez,07-28-13,F,Pasig,Bonifacio High School,17
+LRN-1084,Pedro Dela Cruz,07-30-13,F,Manila,Quezon Science High,6
+LRN-1085,Juan Lopez,07-07-12,F,Cebu City,Rizal Elementary School,15
+LRN-1086,Jose Bautista,12-12-05,F,Manila,Cebu Central School,14
+LRN-1087,Jose Garcia,07-04-14,M,Manila,Rizal Elementary School,8
+LRN-1088,Antonio Aquino,08-10-15,F,Cebu City,Bonifacio High School,11
+LRN-1089,Maria Mendoza,10-28-11,M,Pasig,Quezon Science High,14
+LRN-1090,Pedro Lopez,04-29-06,F,Quezon City,Mabini Academy,14
+LRN-1091,Juan Garcia,12-25-12,F,Makati,Bonifacio High School,10
+LRN-1092,Pedro Bautista,12-05-09,M,Taguig,Rizal Elementary School,11
+LRN-1093,Pedro Reyes,01-31-05,M,Pasig,Mabini Academy,10
+LRN-1094,Carlos Bautista,07-24-09,F,Pasig,Davao National High,18
+LRN-1095,jose bautista,02-07-05,f,Pasig,Cebu Central School,15
 LRN-1096,  maria santos  ,Invalid Date,Unknown,Nowhere,Cebu Central School,16
-LRN-1097,Pedro Garcia,2012-06-06,M,Taguig,Cebu Central School,13
-LRN-1098,Antonio Santos,2010-06-06,F,Davao City,Bonifacio High School,13
-LRN-0387,Rosa Aquino,2015-09-16,F,Manila,Davao National High,17
-LRN-1100,Lisa Santos,2006-09-28,F,Cebu City,Mabini Academy,16
-LRN-1101,Ana Aquino,2012-01-17,F,Davao City,Davao National High,9
-LRN-1102,Antonio Bautista,2007-05-04,M,Quezon City,Rizal Elementary School,11
-LRN-1103,Rosa Aquino,2015-02-11,F,Quezon City,Quezon Science High,16
-LRN-1104,Pedro Lopez,2012-08-27,M,Cebu City,Quezon Science High,10
-LRN-1105,Pedro Garcia,2007-01-30,F,Quezon City,Cebu Central School,7
-LRN-1106,Antonio Lopez,2009-05-19,F,Quezon City,Mabini Academy,15
-LRN-1107,Maria Lopez,2011-12-05,M,Pasig,Davao National High,5
-LRN-1108,Lisa Villanueva,2011-08-16,F,Pasig,Cebu Central School,17
-LRN-1043,Jose Garcia,2006-02-14,F,Pasig,Quezon Science High,14
-LRN-1110,Maria Aquino,2007-07-26,M,Manila,Rizal Elementary School,16
-LRN-1111,Juan Santos,2008-09-18,F,Davao City,Mabini Academy,8
-LRN-1112,Juan Reyes,2007-09-18,M,Makati,Bonifacio High School,17
-LRN-1113,Carlos Lopez,2009-05-01,M,Taguig,Rizal Elementary School,5
-LRN-1114,Rosa Garcia,2006-03-04,M,Taguig,Cebu Central School,17
-LRN-0846,Maria Bautista,2013-05-11,M,Quezon City,Davao National High,7
-LRN-1116,Jose Wong,2007-09-07,M,Davao City,Rizal Elementary School,13
-LRN-1117,Elena Dela Cruz,2013-10-15,M,Manila,Rizal Elementary School,6
-LRN-1118,Pedro Aquino,2007-07-06,F,Manila,Quezon Science High,16
-LRN-1119,Lisa Wong,2009-01-03,M,Quezon City,Rizal Elementary School,14
-LRN-1120,Pedro Bautista,2015-03-06,F,Quezon City,Mabini Academy,12
-LRN-1121,Jose Bautista,2014-06-27,F,Taguig,Rizal Elementary School,10
-LRN-1122,Carlos Lopez,2006-09-18,M,Davao City,Davao National High,10
-LRN-1123,Carlos Wong,2010-02-09,M,Taguig,Cebu Central School,13
-LRN-1124,Elena Garcia,2010-11-22,F,Manila,Bonifacio High School,6
+LRN-1097,Pedro Garcia,06-06-12,M,Taguig,Cebu Central School,13
+LRN-1098,Antonio Santos,06-06-10,F,Davao City,Bonifacio High School,13
+LRN-0387,Rosa Aquino,09-16-15,F,Manila,Davao National High,17
+LRN-1100,Lisa Santos,09-28-06,F,Cebu City,Mabini Academy,16
+LRN-1101,Ana Aquino,01-17-12,F,Davao City,Davao National High,9
+LRN-1102,Antonio Bautista,05-04-07,M,Quezon City,Rizal Elementary School,11
+LRN-1103,Rosa Aquino,02-11-15,F,Quezon City,Quezon Science High,16
+LRN-1104,Pedro Lopez,08-27-12,M,Cebu City,Quezon Science High,10
+LRN-1105,Pedro Garcia,01-30-07,F,Quezon City,Cebu Central School,7
+LRN-1106,Antonio Lopez,05-19-09,F,Quezon City,Mabini Academy,15
+LRN-1107,Maria Lopez,12-05-11,M,Pasig,Davao National High,5
+LRN-1108,Lisa Villanueva,08-16-11,F,Pasig,Cebu Central School,17
+LRN-1043,Jose Garcia,02-14-06,F,Pasig,Quezon Science High,14
+LRN-1110,Maria Aquino,07-26-07,M,Manila,Rizal Elementary School,16
+LRN-1111,Juan Santos,09-18-08,F,Davao City,Mabini Academy,8
+LRN-1112,Juan Reyes,09-18-07,M,Makati,Bonifacio High School,17
+LRN-1113,Carlos Lopez,05-01-09,M,Taguig,Rizal Elementary School,5
+LRN-1114,Rosa Garcia,03-04-06,M,Taguig,Cebu Central School,17
+LRN-0846,Maria Bautista,05-11-13,M,Quezon City,Davao National High,7
+LRN-1116,Jose Wong,09-07-07,M,Davao City,Rizal Elementary School,13
+LRN-1117,Elena Dela Cruz,10-15-13,M,Manila,Rizal Elementary School,6
+LRN-1118,Pedro Aquino,07-06-07,F,Manila,Quezon Science High,16
+LRN-1119,Lisa Wong,01-03-09,M,Quezon City,Rizal Elementary School,14
+LRN-1120,Pedro Bautista,03-06-15,F,Quezon City,Mabini Academy,12
+LRN-1121,Jose Bautista,06-27-14,F,Taguig,Rizal Elementary School,10
+LRN-1122,Carlos Lopez,09-18-06,M,Davao City,Davao National High,10
+LRN-1123,Carlos Wong,02-09-10,M,Taguig,Cebu Central School,13
+LRN-1124,Elena Garcia,11-22-10,F,Manila,Bonifacio High School,6
 LRN-1125,  antonio lopez  ,Invalid Date,M,Nowhere,Bonifacio High School,11
-LRN-1126,Elena Dela Cruz,2011-08-10,F,Manila,Rizal Elementary School,13
-LRN-1127,Lisa Garcia,2012-05-03,M,Davao City,Davao National High,15
-LRN-1128,Jose Reyes,2009-06-03,F,Cebu City,Davao National High,15
-LRN-1129,Antonio Aquino,2008-08-20,M,Makati,Cebu Central School,12
-LRN-1130,Jose Reyes,2006-08-24,F,Pasig,Quezon Science High,7
-LRN-1131,Carlos Mendoza,2012-10-15,M,Cebu City,Mabini Academy,13
-LRN-1132,Carlos Reyes,2007-11-16,M,Cebu City,Bonifacio High School,7
-LRN-1133,Antonio Villanueva,2008-08-23,F,Makati,Davao National High,6
-LRN-1134,Maria Wong,2006-01-17,F,Cebu City,Davao National High,5
-LRN-1135,Antonio Garcia,2009-03-03,M,Makati,Mabini Academy,9
-LRN-1136,antonio garcia,19/10/2015,Unknown,Quezon City,Davao National High,18
-LRN-0824,Pedro Aquino,2015-02-13,M,Manila,Quezon Science High,10
-LRN-1138,Carlos Mendoza,2010-05-26,F,Cebu City,Rizal Elementary School,11
-LRN-1139,Ana Mendoza,2013-11-18,F,Manila,Bonifacio High School,11
-LRN-1140,Maria Reyes,2011-04-30,M,Quezon City,Davao National High,8
-LRN-1141,Antonio Wong,2014-05-01,M,Manila,Mabini Academy,8
-LRN-1142,Carlos Wong,2013-07-04,M,Cebu City,Davao National High,14
-LRN-1143,Rosa Villanueva,2011-10-21,F,Quezon City,Mabini Academy,6
-LRN-1144,Lisa Reyes,2015-07-17,M,Cebu City,Mabini Academy,17
-LRN-1145,Jose Dela Cruz,2014-07-18,F,Pasig,Quezon Science High,11
-LRN-1146,Lisa Lopez,2008-10-18,M,Manila,Rizal Elementary School,16
-LRN-1147,Ana Dela Cruz,2012-05-02,F,Taguig,Mabini Academy,10
-LRN-1148,Carlos Mendoza,2012-07-04,F,Quezon City,Davao National High,10
-LRN-1149,Jose Reyes,2013-10-04,F,Quezon City,Quezon Science High,13
-LRN-1150,Antonio Bautista,2012-06-10,F,Taguig,Rizal Elementary School,14
-LRN-1151,Antonio Santos,2010-10-12,F,Davao City,Mabini Academy,16
-LRN-1152,Juan Mendoza,2015-10-29,F,Taguig,Quezon Science High,12
-LRN-1153,Ana Aquino,2006-05-29,M,Quezon City,Rizal Elementary School,11
-LRN-1154,Carlos Villanueva,2006-07-07,F,Manila,Bonifacio High School,10
-LRN-1155,Elena Wong,2005-05-15,M,Cebu City,Rizal Elementary School,7
-LRN-1156,Maria Lopez,2013-09-25,M,Manila,Cebu Central School,6
-LRN-1157,Lisa Santos,2013-04-08,M,Cebu City,Davao National High,10
-LRN-1158,Maria Reyes,2010-03-21,M,Taguig,Quezon Science High,5
-LRN-1159,Carlos Wong,2008-04-17,M,Pasig,Davao National High,6
-LRN-1160,Jose Wong,2009-05-04,M,Taguig,Cebu Central School,11
-LRN-1161,Pedro Lopez,2010-03-06,M,Pasig,Rizal Elementary School,16
+LRN-1126,Elena Dela Cruz,08-10-11,F,Manila,Rizal Elementary School,13
+LRN-1127,Lisa Garcia,05-03-12,M,Davao City,Davao National High,15
+LRN-1128,Jose Reyes,06-03-09,F,Cebu City,Davao National High,15
+LRN-1129,Antonio Aquino,08-20-08,M,Makati,Cebu Central School,12
+LRN-1130,Jose Reyes,08-24-06,F,Pasig,Quezon Science High,7
+LRN-1131,Carlos Mendoza,10-15-12,M,Cebu City,Mabini Academy,13
+LRN-1132,Carlos Reyes,11-16-07,M,Cebu City,Bonifacio High School,7
+LRN-1133,Antonio Villanueva,08-23-08,F,Makati,Davao National High,6
+LRN-1134,Maria Wong,01-17-06,F,Cebu City,Davao National High,5
+LRN-1135,Antonio Garcia,03-03-09,M,Makati,Mabini Academy,9
+LRN-1136,antonio garcia,10-19-15,Unknown,Quezon City,Davao National High,18
+LRN-0824,Pedro Aquino,02-13-15,M,Manila,Quezon Science High,10
+LRN-1138,Carlos Mendoza,05-26-10,F,Cebu City,Rizal Elementary School,11
+LRN-1139,Ana Mendoza,11-18-13,F,Manila,Bonifacio High School,11
+LRN-1140,Maria Reyes,04-30-11,M,Quezon City,Davao National High,8
+LRN-1141,Antonio Wong,05-01-14,M,Manila,Mabini Academy,8
+LRN-1142,Carlos Wong,07-04-13,M,Cebu City,Davao National High,14
+LRN-1143,Rosa Villanueva,10-21-11,F,Quezon City,Mabini Academy,6
+LRN-1144,Lisa Reyes,07-17-15,M,Cebu City,Mabini Academy,17
+LRN-1145,Jose Dela Cruz,07-18-14,F,Pasig,Quezon Science High,11
+LRN-1146,Lisa Lopez,10-18-08,M,Manila,Rizal Elementary School,16
+LRN-1147,Ana Dela Cruz,05-02-12,F,Taguig,Mabini Academy,10
+LRN-1148,Carlos Mendoza,07-04-12,F,Quezon City,Davao National High,10
+LRN-1149,Jose Reyes,10-04-13,F,Quezon City,Quezon Science High,13
+LRN-1150,Antonio Bautista,06-10-12,F,Taguig,Rizal Elementary School,14
+LRN-1151,Antonio Santos,10-12-10,F,Davao City,Mabini Academy,16
+LRN-1152,Juan Mendoza,10-29-15,F,Taguig,Quezon Science High,12
+LRN-1153,Ana Aquino,05-29-06,M,Quezon City,Rizal Elementary School,11
+LRN-1154,Carlos Villanueva,07-07-06,F,Manila,Bonifacio High School,10
+LRN-1155,Elena Wong,05-15-05,M,Cebu City,Rizal Elementary School,7
+LRN-1156,Maria Lopez,09-25-13,M,Manila,Cebu Central School,6
+LRN-1157,Lisa Santos,04-08-13,M,Cebu City,Davao National High,10
+LRN-1158,Maria Reyes,03-21-10,M,Taguig,Quezon Science High,5
+LRN-1159,Carlos Wong,04-17-08,M,Pasig,Davao National High,6
+LRN-1160,Jose Wong,05-04-09,M,Taguig,Cebu Central School,11
+LRN-1161,Pedro Lopez,03-06-10,M,Pasig,Rizal Elementary School,16
 LRN-1162,  maria lopez  ,Invalid Date,M,Nowhere,Bonifacio High School,16
-LRN-1163,Elena Dela Cruz,2014-03-11,M,Davao City,Rizal Elementary School,18
-LRN-1164,Antonio Wong,2015-05-12,M,Quezon City,Cebu Central School,11
-LRN-0568,Pedro Reyes,2013-07-21,F,Manila,Cebu Central School,6
-LRN-1166,Pedro Villanueva,2013-11-16,M,Cebu City,Cebu Central School,7
-LRN-1167,Elena Bautista,2014-02-14,M,Cebu City,Davao National High,10
-LRN-1168,Antonio Santos,2013-11-30,F,Pasig,Davao National High,8
-LRN-1169,Maria Santos,2012-11-01,M,Davao City,Quezon Science High,6
-LRN-1170,Ana Wong,2013-06-09,M,Manila,Quezon Science High,13
-LRN-1171,Pedro Santos,2010-07-23,F,Taguig,Mabini Academy,9
-LRN-1172,Maria Reyes,2007-03-17,M,Cebu City,Cebu Central School,11
-LRN-1173,Rosa Aquino,2011-02-26,M,Manila,Bonifacio High School,16
-LRN-1174,Elena Bautista,2005-04-24,F,Cebu City,Quezon Science High,16
-LRN-1175,Jose Lopez,2009-10-17,F,Cebu City,Quezon Science High,15
-LRN-1176,Jose Garcia,2005-03-18,M,Quezon City,Davao National High,5
-LRN-1177,Ana Lopez,2011-09-21,F,Davao City,Bonifacio High School,6
-LRN-0852,Pedro Santos,2013-10-12,M,Manila,Mabini Academy,9
-LRN-0415,Rosa Wong,2010-02-20,F,Manila,Mabini Academy,14
-LRN-1180,Jose Bautista,2005-03-02,M,Quezon City,Bonifacio High School,6
-LRN-1181,Maria Villanueva,2012-10-17,M,Quezon City,Davao National High,11
-LRN-1182,Carlos Garcia,2007-07-27,M,Quezon City,Davao National High,14
-LRN-1183,Jose Lopez,2007-01-26,M,Manila,Mabini Academy,16
-LRN-1184,Carlos Dela Cruz,2008-10-19,M,Cebu City,Bonifacio High School,10
-LRN-1185,Elena Santos,2009-12-10,M,Makati,Quezon Science High,13
-LRN-1186,Antonio Lopez,2008-01-31,M,Davao City,Quezon Science High,7
-LRN-1187,Carlos Lopez,2007-08-29,F,Quezon City,Davao National High,10
-LRN-1188,Lisa Reyes,2012-07-17,F,Manila,Mabini Academy,5
-LRN-1189,Ana Garcia,2012-07-22,M,Taguig,Cebu Central School,7
-LRN-1190,Rosa Mendoza,2008-11-21,F,Quezon City,Cebu Central School,12
-LRN-1191,Antonio Mendoza,2011-05-26,M,Pasig,Davao National High,14
-LRN-1192,Pedro Aquino,2008-01-06,F,Taguig,Cebu Central School,16
-LRN-1193,Pedro Dela Cruz,2010-12-13,F,Cebu City,Bonifacio High School,8
-LRN-1194,Antonio Garcia,2015-08-01,M,Davao City,Davao National High,9
-LRN-1195,Antonio Aquino,2015-05-21,M,Davao City,Davao National High,6
-LRN-0578,Elena Villanueva,2012-07-24,F,Taguig,Bonifacio High School,14
-LRN-1197,Jose Wong,2012-03-06,M,Cebu City,Rizal Elementary School,9
-LRN-1198,Rosa Reyes,2013-10-16,M,Taguig,Quezon Science High,11
-LRN-1199,Pedro Reyes,2009-03-26,F,Cebu City,Rizal Elementary School,16
-LRN-1200,Jose Bautista,2015-12-01,M,Manila,Quezon Science High,11
+LRN-1163,Elena Dela Cruz,03-11-14,M,Davao City,Rizal Elementary School,18
+LRN-1164,Antonio Wong,05-12-15,M,Quezon City,Cebu Central School,11
+LRN-0568,Pedro Reyes,07-21-13,F,Manila,Cebu Central School,6
+LRN-1166,Pedro Villanueva,11-16-13,M,Cebu City,Cebu Central School,7
+LRN-1167,Elena Bautista,02-14-14,M,Cebu City,Davao National High,10
+LRN-1168,Antonio Santos,11-30-13,F,Pasig,Davao National High,8
+LRN-1169,Maria Santos,11-01-12,M,Davao City,Quezon Science High,6
+LRN-1170,Ana Wong,06-09-13,M,Manila,Quezon Science High,13
+LRN-1171,Pedro Santos,07-23-10,F,Taguig,Mabini Academy,9
+LRN-1172,Maria Reyes,03-17-07,M,Cebu City,Cebu Central School,11
+LRN-1173,Rosa Aquino,02-26-11,M,Manila,Bonifacio High School,16
+LRN-1174,Elena Bautista,04-24-05,F,Cebu City,Quezon Science High,16
+LRN-1175,Jose Lopez,10-17-09,F,Cebu City,Quezon Science High,15
+LRN-1176,Jose Garcia,03-18-05,M,Quezon City,Davao National High,5
+LRN-1177,Ana Lopez,09-21-11,F,Davao City,Bonifacio High School,6
+LRN-0852,Pedro Santos,10-12-13,M,Manila,Mabini Academy,9
+LRN-0415,Rosa Wong,02-20-10,F,Manila,Mabini Academy,14
+LRN-1180,Jose Bautista,03-02-05,M,Quezon City,Bonifacio High School,6
+LRN-1181,Maria Villanueva,10-17-12,M,Quezon City,Davao National High,11
+LRN-1182,Carlos Garcia,07-27-07,M,Quezon City,Davao National High,14
+LRN-1183,Jose Lopez,01-26-07,M,Manila,Mabini Academy,16
+LRN-1184,Carlos Dela Cruz,10-19-08,M,Cebu City,Bonifacio High School,10
+LRN-1185,Elena Santos,12-10-09,M,Makati,Quezon Science High,13
+LRN-1186,Antonio Lopez,01-31-08,M,Davao City,Quezon Science High,7
+LRN-1187,Carlos Lopez,08-29-07,F,Quezon City,Davao National High,10
+LRN-1188,Lisa Reyes,07-17-12,F,Manila,Mabini Academy,5
+LRN-1189,Ana Garcia,07-22-12,M,Taguig,Cebu Central School,7
+LRN-1190,Rosa Mendoza,11-21-08,F,Quezon City,Cebu Central School,12
+LRN-1191,Antonio Mendoza,05-26-11,M,Pasig,Davao National High,14
+LRN-1192,Pedro Aquino,01-06-08,F,Taguig,Cebu Central School,16
+LRN-1193,Pedro Dela Cruz,12-13-10,F,Cebu City,Bonifacio High School,8
+LRN-1194,Antonio Garcia,08-01-15,M,Davao City,Davao National High,9
+LRN-1195,Antonio Aquino,05-21-15,M,Davao City,Davao National High,6
+LRN-0578,Elena Villanueva,07-24-12,F,Taguig,Bonifacio High School,14
+LRN-1197,Jose Wong,03-06-12,M,Cebu City,Rizal Elementary School,9
+LRN-1198,Rosa Reyes,10-16-13,M,Taguig,Quezon Science High,11
+LRN-1199,Pedro Reyes,03-26-09,F,Cebu City,Rizal Elementary School,16
+LRN-1200,Jose Bautista,12-01-15,M,Manila,Quezon Science High,11
