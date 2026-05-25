@@ -121,13 +121,16 @@ class MainWindow(QMainWindow):
         self.btn_import_rule = QPushButton("Import")
         self.btn_export_rule = QPushButton("Export")
         self.btn_clone_rule = QPushButton("Clone")
-        for b in (self.btn_import_rule, self.btn_export_rule, self.btn_clone_rule):
+        self.btn_delete_rule = QPushButton("Delete")
+        self.btn_change_lib = QPushButton("Change Folder...")
+        for b in (self.btn_import_rule, self.btn_export_rule, self.btn_clone_rule, self.btn_delete_rule, self.btn_change_lib):
             b.setObjectName("secondary")
             lib_btns.addWidget(b)
         sidebar_layout.addLayout(lib_btns)
 
         self.rule_builder = RuleBuilderPanel()
         self.rule_builder.rule_changed.connect(self._on_rule_changed)
+        self.rule_builder.rule_saved.connect(self._refresh_library)
         sidebar_layout.addWidget(self.rule_builder)
 
         sidebar_layout.addWidget(QLabel("Processing"))
@@ -160,6 +163,7 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.btn_theme)
         sidebar_layout.addStretch()
 
+        sidebar_scroll = QScrollArea()
         sidebar_scroll.setWidget(sidebar)
         splitter.addWidget(sidebar_scroll)
 
@@ -175,6 +179,8 @@ class MainWindow(QMainWindow):
         self.btn_import_rule.clicked.connect(self._import_rule)
         self.btn_export_rule.clicked.connect(self._export_rule)
         self.btn_clone_rule.clicked.connect(self._clone_rule)
+        self.btn_delete_rule.clicked.connect(self._delete_rule)
+        self.btn_change_lib.clicked.connect(self._change_library_folder)
         self.btn_export_full.clicked.connect(lambda: self._export("full"))
         self.btn_export_clean.clicked.connect(lambda: self._export("cleaned"))
         self.btn_export_errors.clicked.connect(lambda: self._export("validation"))
@@ -318,6 +324,31 @@ class MainWindow(QMainWindow):
             self._rule_set = cloned
             self.rule_builder.load_rule_set(cloned)
             self._refresh_library()
+
+    def _delete_rule(self) -> None:
+        item = self.library_list.currentItem()
+        if not item:
+            return
+        path = item.data(256)
+        if not path:
+            return
+        name = item.text().split("(")[0].strip()
+        ans = QMessageBox.question(
+            self, "Delete Rule", f"Are you sure you want to delete '{name}'?"
+        )
+        if ans == QMessageBox.StandardButton.Yes:
+            self._rule_service.delete(path)
+            self._refresh_library()
+            self.status.showMessage(f"Deleted rule: {name}")
+
+    def _change_library_folder(self) -> None:
+        path = QFileDialog.getExistingDirectory(
+            self, "Select Rule Library Folder", str(self._rule_service.library_dir)
+        )
+        if path:
+            self._rule_service.library_dir = Path(path)
+            self._refresh_library()
+            self.status.showMessage(f"Library folder: {Path(path).name}")
 
     def _export(self, kind: str) -> None:
         if not self._result:

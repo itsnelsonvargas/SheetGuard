@@ -130,6 +130,7 @@ class RuleBuilderPanel(QWidget):
     """Sidebar panel for building and editing rule sets."""
 
     rule_changed = Signal(object)
+    rule_saved = Signal()
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -309,6 +310,7 @@ class RuleBuilderPanel(QWidget):
             from sheetguard.services.rule_service import RuleService
 
             path = RuleService().save_to_library(rs)
+            self.rule_saved.emit()
             QMessageBox.information(self, "Saved", f"Rule set saved to:\n{path}")
         except Exception as exc:
             QMessageBox.critical(self, "Error", str(exc))
