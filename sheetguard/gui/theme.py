@@ -17,20 +17,36 @@ QFrame#sidebar {
     background-color: #FFFFFF;
     border-right: 1px solid #CBD5E1;
 }
+QFrame#summaryContainer {
+    background-color: transparent;
+    border: none;
+}
 QFrame#card {
     background-color: #FFFFFF;
-    border: 1px solid #CBD5E1;
-    border-radius: 8px;
+    border: 1px solid #0F172A;
+    border-radius: 10px;
+}
+QFrame#card QLabel {
+    background-color: transparent;
 }
 QLabel#cardTitle {
+    background-color: transparent;
     font-weight: 600;
     font-size: 12px;
-    color: #475569;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
-QLabel#cardValue {
-    font-size: 22px;
+QLabel#errorsValue, QLabel#warningsValue, QLabel#duplicatesValue, QLabel#correctionsValue {
+    background-color: transparent;
+    font-size: 24px;
     font-weight: 700;
 }
+QLabel#errorsValue { color: #DC2626; }
+QLabel#warningsValue { color: #D97706; }
+QLabel#duplicatesValue { color: #2563EB; }
+QLabel#correctionsValue { color: #059669; }
+
 QPushButton {
     background-color: #2563EB;
     color: white;
@@ -91,13 +107,36 @@ QFrame#sidebar {
     background-color: #1E293B;
     border-right: 1px solid #334155;
 }
-QFrame#card {
-    background-color: #334155;
-    border: 1px solid #475569;
-    border-radius: 8px;
+QFrame#summaryContainer {
+    background-color: transparent;
+    border: none;
 }
-QLabel#cardTitle { font-weight: 600; font-size: 12px; color: #CBD5E1; }
-QLabel#cardValue { font-size: 22px; font-weight: 700; color: #F8FAFC; }
+QFrame#card {
+    background-color: #1E293B;
+    border: 1px solid #0F172A;
+    border-radius: 10px;
+}
+QFrame#card QLabel {
+    background-color: transparent;
+}
+QLabel#cardTitle {
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 12px;
+    color: #CBD5E1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+QLabel#errorsValue, QLabel#warningsValue, QLabel#duplicatesValue, QLabel#correctionsValue {
+    background-color: transparent;
+    font-size: 24px;
+    font-weight: 700;
+}
+QLabel#errorsValue { color: #EF4444; }
+QLabel#warningsValue { color: #F59E0B; }
+QLabel#duplicatesValue { color: #06B6D4; }
+QLabel#correctionsValue { color: #10B981; }
+
 QPushButton {
     background-color: #3B82F6;
     color: #F8FAFC;
