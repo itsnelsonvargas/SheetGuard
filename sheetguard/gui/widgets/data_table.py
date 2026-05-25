@@ -25,15 +25,27 @@ class DataTableWidget(QWidget):
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
+        # Add padding around the entire tab content
+        layout.setContentsMargins(15, 15, 15, 15)
+        layout.setSpacing(15)
 
-        bar = QHBoxLayout()
-        bar.addWidget(QLabel("Search:"))
+        bar_layout = QHBoxLayout()
+        bar_layout.setSpacing(10)
+        
+        search_label = QLabel("Search:")
+        search_label.setStyleSheet("font-weight: bold; color: #64748b;")
+        bar_layout.addWidget(search_label)
+        
         self._search = QLineEdit()
         self._search.setPlaceholderText("Filter rows...")
+        self._search.setMinimumHeight(36)
         self._search.textChanged.connect(self._apply_filter)
-        bar.addWidget(self._search)
-        layout.addLayout(bar)
+        bar_layout.addWidget(self._search)
+        
+        # Add vertical space top and bottom for the search bar area
+        bar_container = QWidget()
+        bar_container.setLayout(bar_layout)
+        layout.addWidget(bar_container)
 
         self._table = QTableWidget()
         self._table.setSortingEnabled(True)
