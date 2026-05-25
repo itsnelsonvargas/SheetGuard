@@ -122,9 +122,9 @@ class MainWindow(QMainWindow):
         self.btn_export_rule = QPushButton("Export")
         self.btn_clone_rule = QPushButton("Clone")
         self.btn_delete_rule = QPushButton("Delete")
+        self.btn_delete_rule.setObjectName("danger")
         self.btn_change_lib = QPushButton("Change Folder...")
         for b in (self.btn_import_rule, self.btn_export_rule, self.btn_clone_rule, self.btn_delete_rule, self.btn_change_lib):
-            b.setObjectName("secondary")
             lib_btns.addWidget(b)
         sidebar_layout.addLayout(lib_btns)
 
@@ -147,19 +147,12 @@ class MainWindow(QMainWindow):
         self.btn_export_clean = QPushButton("Export Cleaned Data")
         self.btn_export_errors = QPushButton("Export Validation Report")
         self.btn_export_dups = QPushButton("Export Duplicate Report")
-        for b in (
-            self.btn_export_clean,
-            self.btn_export_errors,
-            self.btn_export_dups,
-        ):
-            b.setObjectName("secondary")
         sidebar_layout.addWidget(self.btn_export_full)
         sidebar_layout.addWidget(self.btn_export_clean)
         sidebar_layout.addWidget(self.btn_export_errors)
         sidebar_layout.addWidget(self.btn_export_dups)
 
         self.btn_theme = QPushButton("Toggle Dark Mode")
-        self.btn_theme.setObjectName("secondary")
         sidebar_layout.addWidget(self.btn_theme)
         sidebar_layout.addStretch()
 
