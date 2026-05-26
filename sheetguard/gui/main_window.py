@@ -95,12 +95,15 @@ class MainWindow(QMainWindow):
 
         sidebar_scroll = QScrollArea()
         sidebar_scroll.setWidgetResizable(True)
-        sidebar_scroll.setMaximumWidth(360)
-        sidebar_scroll.setMinimumWidth(300)
+        sidebar_scroll.setFixedWidth(500)  # Fixed width to prevent horizontal scrollbar
+        sidebar_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         sidebar = QFrame()
         sidebar.setObjectName("sidebar")
+        sidebar.setMinimumWidth(400)  # Match scroll area width
         sidebar_layout = QVBoxLayout(sidebar)
+        sidebar_layout.setContentsMargins(12, 0, 0, 0)  # left padding to avoid horizontal scrollbar
+
 
         sidebar_layout.addWidget(QLabel("File Upload"))
         self.file_drop = FileDropZone()
