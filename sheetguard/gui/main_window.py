@@ -78,7 +78,7 @@ class MainWindow(QMainWindow):
         self._file_path: str | None = None
         self._result: ProcessingResult | None = None
         self._worker: ProcessingWorker | None = None
-        self._dark_mode = False
+        self._dark_mode = True
 
         self._build_ui()
         self._load_default_rule()
@@ -152,7 +152,9 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.btn_export_errors)
         sidebar_layout.addWidget(self.btn_export_dups)
 
-        self.btn_theme = QPushButton("Toggle Dark Mode")
+        self.btn_theme = QPushButton("Dark Mode")
+        self.btn_theme.setCheckable(True)
+        self.btn_theme.setChecked(self._dark_mode)
         sidebar_layout.addWidget(self.btn_theme)
         sidebar_layout.addStretch()
 
@@ -399,7 +401,7 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self, "Export", f"Saved to {path}")
 
     def _toggle_theme(self) -> None:
-        self._dark_mode = not self._dark_mode
+        self._dark_mode = self.btn_theme.isChecked()
         app = QApplication.instance()
         if isinstance(app, QApplication):
             apply_theme(app, self._dark_mode)
@@ -413,7 +415,7 @@ def run_app() -> None:
 
     setup_logging()
     app = QApplication(sys.argv)
-    apply_theme(app, dark=False)
+    apply_theme(app, dark=True)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
