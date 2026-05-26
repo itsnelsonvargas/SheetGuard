@@ -17,6 +17,9 @@ QFrame#sidebar {
     background-color: #FFFFFF;
     border-right: 1px solid #CBD5E1;
 }
+QFrame#sidebar QLabel {
+    background-color: transparent;
+}
 QFrame#summaryContainer {
     background-color: transparent;
     border: none;
@@ -128,6 +131,9 @@ QMainWindow, QWidget {
 QFrame#sidebar {
     background-color: #1E293B;
     border-right: 1px solid #334155;
+}
+QFrame#sidebar QLabel {
+    background-color: transparent;
 }
 QFrame#summaryContainer {
     background-color: transparent;
