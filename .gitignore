@@ -9,3 +9,4 @@ data/rules_library/*.json
 !data/rules_library/.gitkeep
 .DS_Store
 *.egg-info/
+.env
