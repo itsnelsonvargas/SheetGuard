@@ -118,6 +118,41 @@ QProgressBar::chunk {
     border-radius: 8px;
 }
 QStatusBar { background: #FFFFFF; border-top: 1px solid #CBD5E1; }
+QLabel#bugReportHeader {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0F172A;
+}
+QLabel#bugReportSubtitle {
+    font-size: 12px;
+    color: #64748B;
+    margin-bottom: 4px;
+}
+QLabel#bugReportInfoLabel {
+    font-size: 11px;
+    color: #64748B;
+    margin-top: 8px;
+}
+QLabel#bugReportInfoPreview {
+    font-size: 11px;
+    color: #94A3B8;
+    background-color: #F1F5F9;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 8px;
+}
+QPushButton#bug_link {
+    background-color: transparent;
+    color: #64748B;
+    border: 1px dashed #94A3B8;
+    font-weight: 600;
+    font-size: 12px;
+}
+QPushButton#bug_link:hover {
+    color: #0F172A;
+    border-color: #64748B;
+    background-color: rgba(100, 116, 139, 15);
+}
 """
 
 
@@ -223,6 +258,41 @@ QProgressBar::chunk {
     border-radius: 8px;
 }
 QStatusBar { background: #1E293B; border-top: 1px solid #334155; }
+QLabel#bugReportHeader {
+    font-size: 18px;
+    font-weight: 700;
+    color: #F8FAFC;
+}
+QLabel#bugReportSubtitle {
+    font-size: 12px;
+    color: #94A3B8;
+    margin-bottom: 4px;
+}
+QLabel#bugReportInfoLabel {
+    font-size: 11px;
+    color: #94A3B8;
+    margin-top: 8px;
+}
+QLabel#bugReportInfoPreview {
+    font-size: 11px;
+    color: #64748B;
+    background-color: #0F172A;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px;
+}
+QPushButton#bug_link {
+    background-color: transparent;
+    color: #94A3B8;
+    border: 1px dashed #475569;
+    font-weight: 600;
+    font-size: 12px;
+}
+QPushButton#bug_link:hover {
+    color: #F8FAFC;
+    border-color: #94A3B8;
+    background-color: rgba(148, 163, 184, 15);
+}
 """
 
 

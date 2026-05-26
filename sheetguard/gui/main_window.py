@@ -27,6 +27,7 @@ from PySide6.QtWidgets import (
 from sheetguard.core.exporter import WorkbookExporter
 from sheetguard.core.rule_engine import RuleEngine
 from sheetguard.gui.results_view import ResultsView
+from sheetguard.gui.bug_report_dialog import BugReportDialog
 from sheetguard.gui.rule_builder import RuleBuilderPanel
 from sheetguard.gui.theme import apply_theme
 from sheetguard.gui.widgets.file_drop import FileDropZone
@@ -165,6 +166,11 @@ class MainWindow(QMainWindow):
         self.btn_theme.setChecked(self._dark_mode)
         sidebar_layout.addWidget(self.btn_theme)
         sidebar_layout.addStretch()
+
+        self.btn_bug = QPushButton("🐞  Submit a Bug Report")
+        self.btn_bug.setObjectName("bug_link")
+        self.btn_bug.clicked.connect(self._open_bug_report)
+        sidebar_layout.addWidget(self.btn_bug)
 
         sidebar_scroll = QScrollArea()
         sidebar_scroll.setWidget(sidebar)
@@ -413,6 +419,11 @@ class MainWindow(QMainWindow):
         app = QApplication.instance()
         if isinstance(app, QApplication):
             apply_theme(app, self._dark_mode)
+
+    def _open_bug_report(self) -> None:
+        """Open the bug report dialog."""
+        dlg = BugReportDialog(self)
+        dlg.exec()
 
 
 def run_app() -> None:
