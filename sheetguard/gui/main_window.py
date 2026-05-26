@@ -66,6 +66,27 @@ class ProcessingWorker(QThread):
             self.failed.emit(str(exc))
 
 
+class AIWorker(QThread):
+    """Background thread for AI review."""
+
+    finished_ok = Signal(str)
+    failed = Signal(str)
+
+    def __init__(self, df) -> None:
+        super().__init__()
+        self.df = df
+
+    def run(self) -> None:
+        try:
+            from sheetguard.services.ai_reviewer import AIReviewService
+            service = AIReviewService()
+            insights = service.review_data(self.df)
+            self.finished_ok.emit(insights)
+        except Exception as exc:
+            logger.exception("AI Review failed")
+            self.failed.emit(str(exc))
+
+
 class MainWindow(QMainWindow):
     """Primary SheetGuard window with sidebar layout."""
 
@@ -111,10 +132,18 @@ class MainWindow(QMainWindow):
         self.file_drop.file_selected.connect(self._on_file_selected)
         sidebar_layout.addWidget(self.file_drop)
 
+        file_btns = QHBoxLayout()
         btn_browse = QPushButton("Browse File...")
         btn_browse.setObjectName("secondary")
         btn_browse.clicked.connect(self._browse_file)
-        sidebar_layout.addWidget(btn_browse)
+        file_btns.addWidget(btn_browse)
+
+        self.btn_ai_review = QPushButton("🤖 AI Review")
+        self.btn_ai_review.setObjectName("success")
+        self.btn_ai_review.clicked.connect(self._run_ai_review)
+        file_btns.addWidget(self.btn_ai_review)
+
+        sidebar_layout.addLayout(file_btns)
 
         sidebar_layout.addWidget(QLabel("Rule Library"))
         self.library_list = QListWidget()
@@ -260,6 +289,44 @@ class MainWindow(QMainWindow):
             self.results_view.show_preview(df, self._rule_set)
         except Exception as exc:
             QMessageBox.warning(self, "Preview", f"Could not preview file: {exc}")
+
+    def _run_ai_review(self) -> None:
+        if not self._file_path:
+            QMessageBox.warning(self, "AI Review", "Please select a file first.")
+            return
+            
+        try:
+            from sheetguard.services.file_loader import FileLoader
+            df = FileLoader.load(self._file_path, self._rule_set)
+        except Exception as exc:
+            QMessageBox.warning(self, "AI Review", f"Could not load file: {exc}")
+            return
+            
+        self.btn_ai_review.setEnabled(False)
+        self.btn_ai_review.setText("🤖 Reviewing...")
+        self.status.showMessage("AI is reviewing data...")
+        
+        self._ai_worker = AIWorker(df)
+        self._ai_worker.finished_ok.connect(self._on_ai_finished)
+        self._ai_worker.failed.connect(self._on_ai_failed)
+        self._ai_worker.start()
+
+    @Slot(str)
+    def _on_ai_finished(self, insights: str) -> None:
+        self.btn_ai_review.setEnabled(True)
+        self.btn_ai_review.setText("🤖 AI Review")
+        self.status.showMessage("AI Review complete.")
+        
+        from sheetguard.gui.ai_insights_dialog import AIInsightsDialog
+        dlg = AIInsightsDialog(insights, self)
+        dlg.exec()
+
+    @Slot(str)
+    def _on_ai_failed(self, message: str) -> None:
+        self.btn_ai_review.setEnabled(True)
+        self.btn_ai_review.setText("🤖 AI Review")
+        QMessageBox.critical(self, "AI Review Failed", f"AI Review failed:\n{message}")
+        self.status.showMessage("AI Review failed.")
 
     def _run_processing(self) -> None:
         if not self._file_path:
