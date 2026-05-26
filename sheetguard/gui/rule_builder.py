@@ -143,11 +143,7 @@ class RuleBuilderPanel(QWidget):
         meta_layout = QFormLayout(meta)
         self.rule_name = QTextEdit()
         self.rule_name.setMaximumHeight(32)
-        self.version = QTextEdit()
-        self.version.setMaximumHeight(32)
-        self.version.setPlainText("1.0")
         meta_layout.addRow("Name", self.rule_name)
-        meta_layout.addRow("Version", self.version)
         layout.addWidget(meta)
 
         self.column_list = QListWidget()
@@ -201,12 +197,10 @@ class RuleBuilderPanel(QWidget):
         self._rule_set = rule_set
         if not rule_set:
             self.rule_name.clear()
-            self.version.setPlainText("1.0")
             self.column_list.clear()
             self.dup_list.clear()
             return
         self.rule_name.setPlainText(rule_set.rule_name)
-        self.version.setPlainText(rule_set.version)
         self._refresh_lists()
         self.rule_changed.emit(rule_set)
 
@@ -214,7 +208,6 @@ class RuleBuilderPanel(QWidget):
         if not self._rule_set:
             return None
         self._rule_set.rule_name = self.rule_name.toPlainText().strip() or "Untitled"
-        self._rule_set.version = self.version.toPlainText().strip() or "1.0"
         return self._rule_set
 
     def _refresh_lists(self) -> None:
