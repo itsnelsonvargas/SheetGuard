@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
 
         sidebar_scroll = QScrollArea()
         sidebar_scroll.setWidgetResizable(True)
-        sidebar_scroll.setFixedWidth(500)  # Fixed width to prevent horizontal scrollbar
+        sidebar_scroll.setFixedWidth(400)  # Fixed width to prevent horizontal scrollbar
         sidebar_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         sidebar = QFrame()
@@ -159,7 +159,8 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.btn_export_errors)
         sidebar_layout.addWidget(self.btn_export_dups)
 
-        self.btn_theme = QPushButton("Dark Mode")
+        self.btn_theme = QPushButton("Dark Mode" if self._dark_mode else "Light Mode")
+        self.btn_theme.setObjectName("theme_toggle")
         self.btn_theme.setCheckable(True)
         self.btn_theme.setChecked(self._dark_mode)
         sidebar_layout.addWidget(self.btn_theme)
