@@ -63,12 +63,17 @@ QTabBar::tab {
 }
 QTabBar::tab:selected { background: #ffffff; font-weight: 600; }
 QProgressBar {
-    border: none;
-    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
     background: #e2e8f0;
+    color: #1a1d21;
     text-align: center;
+    min-height: 24px;
 }
-QProgressBar::chunk { background: #2563eb; border-radius: 4px; }
+QProgressBar::chunk {
+    background: #2563eb;
+    border-radius: 8px;
+}
 QStatusBar { background: #ffffff; border-top: 1px solid #e2e5ea; }
 """
 
@@ -111,8 +116,18 @@ QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
 QTabWidget::pane { border: 1px solid #30363d; background: #161b22; }
 QTabBar::tab { background: #21262d; padding: 8px 16px; }
 QTabBar::tab:selected { background: #161b22; }
-QProgressBar { background: #21262d; border: none; border-radius: 4px; }
-QProgressBar::chunk { background: #388bfd; }
+QProgressBar {
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    background: #21262d;
+    color: #e8eaed;
+    text-align: center;
+    min-height: 24px;
+}
+QProgressBar::chunk {
+    background: #388bfd;
+    border-radius: 8px;
+}
 QStatusBar { background: #161b22; border-top: 1px solid #30363d; }
 """
 

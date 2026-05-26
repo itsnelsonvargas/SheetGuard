@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from PySide6.QtCore import QThread, Signal, Slot
+from PySide6.QtCore import QThread, Signal, Slot, Qt
 from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
@@ -140,6 +140,10 @@ class MainWindow(QMainWindow):
         self.progress = QProgressBar()
         self.progress.setRange(0, 100)
         self.progress.setValue(0)
+        self.progress.setFormat("%p %")
+        self.progress.setTextVisible(True)
+        self.progress.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.progress.setFixedHeight(24)
         sidebar_layout.addWidget(self.progress)
 
         sidebar_layout.addWidget(QLabel("Export"))
