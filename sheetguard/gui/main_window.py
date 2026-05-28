@@ -33,6 +33,7 @@ from sheetguard.gui.bug_report_dialog import BugReportDialog
 from sheetguard.gui.rule_builder import RuleBuilderPanel
 from sheetguard.gui.theme import apply_theme
 from sheetguard.gui.widgets.file_drop import FileDropZone
+from sheetguard.gui.widgets.processing_overlay import ProcessingOverlay
 from sheetguard.models.results import ProcessingResult
 from sheetguard.models.rules import RuleSet
 from sheetguard.services.pipeline import ProcessingPipeline
@@ -254,6 +255,8 @@ class MainWindow(QMainWindow):
         self.setStatusBar(self.status)
         self.status.showMessage("Ready")
 
+        self.processing_overlay = ProcessingOverlay(self)
+
         self.btn_process.clicked.connect(self._run_processing)
         self.btn_import_rule.clicked.connect(self._import_rule)
         self.btn_export_rule.clicked.connect(self._export_rule)
@@ -359,6 +362,7 @@ class MainWindow(QMainWindow):
             
         self.btn_ai_review.setEnabled(False)
         self.btn_ai_review.setText("🤖 Reviewing...")
+        self.processing_overlay.show_processing("AI Data Review")
         self.status.showMessage("AI is reviewing data...")
         
         self._ai_worker = AIWorker(df)
@@ -370,6 +374,7 @@ class MainWindow(QMainWindow):
     def _on_ai_finished(self, insights: str) -> None:
         self.btn_ai_review.setEnabled(True)
         self.btn_ai_review.setText("🤖 AI Review")
+        self.processing_overlay.hide()
         self.status.showMessage("AI Review complete.")
         
         from sheetguard.gui.ai_insights_dialog import AIInsightsDialog
@@ -380,6 +385,7 @@ class MainWindow(QMainWindow):
     def _on_ai_failed(self, message: str) -> None:
         self.btn_ai_review.setEnabled(True)
         self.btn_ai_review.setText("🤖 AI Review")
+        self.processing_overlay.hide()
         QMessageBox.critical(self, "AI Review Failed", f"AI Review failed:\n{message}")
         self.status.showMessage("AI Review failed.")
 
@@ -399,6 +405,7 @@ class MainWindow(QMainWindow):
 
         self.btn_process.setEnabled(False)
         self.progress.setValue(0)
+        self.processing_overlay.show_processing("Cleaning & Validating")
         self._worker = ProcessingWorker(self._rule_set, self._file_path)
         self._worker.progress.connect(self._on_progress)
         self._worker.finished_ok.connect(self._on_finished)
@@ -408,6 +415,7 @@ class MainWindow(QMainWindow):
     @Slot(int, str)
     def _on_progress(self, pct: int, msg: str) -> None:
         self.progress.setValue(pct)
+        self.processing_overlay.update_progress(pct, msg)
         self.status.showMessage(msg)
 
     @Slot(object)
@@ -416,6 +424,7 @@ class MainWindow(QMainWindow):
         self.results_view.show_result(result)
         self.btn_process.setEnabled(True)
         self.progress.setValue(100)
+        self.processing_overlay.hide()
         self.status.showMessage(
             f"Done — {result.error_count} errors, {result.warning_count} warnings"
         )
@@ -423,6 +432,7 @@ class MainWindow(QMainWindow):
     @Slot(str)
     def _on_failed(self, message: str) -> None:
         self.btn_process.setEnabled(True)
+        self.processing_overlay.hide()
         QMessageBox.critical(self, "Processing Failed", message)
 
     @Slot(int)
