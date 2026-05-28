@@ -34,6 +34,7 @@ class ResultsView(QWidget):
         self.tabs = QTabWidget()
         self.preview_table = DataTableWidget()
         self.summary_table = DataTableWidget()
+        self.summary_table.set_sorting_enabled(False)
         self.errors_table = DataTableWidget()
         self.duplicates_table = DataTableWidget()
 

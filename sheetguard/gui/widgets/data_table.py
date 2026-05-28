@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pandas as pd
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
@@ -117,6 +117,12 @@ class DataTableWidget(QWidget):
         self._hovered_row: int = -1
         self._hidden_columns: set[str] = set()
         self._freeze_first_column: bool = False
+        self._sorting_enabled: bool = True
+
+    def set_sorting_enabled(self, enabled: bool) -> None:
+        """Enable or disable sorting for this table."""
+        self._sorting_enabled = enabled
+        self._table.setSortingEnabled(enabled)
 
     def set_freeze_first_column(self, freeze: bool) -> None:
         """Enable/disable freezing of the first column."""
@@ -142,16 +148,19 @@ class DataTableWidget(QWidget):
 
     def _get_row_background(self, row_idx: int, is_group_header: bool = False) -> QColor:
         """Get the appropriate background color for a row based on theme and state."""
+        # Use palette to detect if we are in dark mode
+        is_dark = self.palette().color(QPalette.Window).lightness() < 128
+        
         if is_group_header:
-            return QColor(241, 245, 249) # Subtle gray for headers
+            return QColor("#1E293B") if is_dark else QColor("#F1F5F9")
 
         if self._table._frozen_enabled:
-            return QColor("#0F172A")
+            return QColor("#0F172A") if is_dark else QColor("#FFFFFF")
 
         # Match standard QTableWidget alternating colors
         if self._table.alternatingRowColors() and row_idx % 2:
-            return QColor(248, 250, 252) # Light alternate
-        return QColor(255, 255, 255) # Base white
+            return QColor("#1E293B") if is_dark else QColor("#F8FAFC")
+        return QColor("#0F172A") if is_dark else QColor("#FFFFFF")
     def _on_cell_entered(self, row: int, column: int) -> None:
         """Visual feedback: highlight the entire row on hover."""
         if row == self._hovered_row:
@@ -277,7 +286,7 @@ class DataTableWidget(QWidget):
                     
                     item_c1 = QTableWidgetItem(str(first_val))
                     item_c1.setFlags(item_c1.flags() & ~Qt.ItemFlag.ItemIsEditable)
-                    item_c1.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                    item_c1.setTextAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
                     item_c1.setFont(font)
                     item_c1.setBackground(self._get_row_background(r, True))
                     self._table.setItem(r, 1, item_c1)
@@ -291,7 +300,7 @@ class DataTableWidget(QWidget):
                 else:
                     item = QTableWidgetItem(str(first_val))
                     item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
-                    item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                    item.setTextAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
                     item.setFont(font)
                     item.setBackground(self._get_row_background(r, True))
                     self._table.setItem(r, 0, item)
@@ -303,9 +312,8 @@ class DataTableWidget(QWidget):
                 item = QTableWidgetItem(str(val))
                 item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
                 
-                # Center align from 2nd column onwards
-                if c > 0:
-                    item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                # Center align data cells
+                item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 
                 if c == 0 and self._table._frozen_enabled:
                     # Hide text in main table for frozen column to avoid double rendering
@@ -316,6 +324,7 @@ class DataTableWidget(QWidget):
                 if c == 0 and self._table._frozen_enabled:
                     frozen_item = QTableWidgetItem(str(val))
                     frozen_item.setFlags(frozen_item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                    frozen_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                     # Use white text for contrast on dark background
                     frozen_item.setForeground(QColor("#F8FAFC")) 
                     frozen_item.setBackground(self._get_row_background(r, False))
@@ -338,7 +347,8 @@ class DataTableWidget(QWidget):
                 self._table._frozen_table.setRowHeight(r, self._table.rowHeight(r))
             self._table.update_frozen_geometry()
             
-        self._table.setSortingEnabled(True)
+        if self._sorting_enabled:
+            self._table.setSortingEnabled(True)
 
     def _apply_filter(self, text: str) -> None:
         if self._df is None:
