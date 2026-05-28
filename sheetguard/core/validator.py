@@ -59,6 +59,7 @@ class DataValidator:
             self._check_length(col_rule, col_name, series)
             self._check_numeric_range(col_rule, col_name, series)
             self._check_date(col_rule, col_name, series)
+            self._check_email(col_rule, col_name, series)
             self._check_lookup(col_rule, col_name, series)
 
         logger.info("Validation found %d issues", len(self._issues))
@@ -239,6 +240,27 @@ class DataValidator:
                         val,
                         "date",
                     )
+
+    def _check_email(self, col_rule: ColumnRule, col_name: str, series: pd.Series) -> None:
+        if not col_rule.validate_email:
+            return
+        # Basic email regex
+        pattern = re.compile(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+        for idx, val in series.items():
+            if pd.isna(val) or str(val).strip() == "":
+                continue
+            s = str(val).strip()
+            if not pattern.match(s):
+                self._add(
+                    int(idx),
+                    col_rule,
+                    col_name,
+                    self._severity(col_rule),
+                    f"Invalid email address: {s}",
+                    val,
+                    val,
+                    "email",
+                )
 
     def _check_lookup(self, col_rule: ColumnRule, col_name: str, series: pd.Series) -> None:
         if not col_rule.lookup:

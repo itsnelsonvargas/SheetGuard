@@ -60,6 +60,7 @@ class ColumnRule:
     date_format: str | None = None
     lookup: str | None = None
     warning_only: bool = False
+    validate_email: bool = False
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> ColumnRule:
@@ -77,6 +78,7 @@ class ColumnRule:
             date_format=data.get("date_format"),
             lookup=data.get("lookup"),
             warning_only=bool(data.get("warning_only", False)),
+            validate_email=bool(data.get("validate_email", False)),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -86,6 +88,8 @@ class ColumnRule:
         }
         if self.required:
             out["required"] = True
+        if self.validate_email:
+            out["validate_email"] = True
         if self.cleaning:
             out["cleaning"] = self.cleaning
         if self.allowed_values is not None:

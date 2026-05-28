@@ -50,11 +50,19 @@ class ColumnRuleEditor(QDialog):
     def __init__(self, rule: ColumnRule | None = None, parent=None) -> None:
         super().__init__(parent)
         self.setWindowTitle("Edit Column Rule")
-        self.setMinimumWidth(600)
+        self.setMinimumWidth(900)  # Stretch to width
         self._rule = rule
 
         main_layout = QVBoxLayout(self)
-        main_layout.setSpacing(20)
+        main_layout.setSpacing(15)
+
+        # Content area with two columns
+        content_layout = QHBoxLayout()
+        content_layout.setSpacing(20)
+
+        # --- LEFT COLUMN (ID & Cleaning) ---
+        left_col = QVBoxLayout()
+        left_col.setSpacing(15)
 
         # 1. Identification Section
         id_group = QGroupBox("1. Identification")
@@ -78,13 +86,13 @@ class ColumnRuleEditor(QDialog):
         col_help.setStyleSheet("color: #64748B; font-size: 11px;")
         id_layout.addRow("", col_help)
 
-        main_layout.addWidget(id_group)
+        left_col.addWidget(id_group)
 
         # 2. Cleaning Section
         clean_group = QGroupBox("2. Automatic Data Cleaning")
         clean_layout = QVBoxLayout(clean_group)
         
-        clean_desc = QLabel("Clean data automatically before validation. This fixes common typos.")
+        clean_desc = QLabel("Fix common typos automatically before validation.")
         clean_desc.setStyleSheet("font-weight: 600; color: #1E293B;")
         clean_layout.addWidget(clean_desc)
 
@@ -96,8 +104,8 @@ class ColumnRuleEditor(QDialog):
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
         grid.setContentsMargins(0, 5, 0, 0)
-        grid.setHorizontalSpacing(20)
-        grid.setVerticalSpacing(10)
+        grid.setHorizontalSpacing(15)
+        grid.setVerticalSpacing(8)
 
         for i, op in enumerate(CLEANING_OPTIONS):
             row = i // 2
@@ -109,40 +117,49 @@ class ColumnRuleEditor(QDialog):
                 cb.setChecked(True)
             self._clean_checkboxes[op] = cb
             
-            # Connect casing options to mutual exclusion logic
             if op in self._casing_ops:
                 cb.toggled.connect(lambda checked, o=op: self._on_casing_toggled(checked, o))
             
-            # Label with description
             desc_label = QLabel(f"<i>{CLEANING_DESCRIPTIONS.get(op, '')}</i>")
             desc_label.setStyleSheet("color: #64748B; font-size: 10px;")
             
             cell_layout = QVBoxLayout()
-            cell_layout.setSpacing(2)
+            cell_layout.setSpacing(1)
             cell_layout.addWidget(cb)
             cell_layout.addWidget(desc_label)
             grid.addLayout(cell_layout, row, col)
 
         clean_layout.addWidget(grid_container)
-        main_layout.addWidget(clean_group)
+        left_col.addWidget(clean_group)
+        left_col.addStretch()
+        content_layout.addLayout(left_col, 4)
+
+        # --- RIGHT COLUMN (Validation) ---
+        right_col = QVBoxLayout()
+        right_col.setSpacing(15)
 
         # 3. Validation Section
-        val_group = QGroupBox("3. Validation Rules (Rules to catch errors)")
+        val_group = QGroupBox("3. Validation Rules (Constraints)")
         val_layout = QFormLayout(val_group)
+        val_layout.setSpacing(12)
 
-        # Requirement check
+        # Status checkboxes
         self.required = QCheckBox("Field cannot be empty")
-        self.required.setToolTip("If checked, empty cells in this column will be flagged.")
+        self.required.setToolTip("If checked, empty cells will be flagged as errors.")
         self.required.setChecked(rule.required if rule else False)
         val_layout.addRow("Requirement:", self.required)
 
-        # Severity selection
+        self.validate_email = QCheckBox("Must be a valid Email")
+        self.validate_email.setToolTip("Value must follow standard email format (user@example.com).")
+        self.validate_email.setChecked(rule.validate_email if rule else False)
+        val_layout.addRow("Email Check:", self.validate_email)
+
         self.warning_only = QCheckBox("Report issues as Warnings only")
-        self.warning_only.setToolTip("If checked, any rule failures will be labeled as Warnings instead of Errors.")
+        self.warning_only.setToolTip("If checked, failures will be Warnings instead of Errors.")
         self.warning_only.setChecked(rule.warning_only if rule else False)
         val_layout.addRow("Severity:", self.warning_only)
         
-        severity_help = QLabel("<b>Error:</b> Data is broken/invalid. <br><b>Warning:</b> Data is suspicious but might be okay.")
+        severity_help = QLabel("<b>Error:</b> Data is broken. <br><b>Warning:</b> Data is suspicious.")
         severity_help.setStyleSheet("color: #64748B; font-size: 11px;")
         val_layout.addRow("", severity_help)
 
@@ -150,8 +167,10 @@ class ColumnRuleEditor(QDialog):
         len_layout = QHBoxLayout()
         self.min_length = QSpinBox()
         self.min_length.setRange(0, 9999)
+        self.min_length.setMinimumWidth(100)
         self.max_length = QSpinBox()
         self.max_length.setRange(0, 9999)
+        self.max_length.setMinimumWidth(100)
         if rule and rule.min_length:
             self.min_length.setValue(rule.min_length)
         if rule and rule.max_length:
@@ -170,7 +189,7 @@ class ColumnRuleEditor(QDialog):
         val_layout.addRow("Allowed List:", self.allowed_values)
 
         self.regex = QLineEdit()
-        self.regex.setPlaceholderText("e.g., ^[0-9]{12}$ for IDs")
+        self.regex.setPlaceholderText("e.g., ^[0-9]{12}$")
         if rule and rule.regex:
             self.regex.setText(rule.regex)
         val_layout.addRow("Pattern (Regex):", self.regex)
@@ -180,9 +199,13 @@ class ColumnRuleEditor(QDialog):
         self.lookup.setPlaceholderText("Search reference lists...")
         if rule and rule.lookup:
             self.lookup.setCurrentText(rule.lookup)
-        val_layout.addRow("Reference Lookup:", self.lookup)
+        val_layout.addRow("Lookup Table:", self.lookup)
 
-        main_layout.addWidget(val_group)
+        right_col.addWidget(val_group)
+        right_col.addStretch()
+        content_layout.addLayout(right_col, 5)
+
+        main_layout.addLayout(content_layout)
 
         # Buttons
         buttons = QDialogButtonBox(
@@ -227,6 +250,7 @@ class ColumnRuleEditor(QDialog):
             min_length=self.min_length.value() if self.min_length.value() > 0 else None,
             max_length=self.max_length.value() if self.max_length.value() > 0 else None,
             lookup=self.lookup.currentText().strip() or None,
+            validate_email=self.validate_email.isChecked(),
         )
 
 

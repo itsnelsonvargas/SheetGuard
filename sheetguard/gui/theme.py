@@ -83,12 +83,30 @@ QPushButton#danger {
 QPushButton#danger:hover { background-color: rgba(220, 38, 38, 20); }
 QPushButton#danger:pressed { background-color: rgba(220, 38, 38, 40); }
 
-QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
+QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
     background-color: #FFFFFF;
     border: 1px solid #CBD5E1;
     border-radius: 6px;
     padding: 8px;
 }
+QSpinBox {
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 6px;
+    padding-right: 20px; /* Make room for buttons */
+}
+QSpinBox::up-button, QSpinBox::down-button {
+    width: 20px;
+    border: none;
+    background-color: #F1F5F9;
+}
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+    background-color: #E2E8F0;
+}
+QSpinBox::up-arrow { image: url(none); border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 5px solid #64748B; width: 0; height: 0; }
+QSpinBox::down-arrow { image: url(none); border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #64748B; width: 0; height: 0; }
+
 QTableWidget::item:hover {
     background-color: rgba(37, 99, 235, 30);
 }
@@ -228,13 +246,32 @@ QPushButton#danger {
 QPushButton#danger:hover { background-color: #F87171; }
 QPushButton#danger:pressed { background-color: #DC2626; }
 
-QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
+QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
     background-color: #0F172A;
     border: 1px solid #334155;
     border-radius: 6px;
     padding: 8px;
     color: #F8FAFC;
 }
+QSpinBox {
+    background-color: #0F172A;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 6px;
+    padding-right: 20px;
+    color: #F8FAFC;
+}
+QSpinBox::up-button, QSpinBox::down-button {
+    width: 20px;
+    border: none;
+    background-color: #1E293B;
+}
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+    background-color: #334155;
+}
+QSpinBox::up-arrow { image: url(none); border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 5px solid #CBD5E1; width: 0; height: 0; }
+QSpinBox::down-arrow { image: url(none); border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #CBD5E1; width: 0; height: 0; }
+
 QTableWidget::item:hover {
     background-color: rgba(59, 130, 246, 30);
 }
