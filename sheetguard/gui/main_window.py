@@ -196,8 +196,7 @@ class MainWindow(QMainWindow):
         self.btn_clone_rule = QPushButton("📋 Clone")
         self.btn_delete_rule = QPushButton("🗑️ Delete")
         self.btn_delete_rule.setObjectName("danger")
-        self.btn_change_lib = QPushButton("📁 Change Folder...")
-        for b in (self.btn_import_rule, self.btn_export_rule, self.btn_clone_rule, self.btn_delete_rule, self.btn_change_lib):
+        for b in (self.btn_import_rule, self.btn_export_rule, self.btn_clone_rule, self.btn_delete_rule):
             lib_btns.addWidget(b)
         sidebar_layout.addLayout(lib_btns)
 
@@ -261,7 +260,6 @@ class MainWindow(QMainWindow):
         self.btn_export_rule.clicked.connect(self._export_rule)
         self.btn_clone_rule.clicked.connect(self._clone_rule)
         self.btn_delete_rule.clicked.connect(self._delete_rule)
-        self.btn_change_lib.clicked.connect(self._change_library_folder)
         self.btn_export_full.clicked.connect(lambda: self._export("full"))
         self.btn_export_clean.clicked.connect(lambda: self._export("cleaned"))
         self.btn_export_errors.clicked.connect(lambda: self._export("validation"))
@@ -502,15 +500,6 @@ class MainWindow(QMainWindow):
             self._rule_service.delete(path)
             self._refresh_library()
             self.status.showMessage(f"Deleted rule: {name}")
-
-    def _change_library_folder(self) -> None:
-        path = QFileDialog.getExistingDirectory(
-            self, "Select Rule Library Folder", str(self._rule_service.library_dir)
-        )
-        if path:
-            self._rule_service.library_dir = Path(path)
-            self._refresh_library()
-            self.status.showMessage(f"Library folder: {Path(path).name}")
 
     def _export(self, kind: str) -> None:
         if not self._result:
