@@ -22,6 +22,7 @@ class RuleEngine:
         "uppercase",
         "lowercase",
         "title",
+        "pascal_case",
         "remove_special",
         "normalize_date",
         "numeric_cleanup",

@@ -9,14 +9,17 @@ from PySide6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QFormLayout,
+    QGridLayout,
     QGroupBox,
     QHBoxLayout,
     QInputDialog,
     QLabel,
+    QLineEdit,
     QListWidget,
     QListWidgetItem,
     QMessageBox,
     QPushButton,
+    QScrollArea,
     QSpinBox,
     QTextEdit,
     QVBoxLayout,
@@ -26,48 +29,125 @@ from PySide6.QtWidgets import (
 from sheetguard.core.rule_engine import RuleEngine
 from sheetguard.models.rules import ColumnRule, DuplicateRule, RuleSet
 
+CLEANING_DESCRIPTIONS = {
+    "trim": "Remove leading/trailing spaces",
+    "collapse_spaces": "Fix double/multiple spaces",
+    "uppercase": "CONVERT TO ALL CAPS",
+    "lowercase": "convert to all lowercase",
+    "title": "Convert To Title Case",
+    "pascal_case": "Convert To PascalCase",
+    "remove_special": "Remove symbols (!@#$, etc.)",
+    "normalize_date": "Standardize date formats",
+    "numeric_cleanup": "Keep only numbers/decimals",
+}
+
 CLEANING_OPTIONS = sorted(RuleEngine.SUPPORTED_CLEANING)
 
 
 class ColumnRuleEditor(QDialog):
-    """Edit a single column rule."""
+    """Edit a single column rule with improved UI/UX."""
 
     def __init__(self, rule: ColumnRule | None = None, parent=None) -> None:
         super().__init__(parent)
-        self.setWindowTitle("Column Rule")
-        self.setMinimumWidth(480)
+        self.setWindowTitle("Edit Column Rule")
+        self.setMinimumWidth(600)
         self._rule = rule
 
-        layout = QFormLayout(self)
-        self.field_id = QTextEdit()
-        self.field_id.setMaximumHeight(32)
-        self.field_id.setPlainText(rule.field_id if rule else "")
-        self.column = QTextEdit()
-        self.column.setMaximumHeight(32)
-        self.column.setPlainText(rule.column if rule else "")
-        self.required = QCheckBox("Required")
-        self.required.setChecked(rule.required if rule else False)
-        self.warning_only = QCheckBox("Warning only")
-        self.warning_only.setChecked(rule.warning_only if rule else False)
+        main_layout = QVBoxLayout(self)
+        main_layout.setSpacing(20)
 
-        self.cleaning = QListWidget()
-        self.cleaning.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        for op in CLEANING_OPTIONS:
-            item = QListWidgetItem(op)
-            self.cleaning.addItem(item)
+        # 1. Identification Section
+        id_group = QGroupBox("1. Identification")
+        id_layout = QFormLayout(id_group)
+        
+        self.field_id = QLineEdit()
+        self.field_id.setPlaceholderText("e.g., Learner Name, Date of Birth")
+        self.field_id.setText(rule.field_id if rule else "")
+        id_layout.addRow("Display Name:", self.field_id)
+        
+        id_help = QLabel("The descriptive name used in reports.")
+        id_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        id_layout.addRow("", id_help)
+
+        self.column = QLineEdit()
+        self.column.setPlaceholderText("e.g., A, B or Header Name")
+        self.column.setText(rule.column if rule else "")
+        id_layout.addRow("Excel Column:", self.column)
+        
+        col_help = QLabel("Letter (A, B) or exact header name in the sheet.")
+        col_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        id_layout.addRow("", col_help)
+
+        main_layout.addWidget(id_group)
+
+        # 2. Cleaning Section
+        clean_group = QGroupBox("2. Automatic Data Cleaning")
+        clean_layout = QVBoxLayout(clean_group)
+        
+        clean_desc = QLabel("Clean data automatically before validation. This fixes common typos.")
+        clean_desc.setStyleSheet("font-weight: 600; color: #1E293B;")
+        clean_layout.addWidget(clean_desc)
+
+        # Define casing options for mutual exclusion
+        self._casing_ops = {"uppercase", "lowercase", "title", "pascal_case"}
+
+        # Create a grid of checkboxes for cleaning options
+        self._clean_checkboxes: dict[str, QCheckBox] = {}
+        grid_container = QWidget()
+        grid = QGridLayout(grid_container)
+        grid.setContentsMargins(0, 5, 0, 0)
+        grid.setHorizontalSpacing(20)
+        grid.setVerticalSpacing(10)
+
+        for i, op in enumerate(CLEANING_OPTIONS):
+            row = i // 2
+            col = i % 2
+            
+            cb = QCheckBox(op.replace("_", " ").title())
+            cb.setToolTip(CLEANING_DESCRIPTIONS.get(op, ""))
             if rule and op in rule.cleaning:
-                item.setSelected(True)
+                cb.setChecked(True)
+            self._clean_checkboxes[op] = cb
+            
+            # Connect casing options to mutual exclusion logic
+            if op in self._casing_ops:
+                cb.toggled.connect(lambda checked, o=op: self._on_casing_toggled(checked, o))
+            
+            # Label with description
+            desc_label = QLabel(f"<i>{CLEANING_DESCRIPTIONS.get(op, '')}</i>")
+            desc_label.setStyleSheet("color: #64748B; font-size: 10px;")
+            
+            cell_layout = QVBoxLayout()
+            cell_layout.setSpacing(2)
+            cell_layout.addWidget(cb)
+            cell_layout.addWidget(desc_label)
+            grid.addLayout(cell_layout, row, col)
 
-        self.allowed_values = QTextEdit()
-        self.allowed_values.setPlaceholderText("Comma-separated: M, F")
-        if rule and rule.allowed_values:
-            self.allowed_values.setPlainText(", ".join(rule.allowed_values))
+        clean_layout.addWidget(grid_container)
+        main_layout.addWidget(clean_group)
 
-        self.regex = QTextEdit()
-        self.regex.setMaximumHeight(32)
-        if rule and rule.regex:
-            self.regex.setPlainText(rule.regex)
+        # 3. Validation Section
+        val_group = QGroupBox("3. Validation Rules (Rules to catch errors)")
+        val_layout = QFormLayout(val_group)
 
+        # Requirement check
+        self.required = QCheckBox("Field cannot be empty")
+        self.required.setToolTip("If checked, empty cells in this column will be flagged.")
+        self.required.setChecked(rule.required if rule else False)
+        val_layout.addRow("Requirement:", self.required)
+
+        # Severity selection
+        self.warning_only = QCheckBox("Report issues as Warnings only")
+        self.warning_only.setToolTip("If checked, any rule failures will be labeled as Warnings instead of Errors.")
+        self.warning_only.setChecked(rule.warning_only if rule else False)
+        val_layout.addRow("Severity:", self.warning_only)
+        
+        severity_help = QLabel("<b>Error:</b> Data is broken/invalid. <br><b>Warning:</b> Data is suspicious but might be okay.")
+        severity_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        val_layout.addRow("", severity_help)
+
+        # Lengths
+        len_layout = QHBoxLayout()
         self.min_length = QSpinBox()
         self.min_length.setRange(0, 9999)
         self.max_length = QSpinBox()
@@ -76,42 +156,66 @@ class ColumnRuleEditor(QDialog):
             self.min_length.setValue(rule.min_length)
         if rule and rule.max_length:
             self.max_length.setValue(rule.max_length)
+        len_layout.addWidget(QLabel("Min:"))
+        len_layout.addWidget(self.min_length)
+        len_layout.addWidget(QLabel("Max:"))
+        len_layout.addWidget(self.max_length)
+        val_layout.addRow("Text Length:", len_layout)
+
+        # Values & Patterns
+        self.allowed_values = QLineEdit()
+        self.allowed_values.setPlaceholderText("e.g., M, F, Other")
+        if rule and rule.allowed_values:
+            self.allowed_values.setText(", ".join(rule.allowed_values))
+        val_layout.addRow("Allowed List:", self.allowed_values)
+
+        self.regex = QLineEdit()
+        self.regex.setPlaceholderText("e.g., ^[0-9]{12}$ for IDs")
+        if rule and rule.regex:
+            self.regex.setText(rule.regex)
+        val_layout.addRow("Pattern (Regex):", self.regex)
 
         self.lookup = QComboBox()
         self.lookup.setEditable(True)
+        self.lookup.setPlaceholderText("Search reference lists...")
         if rule and rule.lookup:
             self.lookup.setCurrentText(rule.lookup)
+        val_layout.addRow("Reference Lookup:", self.lookup)
 
-        layout.addRow("Field ID", self.field_id)
-        layout.addRow("Column (letter or name)", self.column)
-        layout.addRow(self.required)
-        layout.addRow(self.warning_only)
-        layout.addRow("Cleaning ops", self.cleaning)
-        layout.addRow("Allowed values", self.allowed_values)
-        layout.addRow("Regex", self.regex)
-        layout.addRow("Min length", self.min_length)
-        layout.addRow("Max length", self.max_length)
-        layout.addRow("Lookup name", self.lookup)
+        main_layout.addWidget(val_group)
 
+        # Buttons
         buttons = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         )
         buttons.accepted.connect(self.accept)
         buttons.rejected.connect(self.reject)
-        layout.addRow(buttons)
+        main_layout.addWidget(buttons)
+
+    def _on_casing_toggled(self, checked: bool, op: str) -> None:
+        """Ensure only one casing option is selected at a time."""
+        if not checked:
+            return
+            
+        # Uncheck all other casing options
+        for other_op in self._casing_ops:
+            if other_op != op and other_op in self._clean_checkboxes:
+                self._clean_checkboxes[other_op].blockSignals(True)
+                self._clean_checkboxes[other_op].setChecked(False)
+                self._clean_checkboxes[other_op].blockSignals(False)
 
     def get_rule(self) -> ColumnRule | None:
-        fid = self.field_id.toPlainText().strip()
-        col = self.column.toPlainText().strip()
+        fid = self.field_id.text().strip()
+        col = self.column.text().strip()
         if not fid or not col:
             return None
-        allowed_raw = self.allowed_values.toPlainText().strip()
+        allowed_raw = self.allowed_values.text().strip()
         allowed = [v.strip() for v in allowed_raw.split(",") if v.strip()] if allowed_raw else None
+        
         cleaning = [
-            self.cleaning.item(i).text()
-            for i in range(self.cleaning.count())
-            if self.cleaning.item(i).isSelected()
+            op for op, cb in self._clean_checkboxes.items() if cb.isChecked()
         ]
+        
         return ColumnRule(
             field_id=fid,
             column=col,
@@ -119,7 +223,7 @@ class ColumnRuleEditor(QDialog):
             warning_only=self.warning_only.isChecked(),
             cleaning=cleaning,
             allowed_values=allowed,
-            regex=self.regex.toPlainText().strip() or None,
+            regex=self.regex.text().strip() or None,
             min_length=self.min_length.value() if self.min_length.value() > 0 else None,
             max_length=self.max_length.value() if self.max_length.value() > 0 else None,
             lookup=self.lookup.currentText().strip() or None,
@@ -153,24 +257,36 @@ class RuleBuilderPanel(QWidget):
         col_btns = QHBoxLayout()
         self.btn_add_col = QPushButton("➕ Add")
         self.btn_add_col.setObjectName("success")
+        self.btn_add_col.setToolTip("Add a new column rule")
         self.btn_edit_col = QPushButton("✏️ Edit")
+        self.btn_edit_col.setToolTip("Edit the selected column rule")
         self.btn_del_col = QPushButton("🗑️ Delete")
         self.btn_del_col.setObjectName("danger")
+        self.btn_del_col.setToolTip("Remove the selected column rule")
         self.btn_up_col = QPushButton("🔼 Up")
+        self.btn_up_col.setToolTip("Move the selected rule up")
         self.btn_down_col = QPushButton("🔽 Down")
+        self.btn_down_col.setToolTip("Move the selected rule down")
         for b in (self.btn_add_col, self.btn_edit_col, self.btn_del_col, self.btn_up_col, self.btn_down_col):
             col_btns.addWidget(b)
         layout.addLayout(col_btns)
 
-        dup_group = QGroupBox("Duplicate Rules")
+        dup_group = QGroupBox("Duplicate Check Rules")
         dup_layout = QVBoxLayout(dup_group)
+        
+        dup_help = QLabel("Define combinations of columns that identify a duplicate row:")
+        dup_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        dup_layout.addWidget(dup_help)
+
         self.dup_list = QListWidget()
         dup_layout.addWidget(self.dup_list)
         dup_btns = QHBoxLayout()
         self.btn_add_dup = QPushButton("➕ Add Dup Rule")
         self.btn_add_dup.setObjectName("success")
+        self.btn_add_dup.setToolTip("Create a new duplicate detection rule")
         self.btn_del_dup = QPushButton("🗑️ Remove")
         self.btn_del_dup.setObjectName("danger")
+        self.btn_del_dup.setToolTip("Remove the selected duplicate rule")
         dup_btns.addWidget(self.btn_add_dup)
         dup_btns.addWidget(self.btn_del_dup)
         dup_layout.addLayout(dup_btns)
@@ -178,7 +294,9 @@ class RuleBuilderPanel(QWidget):
 
         save_row = QHBoxLayout()
         self.btn_save = QPushButton("💾 Save Rule Set")
+        self.btn_save.setToolTip("Save the current rule set to the library")
         self.btn_new = QPushButton("📄 New")
+        self.btn_new.setToolTip("Create a brand new empty rule set")
         save_row.addWidget(self.btn_new)
         save_row.addWidget(self.btn_save)
         layout.addLayout(save_row)

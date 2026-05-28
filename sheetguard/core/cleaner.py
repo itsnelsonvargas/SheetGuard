@@ -57,6 +57,8 @@ class DataCleaner:
                 out = out.map(self._lower)
             elif op == "title":
                 out = out.map(self._title)
+            elif op == "pascal_case":
+                out = out.map(self._pascal_case)
             elif op == "remove_special":
                 out = out.map(self._remove_special)
             elif op == "normalize_date":
@@ -108,6 +110,14 @@ class DataCleaner:
         if DataCleaner._is_empty(val):
             return val
         return str(val).title()
+
+    @staticmethod
+    def _pascal_case(val: Any) -> Any:
+        if DataCleaner._is_empty(val):
+            return val
+        # Split by non-alphanumeric, capitalize each, join
+        words = re.split(r"[^a-zA-Z0-9]+", str(val))
+        return "".join(w.capitalize() for w in words if w)
 
     @staticmethod
     def _remove_special(val: Any) -> Any:
