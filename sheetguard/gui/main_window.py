@@ -8,6 +8,7 @@ from pathlib import Path
 from PySide6.QtCore import QThread, Signal, Slot, Qt
 from PySide6.QtWidgets import (
     QApplication,
+    QDialog,
     QFileDialog,
     QFrame,
     QHBoxLayout,
@@ -18,6 +19,7 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QPushButton,
     QScrollArea,
+    QSpinBox,
     QSplitter,
     QStatusBar,
     QVBoxLayout,
@@ -38,6 +40,44 @@ from sheetguard.services.rule_service import RuleService
 from sheetguard.utils.paths import resource_path
 
 logger = logging.getLogger(__name__)
+
+
+class StartRowDialog(QDialog):
+    """Dialog to select which row data should start from."""
+
+    def __init__(self, parent=None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("Select Data Start Row")
+        self.setMinimumWidth(350)
+        self.setModal(True)
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(QLabel("Which row should data start from?"))
+        layout.addWidget(QLabel("(1 = first row, 2 = second row, etc.)"))
+
+        row_layout = QHBoxLayout()
+        row_layout.addWidget(QLabel("Start Row:"))
+        self.spinbox = QSpinBox()
+        self.spinbox.setMinimum(1)
+        self.spinbox.setMaximum(9999)
+        self.spinbox.setValue(1)
+        self.spinbox.setMinimumWidth(100)
+        row_layout.addWidget(self.spinbox)
+        row_layout.addStretch()
+        layout.addLayout(row_layout)
+
+        btn_layout = QHBoxLayout()
+        btn_ok = QPushButton("Load File")
+        btn_cancel = QPushButton("Cancel")
+        btn_ok.clicked.connect(self.accept)
+        btn_cancel.clicked.connect(self.reject)
+        btn_layout.addWidget(btn_ok)
+        btn_layout.addWidget(btn_cancel)
+        layout.addLayout(btn_layout)
+
+    def get_start_row(self) -> int:
+        """Return the selected start row (1-indexed)."""
+        return self.spinbox.value()
 
 
 class ProcessingWorker(QThread):
@@ -261,6 +301,7 @@ class MainWindow(QMainWindow):
             try:
                 self._rule_set = self._rule_service.load_from_library(path)
                 self.rule_builder.load_rule_set(self._rule_set)
+                self.start_row_spin.setValue(self._rule_set.header_row + 1)
                 self.status.showMessage(f"Active rule: {self._rule_set.rule_name}")
             except Exception as exc:
                 QMessageBox.critical(self, "Error", str(exc))
@@ -281,7 +322,21 @@ class MainWindow(QMainWindow):
     def _on_file_selected(self, path: str) -> None:
         self._file_path = path
         self.file_drop.set_file(path)
-        self.status.showMessage(f"File: {Path(path).name}")
+        
+        # Ask user which row to start from
+        dialog = StartRowDialog(self)
+        if dialog.exec() != QDialog.Accepted:
+            self._file_path = None
+            self.file_drop.clear()
+            return
+        
+        start_row = dialog.get_start_row()
+        header_row = start_row - 1  # Convert to 0-indexed
+        
+        if self._rule_set:
+            self._rule_set.header_row = header_row
+        
+        self.status.showMessage(f"File: {Path(path).name} (data starts at row {start_row})")
         try:
             from sheetguard.services.file_loader import FileLoader
 
@@ -396,6 +451,7 @@ class MainWindow(QMainWindow):
                 rs = self._rule_service.import_file(path)
                 self._rule_set = rs
                 self.rule_builder.load_rule_set(rs)
+                self.start_row_spin.setValue(rs.header_row + 1)
                 self._refresh_library()
             except Exception as exc:
                 QMessageBox.critical(self, "Import Error", str(exc))
@@ -419,6 +475,7 @@ class MainWindow(QMainWindow):
             cloned = self._rule_service.clone(rs, name)
             self._rule_set = cloned
             self.rule_builder.load_rule_set(cloned)
+            self.start_row_spin.setValue(cloned.header_row + 1)
             self._refresh_library()
 
     def _delete_rule(self) -> None:

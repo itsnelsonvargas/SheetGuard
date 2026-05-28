@@ -18,6 +18,7 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QPushButton,
     QScrollArea,
+    QSpinBox,
     QSplitter,
     QStatusBar,
     QVBoxLayout,
@@ -112,6 +113,20 @@ class MainWindow(QMainWindow):
         btn_browse.clicked.connect(self._browse_file)
         sidebar_layout.addWidget(btn_browse)
 
+        sidebar_layout.addWidget(QLabel("Data Start Row"))
+        start_row_layout = QHBoxLayout()
+        self.start_row_spin = QSpinBox()
+        self.start_row_spin.setMinimum(1)
+        self.start_row_spin.setMaximum(9999)
+        self.start_row_spin.setValue(1)
+        self.start_row_spin.setToolTip("Row number where data starts (1 = first row, 2 = second row, etc.)")
+        start_row_layout.addWidget(self.start_row_spin)
+        self.btn_confirm_start_row = QPushButton("Confirm")
+        self.btn_confirm_start_row.setObjectName("secondary")
+        self.btn_confirm_start_row.clicked.connect(self._on_confirm_start_row)
+        start_row_layout.addWidget(self.btn_confirm_start_row)
+        sidebar_layout.addLayout(start_row_layout)
+
         sidebar_layout.addWidget(QLabel("Rule Library"))
         self.library_list = QListWidget()
         self.library_list.currentItemChanged.connect(self._on_library_selected)
@@ -195,14 +210,17 @@ class MainWindow(QMainWindow):
             try:
                 self._rule_set = RuleEngine.load(sample)
                 self.rule_builder.load_rule_set(self._rule_set)
+                self.start_row_spin.setValue(self._rule_set.header_row + 1)
                 self.status.showMessage(f"Loaded rule: {self._rule_set.rule_name}")
             except Exception as exc:
                 logger.warning("Could not load default rule: %s", exc)
                 self.rule_builder._new_rule_set()
                 self._rule_set = self.rule_builder.get_rule_set()
+                self.start_row_spin.setValue(1)
         else:
             self.rule_builder._new_rule_set()
             self._rule_set = self.rule_builder.get_rule_set()
+            self.start_row_spin.setValue(1)
 
     def _refresh_library(self) -> None:
         self.library_list.clear()
@@ -222,6 +240,7 @@ class MainWindow(QMainWindow):
             try:
                 self._rule_set = self._rule_service.load_from_library(path)
                 self.rule_builder.load_rule_set(self._rule_set)
+                self.start_row_spin.setValue(self._rule_set.header_row + 1)
                 self.status.showMessage(f"Active rule: {self._rule_set.rule_name}")
             except Exception as exc:
                 QMessageBox.critical(self, "Error", str(exc))
@@ -250,6 +269,37 @@ class MainWindow(QMainWindow):
             self.results_view.show_preview(df)
         except Exception as exc:
             QMessageBox.warning(self, "Preview", f"Could not preview file: {exc}")
+
+    def _on_confirm_start_row(self) -> None:
+        """Update the rule set header row and refresh preview if file is loaded."""
+        user_row = self.start_row_spin.value()
+        header_row = user_row - 1  # Convert 1-indexed to 0-indexed
+        logger.info(f"Confirm start row clicked: user_row={user_row}, header_row={header_row}")
+        
+        if self._rule_set:
+            self._rule_set.header_row = header_row
+            logger.info(f"Rule set header_row updated to {header_row}")
+        
+        if self._file_path:
+            logger.info(f"Loading file with new start row: {self._file_path}")
+            self.btn_confirm_start_row.setEnabled(False)
+            self.status.showMessage(f"Loading preview starting from row {user_row}...")
+            try:
+                from sheetguard.services.file_loader import FileLoader
+
+                logger.info(f"FileLoader.load starting...")
+                df = FileLoader.load(self._file_path, self._rule_set)
+                logger.info(f"FileLoader.load completed: {len(df)} rows")
+                self.results_view.show_preview(df)
+                self.status.showMessage(f"Preview updated - data starts at row {user_row}, header at row {user_row - 1}")
+                logger.info(f"Preview updated successfully")
+            except Exception as exc:
+                logger.exception(f"Error loading file: {exc}")
+                QMessageBox.warning(self, "Preview", f"Could not preview file: {exc}")
+            finally:
+                self.btn_confirm_start_row.setEnabled(True)
+        else:
+            self.status.showMessage(f"Start row set to {user_row}. Load a file to preview.")
 
     def _run_processing(self) -> None:
         if not self._file_path:
@@ -300,6 +350,7 @@ class MainWindow(QMainWindow):
                 rs = self._rule_service.import_file(path)
                 self._rule_set = rs
                 self.rule_builder.load_rule_set(rs)
+                self.start_row_spin.setValue(rs.header_row + 1)
                 self._refresh_library()
             except Exception as exc:
                 QMessageBox.critical(self, "Import Error", str(exc))
@@ -323,6 +374,7 @@ class MainWindow(QMainWindow):
             cloned = self._rule_service.clone(rs, name)
             self._rule_set = cloned
             self.rule_builder.load_rule_set(cloned)
+            self.start_row_spin.setValue(cloned.header_row + 1)
             self._refresh_library()
 
     def _export(self, kind: str) -> None:
