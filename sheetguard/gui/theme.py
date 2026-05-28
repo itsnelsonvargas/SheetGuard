@@ -87,7 +87,7 @@ QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
     background-color: #FFFFFF;
     border: 1px solid #CBD5E1;
     border-radius: 6px;
-    padding: 6px;
+    padding: 8px;
 }
 QTableWidget::item:hover {
     background-color: rgba(37, 99, 235, 30);
@@ -232,7 +232,7 @@ QLineEdit, QComboBox, QSpinBox, QTextEdit, QListWidget, QTableWidget {
     background-color: #0F172A;
     border: 1px solid #334155;
     border-radius: 6px;
-    padding: 6px;
+    padding: 8px;
     color: #F8FAFC;
 }
 QTableWidget::item:hover {

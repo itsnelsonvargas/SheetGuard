@@ -157,17 +157,19 @@ class MainWindow(QMainWindow):
 
         sidebar_scroll = QScrollArea()
         sidebar_scroll.setWidgetResizable(True)
-        sidebar_scroll.setFixedWidth(400)  # Fixed width to prevent horizontal scrollbar
+        sidebar_scroll.setMinimumWidth(400)
+        sidebar_scroll.setMaximumWidth(500)
         sidebar_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        sidebar_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        sidebar_scroll.setFrameShape(QFrame.NoFrame)
 
         sidebar = QFrame()
         sidebar.setObjectName("sidebar")
-        sidebar.setMinimumWidth(400)  # Match scroll area width
         sidebar_layout = QVBoxLayout(sidebar)
-        sidebar_layout.setContentsMargins(12, 0, 0, 0)  # left padding to avoid horizontal scrollbar
+        sidebar_layout.setContentsMargins(20, 20, 20, 20)
+        sidebar_layout.setSpacing(15)
 
-
-        sidebar_layout.addWidget(QLabel("File Upload"))
+        sidebar_layout.addWidget(QLabel("FILE UPLOAD"))
         self.file_drop = FileDropZone()
         self.file_drop.file_selected.connect(self._on_file_selected)
         sidebar_layout.addWidget(self.file_drop)
@@ -185,28 +187,36 @@ class MainWindow(QMainWindow):
 
         sidebar_layout.addLayout(file_btns)
 
-        sidebar_layout.addWidget(QLabel("Rule Library"))
+        sidebar_layout.addWidget(QLabel("RULE LIBRARY"))
         self.library_list = QListWidget()
+        self.library_list.setMinimumHeight(150)
         self.library_list.currentItemChanged.connect(self._on_library_selected)
         sidebar_layout.addWidget(self.library_list)
 
-        lib_btns = QHBoxLayout()
+        # Split library buttons into two rows to save horizontal space
+        lib_btns_row1 = QHBoxLayout()
         self.btn_import_rule = QPushButton("📥 Import")
         self.btn_export_rule = QPushButton("📤 Export")
+        lib_btns_row1.addWidget(self.btn_import_rule)
+        lib_btns_row1.addWidget(self.btn_export_rule)
+        sidebar_layout.addLayout(lib_btns_row1)
+
+        lib_btns_row2 = QHBoxLayout()
         self.btn_clone_rule = QPushButton("📋 Clone")
         self.btn_delete_rule = QPushButton("🗑️ Delete")
         self.btn_delete_rule.setObjectName("danger")
-        for b in (self.btn_import_rule, self.btn_export_rule, self.btn_clone_rule, self.btn_delete_rule):
-            lib_btns.addWidget(b)
-        sidebar_layout.addLayout(lib_btns)
+        lib_btns_row2.addWidget(self.btn_clone_rule)
+        lib_btns_row2.addWidget(self.btn_delete_rule)
+        sidebar_layout.addLayout(lib_btns_row2)
 
         self.rule_builder = RuleBuilderPanel()
         self.rule_builder.rule_changed.connect(self._on_rule_changed)
         self.rule_builder.rule_saved.connect(self._refresh_library)
         sidebar_layout.addWidget(self.rule_builder)
 
-        sidebar_layout.addWidget(QLabel("Processing"))
+        sidebar_layout.addWidget(QLabel("PROCESSING"))
         self.btn_process = QPushButton("⚡ Run Clean & Validate")
+        self.btn_process.setMinimumHeight(45)
         sidebar_layout.addWidget(self.btn_process)
 
         self.progress = QProgressBar()
@@ -218,21 +228,26 @@ class MainWindow(QMainWindow):
         self.progress.setFixedHeight(24)
         sidebar_layout.addWidget(self.progress)
 
-        sidebar_layout.addWidget(QLabel("Export"))
+        sidebar_layout.addWidget(QLabel("EXPORT REPORTS"))
         self.btn_export_full = QPushButton("📊 Export Full Report")
         self.btn_export_clean = QPushButton("🧹 Export Cleaned Data")
         self.btn_export_errors = QPushButton("⚠️ Export Validation Report")
         self.btn_export_dups = QPushButton("👯 Export Duplicate Report")
-        sidebar_layout.addWidget(self.btn_export_full)
-        sidebar_layout.addWidget(self.btn_export_clean)
-        sidebar_layout.addWidget(self.btn_export_errors)
-        sidebar_layout.addWidget(self.btn_export_dups)
+        for b in (
+            self.btn_export_full,
+            self.btn_export_clean,
+            self.btn_export_errors,
+            self.btn_export_dups,
+        ):
+            sidebar_layout.addWidget(b)
 
+        sidebar_layout.addSpacing(10)
         self.btn_theme = QPushButton("🌙 Dark Mode" if self._dark_mode else "☀️ Light Mode")
         self.btn_theme.setObjectName("theme_toggle")
         self.btn_theme.setCheckable(True)
         self.btn_theme.setChecked(self._dark_mode)
         sidebar_layout.addWidget(self.btn_theme)
+        
         sidebar_layout.addStretch()
 
         self.btn_bug = QPushButton("🐞  Submit a Bug Report")
@@ -240,7 +255,6 @@ class MainWindow(QMainWindow):
         self.btn_bug.clicked.connect(self._open_bug_report)
         sidebar_layout.addWidget(self.btn_bug)
 
-        sidebar_scroll = QScrollArea()
         sidebar_scroll.setWidget(sidebar)
         splitter.addWidget(sidebar_scroll)
 
