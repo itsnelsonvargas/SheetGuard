@@ -134,7 +134,6 @@ class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("SheetGuard")
-        self.resize(1280, 800)
 
         self._rule_service = RuleService()
         self._rule_set: RuleSet | None = None
@@ -570,5 +569,5 @@ def run_app() -> None:
     app = QApplication(sys.argv)
     apply_theme(app, dark=True)
     window = MainWindow()
-    window.show()
+    window.showMaximized()
     sys.exit(app.exec())
