@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pandas as pd
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import (
     QHBoxLayout,
@@ -75,6 +75,7 @@ class FrozenTable(QTableWidget):
 
 class DataTableWidget(QWidget):
     """Table with search/filter for preview and results."""
+    cell_changed = Signal(int, str, str)  # original_row_index, column_name, new_value
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -106,9 +107,11 @@ class DataTableWidget(QWidget):
         self._table.setAlternatingRowColors(True)
         self._table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self._table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
+        self._table.setEditTriggers(QTableWidget.EditTrigger.DoubleClicked | QTableWidget.EditTrigger.EditKeyPressed)
         self._table.setMouseTracking(True)
         self._table.cellEntered.connect(self._on_cell_entered)
         self._table._frozen_table.cellEntered.connect(self._on_cell_entered)
+        self._table.itemChanged.connect(self._on_item_changed)
         layout.addWidget(self._table)
 
         self._df: pd.DataFrame | None = None
@@ -118,6 +121,17 @@ class DataTableWidget(QWidget):
         self._hidden_columns: set[str] = set()
         self._freeze_first_column: bool = False
         self._sorting_enabled: bool = True
+        self._editable_columns: set[str] = set()
+        self._manual_edits: set[tuple[int, str]] = set()  # (original_df_index, column_name)
+
+    def set_editable_columns(self, columns: list[str]) -> None:
+        """Define which columns should be user-editable."""
+        self._editable_columns = set(columns)
+        if self._editable_columns:
+            # When editing is allowed, we want to select specific items, not entire rows
+            self._table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectItems)
+        else:
+            self._table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
 
     def set_sorting_enabled(self, enabled: bool) -> None:
         """Enable or disable sorting for this table."""
@@ -225,10 +239,12 @@ class DataTableWidget(QWidget):
         self._df = df.copy() if df is not None else None
         self._action_col_name = action_column
         self._action_callback = on_action
+        self._manual_edits.clear()  # Clear edit history for new datasets
         self._search.clear()
         self._render(df)
 
     def _render(self, df: pd.DataFrame | None) -> None:
+        self._table.blockSignals(True)
         self._table.setSortingEnabled(False)
         self._table.clear()
         if self._table._frozen_enabled:
@@ -310,7 +326,22 @@ class DataTableWidget(QWidget):
             for c, col in enumerate(df.columns):
                 val = coerce_cell(df.iloc[r, c])
                 item = QTableWidgetItem(str(val))
-                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                
+                # Store original index to map back during edits/filtering
+                original_df_idx = df.index[r]
+                item.setData(Qt.ItemDataRole.UserRole, original_df_idx)
+
+                if col in self._editable_columns:
+                    item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
+                else:
+                    item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                
+                # Apply highlight for manual edits
+                if (original_df_idx, col) in self._manual_edits:
+                    item.setForeground(QColor("#10B981"))  # Success Green
+                    font = item.font()
+                    font.setBold(True)
+                    item.setFont(font)
                 
                 # Center align data cells
                 item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -349,6 +380,46 @@ class DataTableWidget(QWidget):
             
         if self._sorting_enabled:
             self._table.setSortingEnabled(True)
+        self._table.blockSignals(False)
+
+    def _on_item_changed(self, item: QTableWidgetItem) -> None:
+        """Handle manual cell edits."""
+        if self._df is None:
+            return
+
+        col_idx = item.column()
+        header = self._table.horizontalHeaderItem(col_idx)
+        if not header:
+            return
+            
+        column_name = header.text()
+        
+        if column_name in self._editable_columns:
+            original_idx = item.data(Qt.ItemDataRole.UserRole)
+            new_value = item.text()
+            
+            # CRITICAL: Only proceed if the value has actually changed.
+            # This prevents hover background changes from triggering "edit" logic.
+            current_val = str(coerce_cell(self._df.at[original_idx, column_name]))
+            if new_value == current_val:
+                return
+
+            # Track this as a manual edit for visual highlighting
+            self._manual_edits.add((original_idx, column_name))
+            
+            # Update internal item appearance immediately
+            item.setForeground(QColor("#10B981"))
+            font = item.font()
+            font.setBold(True)
+            item.setFont(font)
+            
+            # Update the internal DataFrame so the edit persists across sorts/filters
+            try:
+                self._df.at[original_idx, column_name] = new_value
+            except Exception as exc:
+                print(f"DataTableWidget: Failed to update internal DF: {exc}")
+                
+            self.cell_changed.emit(original_idx, column_name, new_value)
 
     def _apply_filter(self, text: str) -> None:
         if self._df is None:

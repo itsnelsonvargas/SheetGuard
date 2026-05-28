@@ -26,6 +26,7 @@ class ResultsView(QWidget):
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
+        self._result: ProcessingResult | None = None
         layout = QVBoxLayout(self)
 
         self.summary = SummaryCards()
@@ -36,6 +37,8 @@ class ResultsView(QWidget):
         self.summary_table = DataTableWidget()
         self.summary_table.set_sorting_enabled(False)
         self.errors_table = DataTableWidget()
+        self.errors_table.set_editable_columns(["cleaned_value"])
+        self.errors_table.cell_changed.connect(self._on_error_fixed)
         self.duplicates_table = DataTableWidget()
 
         self.tabs.addTab(self.preview_table, "Preview")
@@ -54,6 +57,7 @@ class ResultsView(QWidget):
                 pass
 
     def show_result(self, result: ProcessingResult) -> None:
+        self._result = result
         self.summary.update_counts(
             errors=result.error_count,
             warnings=result.warning_count,
@@ -72,6 +76,43 @@ class ResultsView(QWidget):
     def show_preview(self, df: pd.DataFrame, rule_set: RuleSet | None = None) -> None:
         self.preview_table.set_dataframe(df)
         self.summary_table.set_dataframe(self._generate_column_summary(df, rule_set))
+
+    def _on_error_fixed(self, issue_df_idx: int, col_name: str, new_val: str) -> None:
+        """Handle manual correction of a validation error from the errors table."""
+        if not self._result or col_name != "cleaned_value":
+            return
+
+        try:
+            # issue_df_idx is the original index in the issues list (from UserRole)
+            issue = self._result.issues[issue_df_idx]
+            row_idx = issue.row_index
+            
+            from sheetguard.utils.column_utils import resolve_column_name
+            actual_col = resolve_column_name(self._result.cleaned_df, issue.column)
+            
+            # 1. Update the master Cleaned DataFrame
+            self._result.cleaned_df.at[row_idx, actual_col] = new_val
+            
+            # 2. Update the issue object itself
+            issue.cleaned_value = new_val
+            
+            # 3. Refresh Preview & Summary tabs
+            # We don't refresh errors_table here because it already updated itself locally
+            # and marked the cell as edited (green).
+            self.preview_table.set_dataframe(self._result.cleaned_df)
+            self.summary_table.set_dataframe(
+                self._generate_column_summary(self._result.cleaned_df, self._result.rule_set)
+            )
+            
+            # 4. Update status message
+            main_win = self.window()
+            if hasattr(main_win, "status"):
+                main_win.status.showMessage(f"Manual correction saved for row {row_idx + 1}", 3000)
+                
+        except Exception as exc:
+            import traceback
+            traceback.print_exc()
+            print(f"ResultsView: Failed to update manual correction: {exc}")
 
     def reset(self) -> None:
         self.summary.reset()
