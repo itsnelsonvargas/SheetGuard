@@ -173,7 +173,7 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.file_drop)
 
         file_btns = QHBoxLayout()
-        btn_browse = QPushButton("Browse File...")
+        btn_browse = QPushButton("📂 Browse File...")
         btn_browse.setObjectName("secondary")
         btn_browse.clicked.connect(self._browse_file)
         file_btns.addWidget(btn_browse)
@@ -191,12 +191,12 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.library_list)
 
         lib_btns = QHBoxLayout()
-        self.btn_import_rule = QPushButton("Import")
-        self.btn_export_rule = QPushButton("Export")
-        self.btn_clone_rule = QPushButton("Clone")
-        self.btn_delete_rule = QPushButton("Delete")
+        self.btn_import_rule = QPushButton("📥 Import")
+        self.btn_export_rule = QPushButton("📤 Export")
+        self.btn_clone_rule = QPushButton("📋 Clone")
+        self.btn_delete_rule = QPushButton("🗑️ Delete")
         self.btn_delete_rule.setObjectName("danger")
-        self.btn_change_lib = QPushButton("Change Folder...")
+        self.btn_change_lib = QPushButton("📁 Change Folder...")
         for b in (self.btn_import_rule, self.btn_export_rule, self.btn_clone_rule, self.btn_delete_rule, self.btn_change_lib):
             lib_btns.addWidget(b)
         sidebar_layout.addLayout(lib_btns)
@@ -207,7 +207,7 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.rule_builder)
 
         sidebar_layout.addWidget(QLabel("Processing"))
-        self.btn_process = QPushButton("Run Clean & Validate")
+        self.btn_process = QPushButton("⚡ Run Clean & Validate")
         sidebar_layout.addWidget(self.btn_process)
 
         self.progress = QProgressBar()
@@ -220,16 +220,16 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.progress)
 
         sidebar_layout.addWidget(QLabel("Export"))
-        self.btn_export_full = QPushButton("Export Full Report")
-        self.btn_export_clean = QPushButton("Export Cleaned Data")
-        self.btn_export_errors = QPushButton("Export Validation Report")
-        self.btn_export_dups = QPushButton("Export Duplicate Report")
+        self.btn_export_full = QPushButton("📊 Export Full Report")
+        self.btn_export_clean = QPushButton("🧹 Export Cleaned Data")
+        self.btn_export_errors = QPushButton("⚠️ Export Validation Report")
+        self.btn_export_dups = QPushButton("👯 Export Duplicate Report")
         sidebar_layout.addWidget(self.btn_export_full)
         sidebar_layout.addWidget(self.btn_export_clean)
         sidebar_layout.addWidget(self.btn_export_errors)
         sidebar_layout.addWidget(self.btn_export_dups)
 
-        self.btn_theme = QPushButton("Dark Mode" if self._dark_mode else "Light Mode")
+        self.btn_theme = QPushButton("🌙 Dark Mode" if self._dark_mode else "☀️ Light Mode")
         self.btn_theme.setObjectName("theme_toggle")
         self.btn_theme.setCheckable(True)
         self.btn_theme.setChecked(self._dark_mode)
@@ -549,6 +549,7 @@ class MainWindow(QMainWindow):
 
     def _toggle_theme(self) -> None:
         self._dark_mode = self.btn_theme.isChecked()
+        self.btn_theme.setText("🌙 Dark Mode" if self._dark_mode else "☀️ Light Mode")
         app = QApplication.instance()
         if isinstance(app, QApplication):
             apply_theme(app, self._dark_mode)
