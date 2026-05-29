@@ -37,14 +37,14 @@ class AIInsightsDialog(QDialog):
         
         btn_row = QHBoxLayout()
         
-        btn_export = QPushButton("Export to File...")
+        btn_export = QPushButton("📄 Export to File...")
         btn_export.setObjectName("secondary")
         btn_export.clicked.connect(self._export_review)
         btn_row.addWidget(btn_export)
         
         btn_row.addStretch()
         
-        btn_close = QPushButton("Close")
+        btn_close = QPushButton("✖ Close")
         btn_close.setObjectName("success")
         btn_close.clicked.connect(self.accept)
         btn_row.addWidget(btn_close)

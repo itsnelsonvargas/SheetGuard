@@ -104,17 +104,17 @@ class BugReportDialog(QDialog):
         btn_row = QHBoxLayout()
         btn_row.addStretch()
 
-        btn_cancel = QPushButton("Cancel")
+        btn_cancel = QPushButton("✖ Cancel")
         btn_cancel.setObjectName("secondary")
         btn_cancel.clicked.connect(self.reject)
         btn_row.addWidget(btn_cancel)
 
-        btn_copy = QPushButton("Copy to Clipboard")
+        btn_copy = QPushButton("📋 Copy to Clipboard")
         btn_copy.setObjectName("secondary")
         btn_copy.clicked.connect(self._copy_to_clipboard)
         btn_row.addWidget(btn_copy)
 
-        btn_gmail = QPushButton("Open in Gmail")
+        btn_gmail = QPushButton("📧 Open in Gmail")
         btn_gmail.setObjectName("success")
         btn_gmail.clicked.connect(self._open_in_gmail)
         btn_row.addWidget(btn_gmail)

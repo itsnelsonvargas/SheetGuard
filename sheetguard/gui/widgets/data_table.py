@@ -383,7 +383,10 @@ class DataTableWidget(QWidget):
                     self._table._frozen_table.setItem(r, 0, frozen_item)
             
             if self._action_col_name:
-                btn = QPushButton(self._action_col_name)
+                btn_text = self._action_col_name
+                if self._action_col_name == "Delete":
+                    btn_text = "🗑️ Delete"
+                btn = QPushButton(btn_text)
                 if "Delete" in self._action_col_name:
                     btn.setObjectName("danger")
                 

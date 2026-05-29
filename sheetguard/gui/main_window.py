@@ -72,8 +72,8 @@ class StartRowDialog(QDialog):
         layout.addLayout(row_layout)
 
         btn_layout = QHBoxLayout()
-        btn_ok = QPushButton("Load File")
-        btn_cancel = QPushButton("Cancel")
+        btn_ok = QPushButton("📂 Load File")
+        btn_cancel = QPushButton("✖ Cancel")
         btn_ok.clicked.connect(self.accept)
         btn_cancel.clicked.connect(self.reject)
         btn_layout.addWidget(btn_ok)
@@ -134,7 +134,7 @@ class HelpDialog(QDialog):
         )
         layout.addWidget(guide)
 
-        btn_close = QPushButton("Close")
+        btn_close = QPushButton("✖ Close")
         btn_close.clicked.connect(self.accept)
         layout.addWidget(btn_close)
 
@@ -162,11 +162,11 @@ class RulePreviewDialog(QDialog):
         layout.addWidget(preview)
 
         btn_row = QHBoxLayout()
-        btn_run = QPushButton("Run Full Clean")
+        btn_run = QPushButton("⚡ Run Full Clean")
         btn_run.clicked.connect(self._request_run)
         btn_row.addWidget(btn_run)
 
-        btn_close = QPushButton("Close")
+        btn_close = QPushButton("✖ Close")
         btn_close.setObjectName("secondary")
         btn_close.clicked.connect(self.accept)
         btn_row.addWidget(btn_close)
@@ -325,7 +325,7 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.rule_builder)
 
         sidebar_layout.addWidget(QLabel("PROCESSING"))
-        self.btn_preview_rules = QPushButton("Preview Rule Test")
+        self.btn_preview_rules = QPushButton("🧪 Preview Rule Test")
         self.btn_preview_rules.setObjectName("secondary")
         self.btn_preview_rules.setToolTip("Test the active rules on the first 25 rows")
         sidebar_layout.addWidget(self.btn_preview_rules)
@@ -357,7 +357,7 @@ class MainWindow(QMainWindow):
             sidebar_layout.addWidget(b)
 
         sidebar_layout.addSpacing(10)
-        self.btn_help = QPushButton("How to Use")
+        self.btn_help = QPushButton("❔ How to Use")
         self.btn_help.setObjectName("secondary")
         self.btn_help.setToolTip("Learn the workflow and app terms")
         sidebar_layout.addWidget(self.btn_help)
