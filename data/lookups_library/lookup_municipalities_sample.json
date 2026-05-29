@@ -1,0 +1,14 @@
+{
+  "name": "Lookup Municipalities Sample",
+  "source_type": "csv",
+  "stored_path": "data\\lookups_library\\lookup_municipalities_sample.csv",
+  "key_column": "province",
+  "sheet": null,
+  "match_mode": "exact",
+  "case_sensitive": true,
+  "trim_spaces": true,
+  "fuzzy_threshold": 90.0,
+  "original_path": "C:\\Users\\user\\masterlist-cleaner\\data\\lookups_library\\lookup_municipalities_sample_source.csv",
+  "created_at": "2026-05-29T10:13:17",
+  "updated_at": "2026-05-29T10:13:17"
+}

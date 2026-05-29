@@ -49,9 +49,19 @@ class LookupTableManagerDialog(QDialog):
     def _build_ui(self) -> None:
         root = QVBoxLayout(self)
 
-        intro = QLabel("Manage reusable lookup tables for validating columns against reference lists.")
+        intro = QLabel(
+            "Use lookup tables as reference lists for validation, such as valid schools, municipalities, statuses, or grade levels."
+        )
         intro.setStyleSheet("font-weight: 600; color: #64748B;")
+        intro.setWordWrap(True)
         root.addWidget(intro)
+
+        steps = QLabel(
+            "Workflow: 1. Choose a source file  2. Pick the sheet if needed  3. Select the key column  4. Preview values  5. Save the lookup"
+        )
+        steps.setStyleSheet("color: #64748B; font-size: 11px;")
+        steps.setWordWrap(True)
+        root.addWidget(steps)
 
         splitter = QSplitter()
         root.addWidget(splitter)
@@ -59,15 +69,22 @@ class LookupTableManagerDialog(QDialog):
         left = QWidget()
         left_layout = QVBoxLayout(left)
         left_layout.addWidget(QLabel("Saved Lookups"))
+        saved_help = QLabel("Saved lookups are stored in the app library and can be reused by rule sets.")
+        saved_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        saved_help.setWordWrap(True)
+        left_layout.addWidget(saved_help)
         self.saved_list = QListWidget()
+        self.saved_list.setToolTip("Select a saved lookup to view its settings or preview its stored values.")
         self.saved_list.currentRowChanged.connect(self._on_saved_selected)
         left_layout.addWidget(self.saved_list)
 
         saved_btns = QHBoxLayout()
         self.btn_preview_saved = QPushButton("👁 Preview")
         self.btn_preview_saved.setObjectName("secondary")
+        self.btn_preview_saved.setToolTip("Show the normalized values that were saved for the selected lookup.")
         self.btn_delete_saved = QPushButton("🗑️ Delete")
         self.btn_delete_saved.setObjectName("danger")
+        self.btn_delete_saved.setToolTip("Remove the selected lookup from the app library.")
         self.btn_preview_saved.clicked.connect(self._preview_selected_saved)
         self.btn_delete_saved.clicked.connect(self._delete_selected_saved)
         saved_btns.addWidget(self.btn_preview_saved)
@@ -80,11 +97,19 @@ class LookupTableManagerDialog(QDialog):
 
         import_group = QGroupBox("Import Lookup Source")
         import_layout = QFormLayout(import_group)
+        import_help = QLabel(
+            "A lookup source can be CSV, TSV, TXT, XLSX, XLS, or JSON. The key column is the list of valid values SheetGuard will check against."
+        )
+        import_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        import_help.setWordWrap(True)
+        import_layout.addRow("", import_help)
         file_row = QHBoxLayout()
         self.source_path = QLineEdit()
         self.source_path.setReadOnly(True)
-        self.source_path.setPlaceholderText("Choose CSV, TSV, TXT, XLSX, or XLS")
+        self.source_path.setPlaceholderText("Choose CSV, TSV, TXT, XLSX, XLS, or JSON")
+        self.source_path.setToolTip("The source file to import. SheetGuard copies and normalizes it into the app lookup library.")
         self.btn_choose_file = QPushButton("📂 Choose File")
+        self.btn_choose_file.setToolTip("Browse for a lookup source file to import.")
         self.btn_choose_file.clicked.connect(self._choose_file)
         file_row.addWidget(self.source_path)
         file_row.addWidget(self.btn_choose_file)
