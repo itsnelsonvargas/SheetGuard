@@ -291,11 +291,11 @@ class MainWindow(QMainWindow):
 
         sidebar_scroll = QScrollArea()
         sidebar_scroll.setWidgetResizable(True)
-        sidebar_scroll.setMinimumWidth(400)
-        sidebar_scroll.setMaximumWidth(500)
-        sidebar_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        sidebar_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        sidebar_scroll.setFrameShape(QFrame.NoFrame)
+        sidebar_scroll.setSizeAdjustPolicy(QScrollArea.SizeAdjustPolicy.AdjustToContents)
+        sidebar_scroll.setMinimumWidth(380)
+        sidebar_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        sidebar_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        sidebar_scroll.setFrameShape(QFrame.Shape.NoFrame)
 
         sidebar = QFrame()
         sidebar.setObjectName("sidebar")
