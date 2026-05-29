@@ -198,22 +198,44 @@ class ProcessingWorker(QThread):
     finished_ok = Signal(object)
     failed = Signal(str)
 
-    def __init__(self, rule_set: RuleSet, file_path: str) -> None:
+    def __init__(self, rule_set: RuleSet, source: object) -> None:
         super().__init__()
         self.rule_set = rule_set
-        self.file_path = file_path
+        self.source = source
 
     def run(self) -> None:
         try:
+            from sheetguard.services.pipeline import ProcessingPipeline
             pipeline = ProcessingPipeline(self.rule_set)
 
             def on_progress(pct: int, msg: str) -> None:
                 self.progress.emit(pct, msg)
 
-            result = pipeline.run(self.file_path, progress=on_progress)
+            result = pipeline.run(self.source, progress=on_progress)
             self.finished_ok.emit(result)
         except Exception as exc:
             logger.exception("Processing failed")
+            self.failed.emit(str(exc))
+
+
+class FileLoadWorker(QThread):
+    """Background thread for loading files."""
+
+    finished_ok = Signal(object, str)
+    failed = Signal(str)
+
+    def __init__(self, file_path: str, rule_set: RuleSet | None) -> None:
+        super().__init__()
+        self.file_path = file_path
+        self.rule_set = rule_set
+
+    def run(self) -> None:
+        try:
+            from sheetguard.services.file_loader import FileLoader
+            df = FileLoader.load(self.file_path, self.rule_set)
+            self.finished_ok.emit(df, self.file_path)
+        except Exception as exc:
+            logger.exception("File load failed")
             self.failed.emit(str(exc))
 
 
@@ -248,8 +270,10 @@ class MainWindow(QMainWindow):
         self._rule_service = RuleService()
         self._rule_set: RuleSet | None = None
         self._file_path: str | None = None
+        self._source_df = None
         self._result: ProcessingResult | None = None
         self._worker: ProcessingWorker | None = None
+        self._load_worker: FileLoadWorker | None = None
         self._dark_mode = True
 
         self._build_ui()
@@ -469,9 +493,6 @@ class MainWindow(QMainWindow):
             self._on_file_selected(path)
 
     def _on_file_selected(self, path: str) -> None:
-        self._file_path = path
-        self.file_drop.set_file(path)
-        
         # Ask user which row to start from
         dialog = StartRowDialog(self)
         if dialog.exec() != QDialog.Accepted:
@@ -485,26 +506,39 @@ class MainWindow(QMainWindow):
         if self._rule_set:
             self._rule_set.header_row = header_row
         
-        self.status.showMessage(f"File: {Path(path).name} (data starts at row {start_row})")
-        try:
-            from sheetguard.services.file_loader import FileLoader
+        self.status.showMessage(f"Loading {Path(path).name} (data starts at row {start_row})...")
+        self.processing_overlay.show_processing("Loading File...")
+        self._load_worker = FileLoadWorker(path, self._rule_set)
+        self._load_worker.finished_ok.connect(self._on_file_loaded)
+        self._load_worker.failed.connect(self._on_file_load_failed)
+        self._load_worker.start()
 
-            df = FileLoader.load(path, self._rule_set)
+    @Slot(object, str)
+    def _on_file_loaded(self, df, path: str) -> None:
+        self.processing_overlay.hide()
+        self._file_path = path
+        self._source_df = df
+        self.status.showMessage(f"File loaded: {Path(path).name} ({len(df)} rows)")
+        self.file_drop.set_file(path)
+        try:
             self.results_view.show_preview(df, self._rule_set)
         except Exception as exc:
             QMessageBox.warning(self, "Preview", f"Could not preview file: {exc}")
 
+    @Slot(str)
+    def _on_file_load_failed(self, message: str) -> None:
+        self.processing_overlay.hide()
+        self._file_path = None
+        self._source_df = None
+        self.file_drop.clear()
+        QMessageBox.warning(self, "Load Error", f"Could not load file:\n{message}")
+
     def _run_ai_review(self) -> None:
-        if not self._file_path:
-            QMessageBox.warning(self, "AI Review", "Please select a file first.")
+        if self._source_df is None:
+            QMessageBox.warning(self, "AI Review", "Please select and load a file first.")
             return
             
-        try:
-            from sheetguard.services.file_loader import FileLoader
-            df = FileLoader.load(self._file_path, self._rule_set)
-        except Exception as exc:
-            QMessageBox.warning(self, "AI Review", f"Could not load file: {exc}")
-            return
+        df = self._source_df
             
         self.btn_ai_review.setEnabled(False)
         self.btn_ai_review.setText("🤖 Reviewing...")
@@ -536,8 +570,8 @@ class MainWindow(QMainWindow):
         self.status.showMessage("AI Review failed.")
 
     def _preview_rule_test(self) -> None:
-        if not self._file_path:
-            QMessageBox.warning(self, "Preview Rule Test", "Please select a file first.")
+        if self._source_df is None:
+            QMessageBox.warning(self, "Preview Rule Test", "Please select and load a file first.")
             return
 
         self._rule_set = self.rule_builder.get_rule_set()
@@ -556,10 +590,8 @@ class MainWindow(QMainWindow):
             return
 
         try:
-            from sheetguard.services.file_loader import FileLoader
-
             sample_size = 25
-            source_df = FileLoader.load(self._file_path, self._rule_set)
+            source_df = self._source_df
             sample_df = source_df.head(sample_size).copy()
             if sample_df.empty:
                 QMessageBox.warning(self, "Preview Rule Test", "The selected file has no rows to preview.")
