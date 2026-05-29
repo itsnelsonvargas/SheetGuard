@@ -7,6 +7,8 @@ build/
 logs/
 data/rules_library/*.json
 !data/rules_library/.gitkeep
+data/lookups_library/*
+!data/lookups_library/.gitkeep
 .DS_Store
 *.egg-info/
 .env
