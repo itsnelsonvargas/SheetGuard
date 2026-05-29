@@ -74,9 +74,11 @@ class LookupTableManagerDialog(QDialog):
         saved_help.setWordWrap(True)
         left_layout.addWidget(saved_help)
         self.saved_list = QListWidget()
+        self.saved_list.setObjectName("savedLookups")
         self.saved_list.setToolTip("Select a saved lookup to view its settings or preview its stored values.")
         self.saved_list.currentRowChanged.connect(self._on_saved_selected)
         left_layout.addWidget(self.saved_list)
+
 
         saved_btns = QHBoxLayout()
         self.btn_preview_saved = QPushButton("👁 Preview")
@@ -311,4 +313,5 @@ class LookupTableManagerDialog(QDialog):
         for r in range(len(df)):
             for c, col in enumerate(df.columns):
                 self.preview_table.setItem(r, c, QTableWidgetItem(str(coerce_cell(df.iloc[r][col]))))
+
         self.preview_table.resizeColumnsToContents()

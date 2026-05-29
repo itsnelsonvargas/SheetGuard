@@ -91,32 +91,37 @@ QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
 }
 QListWidget#ruleLibrary,
 QListWidget#ruleColumns,
-QListWidget#duplicateRules {
+QListWidget#duplicateRules,
+QListWidget#savedLookups {
     padding: 4px;
     outline: none;
 }
 QListWidget#ruleLibrary::item,
 QListWidget#ruleColumns::item,
-QListWidget#duplicateRules::item {
+QListWidget#duplicateRules::item,
+QListWidget#savedLookups::item {
     border-radius: 5px;
     padding: 8px 10px;
     margin: 1px 0;
 }
 QListWidget#ruleLibrary::item:hover,
 QListWidget#ruleColumns::item:hover,
-QListWidget#duplicateRules::item:hover {
+QListWidget#duplicateRules::item:hover,
+QListWidget#savedLookups::item:hover {
     background-color: rgba(37, 99, 235, 20);
 }
 QListWidget#ruleLibrary::item:selected,
 QListWidget#ruleColumns::item:selected,
-QListWidget#duplicateRules::item:selected {
+QListWidget#duplicateRules::item:selected,
+QListWidget#savedLookups::item:selected {
     background-color: #DBEAFE;
     color: #0F172A;
     font-weight: 700;
 }
 QListWidget#ruleLibrary::item:selected:!active,
 QListWidget#ruleColumns::item:selected:!active,
-QListWidget#duplicateRules::item:selected:!active {
+QListWidget#duplicateRules::item:selected:!active,
+QListWidget#savedLookups::item:selected:!active {
     background-color: #DBEAFE;
     color: #0F172A;
 }
@@ -286,32 +291,37 @@ QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
 }
 QListWidget#ruleLibrary,
 QListWidget#ruleColumns,
-QListWidget#duplicateRules {
+QListWidget#duplicateRules,
+QListWidget#savedLookups {
     padding: 4px;
     outline: none;
 }
 QListWidget#ruleLibrary::item,
 QListWidget#ruleColumns::item,
-QListWidget#duplicateRules::item {
+QListWidget#duplicateRules::item,
+QListWidget#savedLookups::item {
     border-radius: 5px;
     padding: 8px 10px;
     margin: 1px 0;
 }
 QListWidget#ruleLibrary::item:hover,
 QListWidget#ruleColumns::item:hover,
-QListWidget#duplicateRules::item:hover {
+QListWidget#duplicateRules::item:hover,
+QListWidget#savedLookups::item:hover {
     background-color: rgba(59, 130, 246, 45);
 }
 QListWidget#ruleLibrary::item:selected,
 QListWidget#ruleColumns::item:selected,
-QListWidget#duplicateRules::item:selected {
+QListWidget#duplicateRules::item:selected,
+QListWidget#savedLookups::item:selected {
     background-color: #2563EB;
     color: #F8FAFC;
     font-weight: 700;
 }
 QListWidget#ruleLibrary::item:selected:!active,
 QListWidget#ruleColumns::item:selected:!active,
-QListWidget#duplicateRules::item:selected:!active {
+QListWidget#duplicateRules::item:selected:!active,
+QListWidget#savedLookups::item:selected:!active {
     background-color: #2563EB;
     color: #F8FAFC;
 }
