@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (
     QSpinBox,
     QSplitter,
     QStatusBar,
+    QTextBrowser,
     QVBoxLayout,
     QWidget,
 )
@@ -79,6 +80,60 @@ class StartRowDialog(QDialog):
     def get_start_row(self) -> int:
         """Return the selected start row (1-indexed)."""
         return self.spinbox.value()
+
+
+class HelpDialog(QDialog):
+    """In-app guide for common SheetGuard workflows and terms."""
+
+    def __init__(self, parent=None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("How to Use SheetGuard")
+        self.setMinimumSize(620, 620)
+        self.setModal(True)
+
+        layout = QVBoxLayout(self)
+
+        guide = QTextBrowser()
+        guide.setOpenExternalLinks(False)
+        guide.setHtml(
+            """
+            <h1>How to Use SheetGuard</h1>
+
+            <h2>Basic workflow</h2>
+            <ol>
+              <li><b>Choose a rule</b> from the Rule Library, or build one in Rule Builder.</li>
+              <li><b>Upload a spreadsheet</b> using Browse File or drag and drop.</li>
+              <li><b>Select the Start Row</b> when prompted so SheetGuard reads the right headers.</li>
+              <li><b>Run Clean &amp; Validate</b> to clean data and find issues.</li>
+              <li><b>Review the results</b>, then export the report you need.</li>
+            </ol>
+
+            <h2>Terms used in the app</h2>
+            <p><b>Rule Library</b> - saved rule sets you can select, import, export, clone, or delete.</p>
+            <p><b>Rule Set</b> - a named collection of column rules and duplicate check rules.</p>
+            <p><b>Rule Builder</b> - the panel where you create or edit the active rule set.</p>
+            <p><b>Columns</b> - the spreadsheet fields SheetGuard should clean or validate.</p>
+            <p><b>Column Rule</b> - settings for one column, such as required, email check, allowed values, regex, or lookup.</p>
+            <p><b>Cleaning</b> - automatic fixes applied before validation, such as trimming spaces, changing case, or normalizing dates.</p>
+            <p><b>Validation Rules</b> - checks that flag data problems after cleaning.</p>
+            <p><b>Required</b> - marks a column as mandatory. Empty cells are reported.</p>
+            <p><b>Warning Only</b> - reports issues as warnings instead of errors.</p>
+            <p><b>Error</b> - a data issue that should usually be fixed before using the file.</p>
+            <p><b>Warning</b> - a suspicious value that may need review but may still be acceptable.</p>
+            <p><b>Lookup Table</b> - a reference list used to check whether values are valid.</p>
+            <p><b>Duplicate Check Rules</b> - column combinations used to detect repeated records.</p>
+            <p><b>AI Review</b> - an optional review that summarizes possible data quality issues.</p>
+            <p><b>Export Full Report</b> - saves cleaned data, validation findings, and duplicate findings together.</p>
+            <p><b>Export Cleaned Data</b> - saves only the cleaned spreadsheet data.</p>
+            <p><b>Export Validation Report</b> - saves only validation errors and warnings.</p>
+            <p><b>Export Duplicate Report</b> - saves duplicate groups found by duplicate check rules.</p>
+            """
+        )
+        layout.addWidget(guide)
+
+        btn_close = QPushButton("Close")
+        btn_close.clicked.connect(self.accept)
+        layout.addWidget(btn_close)
 
 
 class ProcessingWorker(QThread):
@@ -243,6 +298,11 @@ class MainWindow(QMainWindow):
             sidebar_layout.addWidget(b)
 
         sidebar_layout.addSpacing(10)
+        self.btn_help = QPushButton("How to Use")
+        self.btn_help.setObjectName("secondary")
+        self.btn_help.setToolTip("Learn the workflow and app terms")
+        sidebar_layout.addWidget(self.btn_help)
+
         self.btn_theme = QPushButton("🌙 Dark Mode" if self._dark_mode else "☀️ Light Mode")
         self.btn_theme.setObjectName("theme_toggle")
         self.btn_theme.setCheckable(True)
@@ -279,6 +339,7 @@ class MainWindow(QMainWindow):
         self.btn_export_clean.clicked.connect(lambda: self._export("cleaned"))
         self.btn_export_errors.clicked.connect(lambda: self._export("validation"))
         self.btn_export_dups.clicked.connect(lambda: self._export("duplicates"))
+        self.btn_help.clicked.connect(self._open_help)
         self.btn_theme.clicked.connect(self._toggle_theme)
 
     def _load_default_rule(self) -> None:
@@ -565,6 +626,11 @@ class MainWindow(QMainWindow):
     def _open_bug_report(self) -> None:
         """Open the bug report dialog."""
         dlg = BugReportDialog(self)
+        dlg.exec()
+
+    def _open_help(self) -> None:
+        """Open the in-app usage guide."""
+        dlg = HelpDialog(self)
         dlg.exec()
 
 
