@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pandas as pd
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
@@ -13,6 +14,7 @@ from PySide6.QtWidgets import (
     QFormLayout,
     QGroupBox,
     QHBoxLayout,
+    QHeaderView,
     QLabel,
     QLineEdit,
     QListWidget,
@@ -36,7 +38,7 @@ class LookupTableManagerDialog(QDialog):
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setWindowTitle("Lookup Table Manager")
-        self.setMinimumSize(960, 640)
+        self.setMinimumSize(1060, 700)
         self.setModal(True)
 
         self._service = LookupService()
@@ -46,70 +48,118 @@ class LookupTableManagerDialog(QDialog):
         self._build_ui()
         self._refresh_saved_lookups()
 
+    # ── UI Construction ──────────────────────────────────────────────
+
     def _build_ui(self) -> None:
         root = QVBoxLayout(self)
 
         intro = QLabel(
-            "Use lookup tables as reference lists for validation, such as valid schools, municipalities, statuses, or grade levels."
+            "Use lookup tables as reference lists for validation, such as valid schools, "
+            "municipalities, statuses, or grade levels."
         )
         intro.setStyleSheet("font-weight: 600; color: #64748B;")
         intro.setWordWrap(True)
         root.addWidget(intro)
 
-        steps = QLabel(
-            "Workflow: 1. Choose a source file  2. Pick the sheet if needed  3. Select the key column  4. Preview values  5. Save the lookup"
-        )
-        steps.setStyleSheet("color: #64748B; font-size: 11px;")
-        steps.setWordWrap(True)
-        root.addWidget(steps)
+        # ── Main horizontal splitter ─────────────────────────────────
+        main_splitter = QSplitter(Qt.Orientation.Horizontal)
+        root.addWidget(main_splitter, 1)
 
-        splitter = QSplitter()
-        root.addWidget(splitter)
-
+        # ── LEFT PANEL: Saved lookups + preview ──────────────────────
         left = QWidget()
         left_layout = QVBoxLayout(left)
-        left_layout.addWidget(QLabel("Saved Lookups"))
-        saved_help = QLabel("Saved lookups are stored in the app library and can be reused by rule sets.")
+        left_layout.setContentsMargins(0, 0, 0, 0)
+
+        # Saved lookups list
+        saved_header = QLabel("📚 Saved Lookups")
+        saved_header.setStyleSheet("font-weight: 700; font-size: 13px;")
+        left_layout.addWidget(saved_header)
+
+        saved_help = QLabel(
+            "Select a lookup to preview its values. "
+            "Saved lookups can be reused by rule sets."
+        )
         saved_help.setStyleSheet("color: #64748B; font-size: 11px;")
         saved_help.setWordWrap(True)
         left_layout.addWidget(saved_help)
+
         self.saved_list = QListWidget()
         self.saved_list.setObjectName("savedLookups")
-        self.saved_list.setToolTip("Select a saved lookup to view its settings or preview its stored values.")
+        self.saved_list.setToolTip(
+            "Select a saved lookup to view its settings and preview its stored values."
+        )
         self.saved_list.currentRowChanged.connect(self._on_saved_selected)
         left_layout.addWidget(self.saved_list)
 
-
+        # Buttons row
         saved_btns = QHBoxLayout()
-        self.btn_preview_saved = QPushButton("👁 Preview")
-        self.btn_preview_saved.setObjectName("secondary")
-        self.btn_preview_saved.setToolTip("Show the normalized values that were saved for the selected lookup.")
         self.btn_delete_saved = QPushButton("🗑️ Delete")
         self.btn_delete_saved.setObjectName("danger")
         self.btn_delete_saved.setToolTip("Remove the selected lookup from the app library.")
-        self.btn_preview_saved.clicked.connect(self._preview_selected_saved)
         self.btn_delete_saved.clicked.connect(self._delete_selected_saved)
-        saved_btns.addWidget(self.btn_preview_saved)
+        saved_btns.addStretch()
         saved_btns.addWidget(self.btn_delete_saved)
         left_layout.addLayout(saved_btns)
-        splitter.addWidget(left)
 
+        # ── Saved-lookup preview (below the list) ────────────────────
+        left_splitter = QSplitter(Qt.Orientation.Vertical)
+
+        # Top part: the list + buttons we just built
+        left_splitter.addWidget(left)
+
+        # Bottom part: preview of saved lookup
+        saved_preview_container = QWidget()
+        saved_preview_layout = QVBoxLayout(saved_preview_container)
+        saved_preview_layout.setContentsMargins(0, 4, 0, 0)
+
+        self.saved_preview_header = QLabel("Preview")
+        self.saved_preview_header.setStyleSheet("font-weight: 700; font-size: 13px;")
+        saved_preview_layout.addWidget(self.saved_preview_header)
+
+        self.saved_meta_label = QLabel("")
+        self.saved_meta_label.setStyleSheet("color: #64748B; font-size: 11px;")
+        self.saved_meta_label.setWordWrap(True)
+        saved_preview_layout.addWidget(self.saved_meta_label)
+
+        self.saved_preview_table = QTableWidget()
+        self.saved_preview_table.setObjectName("savedPreviewTable")
+        self.saved_preview_table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        self.saved_preview_table.horizontalHeader().setStretchLastSection(True)
+        self.saved_preview_table.setAlternatingRowColors(True)
+        saved_preview_layout.addWidget(self.saved_preview_table, 1)
+
+        left_splitter.addWidget(saved_preview_container)
+        left_splitter.setStretchFactor(0, 2)
+        left_splitter.setStretchFactor(1, 3)
+
+        main_splitter.addWidget(left_splitter)
+
+        # ── RIGHT PANEL: Import new lookup ───────────────────────────
         right = QWidget()
         right_layout = QVBoxLayout(right)
+        right_layout.setContentsMargins(0, 0, 0, 0)
+
+        import_header = QLabel("📥 Import New Lookup")
+        import_header.setStyleSheet("font-weight: 700; font-size: 13px;")
+        right_layout.addWidget(import_header)
 
         import_group = QGroupBox("Import Lookup Source")
         import_layout = QFormLayout(import_group)
         import_help = QLabel(
-            "A lookup source can be CSV, TSV, TXT, XLSX, XLS, or JSON. The key column is the list of valid values SheetGuard will check against."
+            "A lookup source can be CSV, TSV, TXT, XLSX, XLS, or JSON. "
+            "The key column is the list of valid values SheetGuard will check against."
         )
         import_help.setStyleSheet("color: #64748B; font-size: 11px;")
         import_help.setWordWrap(True)
         import_layout.addRow("", import_help)
+
         file_row = QHBoxLayout()
         self.source_path = QLineEdit()
         self.source_path.setReadOnly(True)
         self.source_path.setPlaceholderText("Choose CSV, TSV, TXT, XLSX, XLS, or JSON")
-        self.source_path.setToolTip("The source file to import. SheetGuard copies and normalizes it into the app lookup library.")
+        self.source_path.setToolTip(
+            "The source file to import. SheetGuard copies and normalizes it into the app lookup library."
+        )
         self.btn_choose_file = QPushButton("📂 Choose File")
         self.btn_choose_file.setToolTip("Browse for a lookup source file to import.")
         self.btn_choose_file.clicked.connect(self._choose_file)
@@ -147,11 +197,19 @@ class LookupTableManagerDialog(QDialog):
 
         right_layout.addWidget(import_group)
 
-        right_layout.addWidget(QLabel("Preview"))
-        self.preview_table = QTableWidget()
-        self.preview_table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
-        right_layout.addWidget(self.preview_table)
+        # Source file preview
+        source_preview_header = QLabel("Source Preview")
+        source_preview_header.setStyleSheet("font-weight: 700; font-size: 13px;")
+        right_layout.addWidget(source_preview_header)
 
+        self.source_preview_table = QTableWidget()
+        self.source_preview_table.setObjectName("sourcePreviewTable")
+        self.source_preview_table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        self.source_preview_table.horizontalHeader().setStretchLastSection(True)
+        self.source_preview_table.setAlternatingRowColors(True)
+        right_layout.addWidget(self.source_preview_table, 1)
+
+        # Action buttons
         action_row = QHBoxLayout()
         action_row.addStretch()
         self.btn_save = QPushButton("💾 Save Lookup")
@@ -163,8 +221,11 @@ class LookupTableManagerDialog(QDialog):
         action_row.addWidget(self.btn_close)
         right_layout.addLayout(action_row)
 
-        splitter.addWidget(right)
-        splitter.setStretchFactor(1, 1)
+        main_splitter.addWidget(right)
+        main_splitter.setStretchFactor(0, 2)
+        main_splitter.setStretchFactor(1, 3)
+
+    # ── File import slots ────────────────────────────────────────────
 
     def _choose_file(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
@@ -217,25 +278,40 @@ class LookupTableManagerDialog(QDialog):
             preview = self._source_df[[key]].head(100)
         else:
             preview = self._source_df.head(100)
-        self._set_preview(preview)
+        self._fill_table(self.source_preview_table, preview)
+
+    # ── Saved lookup slots ───────────────────────────────────────────
 
     def _refresh_saved_lookups(self) -> None:
         self.saved_list.clear()
         for entry in self._service.list_entries():
             self.saved_list.addItem(
-                f"{entry.name} | {entry.key_column} | {entry.match_mode} {entry.fuzzy_threshold:.0f}%"
+                f"{entry.name}  •  {entry.key_column}  •  {entry.match_mode} {entry.fuzzy_threshold:.0f}%"
             )
             self.saved_list.item(self.saved_list.count() - 1).setData(256, entry)
 
     def _on_saved_selected(self, row: int | None = None) -> None:
         item = self.saved_list.currentItem()
         if not item:
+            self._clear_saved_preview()
             return
         metadata = item.data(256)
         if isinstance(metadata, LookupMetadata):
-            self._show_metadata(metadata)
+            self._show_saved_preview(metadata)
 
-    def _show_metadata(self, metadata: LookupMetadata) -> None:
+    def _show_saved_preview(self, metadata: LookupMetadata) -> None:
+        """Load and display saved lookup values + metadata summary."""
+        # Update metadata summary
+        parts = [
+            f"<b>{metadata.name}</b>",
+            f"Column: <b>{metadata.key_column}</b>",
+            f"Match: <b>{metadata.match_mode}</b> ({metadata.fuzzy_threshold:.0f}%)",
+            f"Case-sensitive: <b>{'Yes' if metadata.case_sensitive else 'No'}</b>",
+            f"Trim spaces: <b>{'Yes' if metadata.trim_spaces else 'No'}</b>",
+        ]
+        self.saved_meta_label.setText("  │  ".join(parts))
+
+        # Update form fields
         self.lookup_name.setText(metadata.name)
         self.key_column.clear()
         self.key_column.addItem(metadata.key_column)
@@ -244,17 +320,26 @@ class LookupTableManagerDialog(QDialog):
         self.case_sensitive.setChecked(metadata.case_sensitive)
         self.trim_spaces.setChecked(metadata.trim_spaces)
 
-    def _preview_selected_saved(self) -> None:
-        item = self.saved_list.currentItem()
-        if not item:
-            return
-        metadata = item.data(256)
-        if not isinstance(metadata, LookupMetadata):
-            return
+        # Load preview data
         try:
-            self._set_preview(self._service.preview_saved(metadata))
+            df = self._service.preview_saved(metadata)
+            row_count = len(df)
+            self.saved_preview_header.setText(
+                f"Preview  —  {row_count} value{'s' if row_count != 1 else ''}"
+            )
+            self._fill_table(self.saved_preview_table, df)
         except Exception as exc:
-            QMessageBox.critical(self, "Preview Lookup", str(exc))
+            self.saved_preview_header.setText("Preview")
+            self.saved_meta_label.setText(f"⚠ Could not load preview: {exc}")
+            self._fill_table(self.saved_preview_table, pd.DataFrame())
+
+    def _clear_saved_preview(self) -> None:
+        """Reset the saved-lookup preview area."""
+        self.saved_preview_header.setText("Preview")
+        self.saved_meta_label.setText("Select a saved lookup above to preview its values.")
+        self.saved_preview_table.clear()
+        self.saved_preview_table.setRowCount(0)
+        self.saved_preview_table.setColumnCount(0)
 
     def _delete_selected_saved(self) -> None:
         item = self.saved_list.currentItem()
@@ -271,7 +356,9 @@ class LookupTableManagerDialog(QDialog):
         if ans == QMessageBox.StandardButton.Yes:
             self._service.delete(metadata.name)
             self._refresh_saved_lookups()
-            self.preview_table.clear()
+            self._clear_saved_preview()
+
+    # ── Save lookup ──────────────────────────────────────────────────
 
     def _save_lookup(self) -> None:
         if self._source_path is None or self._source_df is None:
@@ -300,18 +387,20 @@ class LookupTableManagerDialog(QDialog):
         except Exception as exc:
             QMessageBox.critical(self, "Save Lookup", str(exc))
 
-    def _set_preview(self, df: pd.DataFrame) -> None:
-        self.preview_table.clear()
+    # ── Table helper ─────────────────────────────────────────────────
+
+    def _fill_table(self, table: QTableWidget, df: pd.DataFrame) -> None:
+        """Populate a QTableWidget from a DataFrame."""
+        table.clear()
         if df is None or df.empty:
-            self.preview_table.setRowCount(0)
-            self.preview_table.setColumnCount(0)
+            table.setRowCount(0)
+            table.setColumnCount(0)
             return
 
-        self.preview_table.setRowCount(len(df))
-        self.preview_table.setColumnCount(len(df.columns))
-        self.preview_table.setHorizontalHeaderLabels([str(c) for c in df.columns])
+        table.setRowCount(len(df))
+        table.setColumnCount(len(df.columns))
+        table.setHorizontalHeaderLabels([str(c) for c in df.columns])
         for r in range(len(df)):
             for c, col in enumerate(df.columns):
-                self.preview_table.setItem(r, c, QTableWidgetItem(str(coerce_cell(df.iloc[r][col]))))
-
-        self.preview_table.resizeColumnsToContents()
+                table.setItem(r, c, QTableWidgetItem(str(coerce_cell(df.iloc[r][col]))))
+        table.resizeColumnsToContents()
