@@ -77,6 +77,11 @@ class ResultsView(QWidget):
         self.preview_table.set_dataframe(df)
         self.summary_table.set_dataframe(self._generate_column_summary(df, rule_set))
 
+    def focus_preview_cell(self, row_index: int, column_name: str) -> bool:
+        """Switch to the Preview tab and focus a specific row/column."""
+        self.tabs.setCurrentWidget(self.preview_table)
+        return self.preview_table.focus_cell(row_index, column_name)
+
     def _on_error_fixed(self, issue_df_idx: int, col_name: str, new_val: str) -> None:
         """Handle manual correction of a validation error from the errors table."""
         if not self._result or col_name != "cleaned_value":

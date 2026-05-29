@@ -243,6 +243,27 @@ class DataTableWidget(QWidget):
         self._search.clear()
         self._render(df)
 
+    def focus_cell(self, row_index: int, column_name: str) -> bool:
+        """Clear filters, then select and scroll to a cell by original row index and column."""
+        if self._df is None or self._df.empty or column_name not in self._df.columns:
+            return False
+
+        if self._search.text():
+            self._search.clear()
+        else:
+            self._render(self._df)
+
+        col_idx = list(self._df.columns).index(column_name)
+        for row in range(self._table.rowCount()):
+            item = self._table.item(row, col_idx)
+            if item and item.data(Qt.ItemDataRole.UserRole) == row_index:
+                self._table.setFocus()
+                self._table.selectRow(row)
+                self._table.setCurrentCell(row, col_idx)
+                self._table.scrollToItem(item, QTableWidget.ScrollHint.PositionAtCenter)
+                return True
+        return False
+
     def _render(self, df: pd.DataFrame | None) -> None:
         self._table.blockSignals(True)
         self._table.setSortingEnabled(False)

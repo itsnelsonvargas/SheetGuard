@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from html import escape
 import logging
 from pathlib import Path
+from urllib.parse import quote
 
 from PySide6.QtCore import QThread, Signal, Slot, Qt
 from PySide6.QtWidgets import (
@@ -39,6 +41,7 @@ from sheetguard.models.results import ProcessingResult
 from sheetguard.models.rules import RuleSet
 from sheetguard.services.pipeline import ProcessingPipeline
 from sheetguard.services.rule_service import RuleService
+from sheetguard.utils.column_utils import coerce_cell, resolve_column_name
 from sheetguard.utils.paths import resource_path
 
 logger = logging.getLogger(__name__)
@@ -134,6 +137,57 @@ class HelpDialog(QDialog):
         btn_close = QPushButton("Close")
         btn_close.clicked.connect(self.accept)
         layout.addWidget(btn_close)
+
+
+class RulePreviewDialog(QDialog):
+    """Show a sample run of the active rules before full processing."""
+
+    navigate_requested = Signal(int, str)
+    run_requested = Signal()
+
+    def __init__(self, html: str, parent=None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("Rule Test Preview")
+        self.setMinimumSize(760, 640)
+        self.setModal(True)
+        self.ran_full_clean = False
+
+        layout = QVBoxLayout(self)
+
+        preview = QTextBrowser()
+        preview.setOpenExternalLinks(False)
+        preview.setOpenLinks(False)
+        preview.anchorClicked.connect(self._on_anchor_clicked)
+        preview.setHtml(html)
+        layout.addWidget(preview)
+
+        btn_row = QHBoxLayout()
+        btn_run = QPushButton("Run Full Clean")
+        btn_run.clicked.connect(self._request_run)
+        btn_row.addWidget(btn_run)
+
+        btn_close = QPushButton("Close")
+        btn_close.setObjectName("secondary")
+        btn_close.clicked.connect(self.accept)
+        btn_row.addWidget(btn_close)
+        layout.addLayout(btn_row)
+
+    def _on_anchor_clicked(self, url) -> None:
+        if url.scheme() != "preview-row":
+            return
+        payload = url.path()
+        try:
+            row_text, column_name = payload.split("|", 1)
+            row_index = int(row_text)
+        except (ValueError, TypeError):
+            return
+        if column_name:
+            self.navigate_requested.emit(row_index, column_name)
+
+    def _request_run(self) -> None:
+        self.ran_full_clean = True
+        self.run_requested.emit()
+        self.accept()
 
 
 class ProcessingWorker(QThread):
@@ -271,6 +325,11 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(self.rule_builder)
 
         sidebar_layout.addWidget(QLabel("PROCESSING"))
+        self.btn_preview_rules = QPushButton("Preview Rule Test")
+        self.btn_preview_rules.setObjectName("secondary")
+        self.btn_preview_rules.setToolTip("Test the active rules on the first 25 rows")
+        sidebar_layout.addWidget(self.btn_preview_rules)
+
         self.btn_process = QPushButton("⚡ Run Clean & Validate")
         self.btn_process.setMinimumHeight(45)
         sidebar_layout.addWidget(self.btn_process)
@@ -330,6 +389,7 @@ class MainWindow(QMainWindow):
 
         self.processing_overlay = ProcessingOverlay(self)
 
+        self.btn_preview_rules.clicked.connect(self._preview_rule_test)
         self.btn_process.clicked.connect(self._run_processing)
         self.btn_import_rule.clicked.connect(self._import_rule)
         self.btn_export_rule.clicked.connect(self._export_rule)
@@ -467,6 +527,184 @@ class MainWindow(QMainWindow):
         self.processing_overlay.hide()
         QMessageBox.critical(self, "AI Review Failed", f"AI Review failed:\n{message}")
         self.status.showMessage("AI Review failed.")
+
+    def _preview_rule_test(self) -> None:
+        if not self._file_path:
+            QMessageBox.warning(self, "Preview Rule Test", "Please select a file first.")
+            return
+
+        self._rule_set = self.rule_builder.get_rule_set()
+        if not self._rule_set or not self._rule_set.columns:
+            QMessageBox.warning(
+                self,
+                "Preview Rule Test",
+                "Configure at least one column rule before previewing.",
+            )
+            return
+
+        try:
+            RuleEngine.validate(self._rule_set)
+        except Exception as exc:
+            QMessageBox.critical(self, "Invalid Rules", str(exc))
+            return
+
+        try:
+            from sheetguard.services.file_loader import FileLoader
+
+            sample_size = 25
+            source_df = FileLoader.load(self._file_path, self._rule_set)
+            sample_df = source_df.head(sample_size).copy()
+            if sample_df.empty:
+                QMessageBox.warning(self, "Preview Rule Test", "The selected file has no rows to preview.")
+                return
+
+            result = ProcessingPipeline(self._rule_set).run(sample_df)
+            html = self._build_rule_preview_html(result, len(source_df), sample_size)
+            dlg = RulePreviewDialog(html, self)
+            dlg.navigate_requested.connect(self._focus_preview_cell)
+            dlg.run_requested.connect(self._run_processing)
+            dlg.exec()
+            if not dlg.ran_full_clean:
+                self.status.showMessage("Rule test preview complete.")
+        except Exception as exc:
+            logger.exception("Rule test preview failed")
+            QMessageBox.critical(self, "Preview Rule Test Failed", str(exc))
+
+    def _build_rule_preview_html(
+        self,
+        result: ProcessingResult,
+        total_rows: int,
+        requested_sample_size: int,
+    ) -> str:
+        sample_rows = len(result.cleaned_df)
+        change_rows = self._cleaning_preview_rows(result)
+        issue_rows = self._validation_preview_rows(result)
+        duplicate_rows = [dup.to_dict() for dup in result.duplicates]
+
+        return f"""
+        <style>
+          body {{ font-family: "Segoe UI", sans-serif; }}
+          h1 {{ margin-bottom: 4px; }}
+          h2 {{ margin-top: 22px; }}
+          table {{ border-collapse: collapse; width: 100%; margin-top: 8px; }}
+          th, td {{ border: 1px solid #CBD5E1; padding: 6px 8px; vertical-align: top; }}
+          th {{ background: #E2E8F0; color: #0F172A; }}
+          .ok {{ color: #059669; font-weight: 700; }}
+          .warn {{ color: #D97706; font-weight: 700; }}
+          .err {{ color: #DC2626; font-weight: 700; }}
+          .muted {{ color: #64748B; }}
+        </style>
+
+        <h1>Rule Test Preview</h1>
+        <p class="muted">
+          Tested <b>{sample_rows}</b> of <b>{total_rows}</b> rows using
+          <b>{escape(result.rule_set.rule_name if result.rule_set else "Active Rule Set")}</b>.
+          This preview uses up to the first {requested_sample_size} data rows and does not change the full results.
+        </p>
+
+        <h2>Summary</h2>
+        <table>
+          <tr><th>Check</th><th>Result</th></tr>
+          <tr><td>Cells that would be cleaned</td><td>{len(change_rows)}</td></tr>
+          <tr><td>Validation errors</td><td class="err">{result.error_count}</td></tr>
+          <tr><td>Validation warnings</td><td class="warn">{result.warning_count}</td></tr>
+          <tr><td>Duplicate groups</td><td>{len(result.duplicates)}</td></tr>
+        </table>
+
+        <h2>This Column Will Be Cleaned Like This</h2>
+        {self._html_table(change_rows, ["row", "column_rule", "triggered_rule", "column", "original_value", "cleaned_value"], "No cleaning changes found in the preview rows.")}
+
+        <h2>These Validations Will Fail</h2>
+        {self._html_table(issue_rows, ["view", "row", "column_rule", "triggered_rule", "column", "severity", "message", "cleaned_value"], "No validation failures found in the preview rows.")}
+
+        <h2>Duplicate Check Preview</h2>
+        {self._html_table(duplicate_rows, ["rule_name", "key", "rows", "count"], "No duplicate groups found in the preview rows.")}
+        """
+
+    def _cleaning_preview_rows(self, result: ProcessingResult) -> list[dict[str, object]]:
+        rows: list[dict[str, object]] = []
+        rule_by_column = self._rule_by_resolved_column(result)
+        for row_idx in range(len(result.cleaned_df)):
+            for column in result.cleaned_df.columns:
+                original = coerce_cell(result.original_df.iloc[row_idx][column])
+                cleaned = coerce_cell(result.cleaned_df.iloc[row_idx][column])
+                if str(original) == str(cleaned):
+                    continue
+                rule = rule_by_column.get(str(column))
+                rows.append(
+                    {
+                        "row": row_idx + 1,
+                        "column_rule": rule.field_id if rule else column,
+                        "triggered_rule": ", ".join(rule.cleaning) if rule else "cleaning",
+                        "column": column,
+                        "original_value": original,
+                        "cleaned_value": cleaned,
+                    }
+                )
+        return rows
+
+    def _validation_preview_rows(self, result: ProcessingResult) -> list[dict[str, object]]:
+        rows: list[dict[str, object]] = []
+        for issue in result.issues:
+            rows.append(
+                {
+                    "view": (
+                        f'<a href="preview-row:{issue.row_index}|{quote(issue.column, safe="")}">'
+                        "View row</a>"
+                    ),
+                    "row": issue.row_index + 1,
+                    "column_rule": issue.field_id,
+                    "triggered_rule": issue.rule_type,
+                    "column": issue.column,
+                    "severity": issue.severity,
+                    "message": issue.message,
+                    "cleaned_value": issue.cleaned_value,
+                }
+            )
+        return rows
+
+    @staticmethod
+    def _rule_by_resolved_column(result: ProcessingResult) -> dict[str, object]:
+        mapping: dict[str, object] = {}
+        if not result.rule_set:
+            return mapping
+        for rule in result.rule_set.columns:
+            try:
+                mapping[resolve_column_name(result.cleaned_df, rule.column)] = rule
+            except (KeyError, ValueError):
+                continue
+        return mapping
+
+    def _focus_preview_cell(self, row_index: int, column_name: str) -> None:
+        if self.results_view.focus_preview_cell(row_index, column_name):
+            self.status.showMessage(f"Focused preview row {row_index + 1}, column {column_name}")
+        else:
+            self.status.showMessage(f"Could not find row {row_index + 1}, column {column_name} in preview")
+
+    @staticmethod
+    def _html_table(rows: list[dict[str, object]], columns: list[str], empty_text: str) -> str:
+        if not rows:
+            return f'<p class="ok">{escape(empty_text)}</p>'
+
+        limited_rows = rows[:100]
+        header = "".join(f"<th>{escape(col.replace('_', ' ').title())}</th>" for col in columns)
+        body = []
+        for row in limited_rows:
+            cells = []
+            for col in columns:
+                value = row.get(col, "")
+                if isinstance(value, list):
+                    value = ", ".join(str(v) for v in value)
+                if col == "view":
+                    cells.append(f"<td>{value}</td>")
+                else:
+                    cells.append(f"<td>{escape(str(value))}</td>")
+            body.append(f"<tr>{''.join(cells)}</tr>")
+
+        note = ""
+        if len(rows) > len(limited_rows):
+            note = f"<p class=\"muted\">Showing first {len(limited_rows)} of {len(rows)} rows.</p>"
+        return f"<table><tr>{header}</tr>{''.join(body)}</table>{note}"
 
     def _run_processing(self) -> None:
         if not self._file_path:
