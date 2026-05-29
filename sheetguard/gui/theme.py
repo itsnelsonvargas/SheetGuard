@@ -89,6 +89,27 @@ QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
     border-radius: 6px;
     padding: 8px;
 }
+QListWidget#ruleLibrary {
+    padding: 4px;
+    outline: none;
+}
+QListWidget#ruleLibrary::item {
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 1px 0;
+}
+QListWidget#ruleLibrary::item:hover {
+    background-color: rgba(37, 99, 235, 20);
+}
+QListWidget#ruleLibrary::item:selected {
+    background-color: #DBEAFE;
+    color: #0F172A;
+    font-weight: 700;
+}
+QListWidget#ruleLibrary::item:selected:!active {
+    background-color: #DBEAFE;
+    color: #0F172A;
+}
 QSpinBox {
     background-color: #FFFFFF;
     border: 1px solid #CBD5E1;
@@ -251,6 +272,27 @@ QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
     border: 1px solid #334155;
     border-radius: 6px;
     padding: 8px;
+    color: #F8FAFC;
+}
+QListWidget#ruleLibrary {
+    padding: 4px;
+    outline: none;
+}
+QListWidget#ruleLibrary::item {
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 1px 0;
+}
+QListWidget#ruleLibrary::item:hover {
+    background-color: rgba(59, 130, 246, 45);
+}
+QListWidget#ruleLibrary::item:selected {
+    background-color: #2563EB;
+    color: #F8FAFC;
+    font-weight: 700;
+}
+QListWidget#ruleLibrary::item:selected:!active {
+    background-color: #2563EB;
     color: #F8FAFC;
 }
 QSpinBox {

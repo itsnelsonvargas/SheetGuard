@@ -189,6 +189,7 @@ class MainWindow(QMainWindow):
 
         sidebar_layout.addWidget(QLabel("RULE LIBRARY"))
         self.library_list = QListWidget()
+        self.library_list.setObjectName("ruleLibrary")
         self.library_list.setMinimumHeight(150)
         self.library_list.currentItemChanged.connect(self._on_library_selected)
         sidebar_layout.addWidget(self.library_list)
@@ -298,6 +299,11 @@ class MainWindow(QMainWindow):
             self._rule_set = self.rule_builder.get_rule_set()
 
     def _refresh_library(self) -> None:
+        selected_path = None
+        current_item = self.library_list.currentItem()
+        if current_item:
+            selected_path = current_item.data(256)
+
         self.library_list.clear()
         for entry in self._rule_service.list_entries():
             self.library_list.addItem(
@@ -305,6 +311,8 @@ class MainWindow(QMainWindow):
             )
             item = self.library_list.item(self.library_list.count() - 1)
             item.setData(256, entry["path"])
+            if selected_path and entry["path"] == selected_path:
+                self.library_list.setCurrentItem(item)
 
     def _on_library_selected(self) -> None:
         item = self.library_list.currentItem()
@@ -315,7 +323,6 @@ class MainWindow(QMainWindow):
             try:
                 self._rule_set = self._rule_service.load_from_library(path)
                 self.rule_builder.load_rule_set(self._rule_set)
-                self.start_row_spin.setValue(self._rule_set.header_row + 1)
                 self.status.showMessage(f"Active rule: {self._rule_set.rule_name}")
             except Exception as exc:
                 QMessageBox.critical(self, "Error", str(exc))
@@ -472,7 +479,6 @@ class MainWindow(QMainWindow):
                 rs = self._rule_service.import_file(path)
                 self._rule_set = rs
                 self.rule_builder.load_rule_set(rs)
-                self.start_row_spin.setValue(rs.header_row + 1)
                 self._refresh_library()
             except Exception as exc:
                 QMessageBox.critical(self, "Import Error", str(exc))
@@ -496,7 +502,6 @@ class MainWindow(QMainWindow):
             cloned = self._rule_service.clone(rs, name)
             self._rule_set = cloned
             self.rule_builder.load_rule_set(cloned)
-            self.start_row_spin.setValue(cloned.header_row + 1)
             self._refresh_library()
 
     def _delete_rule(self) -> None:
