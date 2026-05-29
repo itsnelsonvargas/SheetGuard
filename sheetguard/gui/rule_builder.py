@@ -275,6 +275,8 @@ class RuleBuilderPanel(QWidget):
         layout.addWidget(meta)
 
         self.column_list = QListWidget()
+        self.column_list.setObjectName("ruleColumns")
+        self.column_list.setMinimumHeight(160)
         layout.addWidget(QLabel("Columns"))
         layout.addWidget(self.column_list)
 
@@ -303,6 +305,8 @@ class RuleBuilderPanel(QWidget):
         dup_layout.addWidget(dup_help)
 
         self.dup_list = QListWidget()
+        self.dup_list.setObjectName("duplicateRules")
+        self.dup_list.setMinimumHeight(160)
         dup_layout.addWidget(self.dup_list)
         dup_btns = QHBoxLayout()
         self.btn_add_dup = QPushButton("➕ Add Dup Rule")
@@ -352,7 +356,16 @@ class RuleBuilderPanel(QWidget):
         self._rule_set.rule_name = self.rule_name.toPlainText().strip() or "Untitled"
         return self._rule_set
 
-    def _refresh_lists(self) -> None:
+    def _refresh_lists(
+        self,
+        selected_column_row: int | None = None,
+        selected_dup_row: int | None = None,
+    ) -> None:
+        if selected_column_row is None:
+            selected_column_row = self.column_list.currentRow()
+        if selected_dup_row is None:
+            selected_dup_row = self.dup_list.currentRow()
+
         self.column_list.clear()
         self.dup_list.clear()
         if not self._rule_set:
@@ -368,6 +381,11 @@ class RuleBuilderPanel(QWidget):
         for dup in self._rule_set.duplicate_rules:
             self.dup_list.addItem(f"{dup.name}: {' + '.join(dup.fields)}")
 
+        if self.column_list.count() and selected_column_row >= 0:
+            self.column_list.setCurrentRow(min(selected_column_row, self.column_list.count() - 1))
+        if self.dup_list.count() and selected_dup_row >= 0:
+            self.dup_list.setCurrentRow(min(selected_dup_row, self.dup_list.count() - 1))
+
     def _new_rule_set(self) -> None:
         self._rule_set = RuleSet(rule_name="New Rule Set", version="1.0", columns=[])
         self.load_rule_set(self._rule_set)
@@ -380,7 +398,7 @@ class RuleBuilderPanel(QWidget):
             rule = dlg.get_rule()
             if rule:
                 self._rule_set.columns.append(rule)
-                self._refresh_lists()
+                self._refresh_lists(selected_column_row=len(self._rule_set.columns) - 1)
                 self.rule_changed.emit(self._rule_set)
 
     def _edit_column(self) -> None:
@@ -399,7 +417,7 @@ class RuleBuilderPanel(QWidget):
         idx = self.column_list.currentRow()
         if self._rule_set and idx >= 0:
             del self._rule_set.columns[idx]
-            self._refresh_lists()
+            self._refresh_lists(selected_column_row=idx)
             self.rule_changed.emit(self._rule_set)
 
     def _move_column(self, direction: int) -> None:
@@ -425,14 +443,14 @@ class RuleBuilderPanel(QWidget):
             return
         field_list = [f.strip() for f in fields.split(",") if f.strip()]
         self._rule_set.duplicate_rules.append(DuplicateRule(name=name, fields=field_list))
-        self._refresh_lists()
+        self._refresh_lists(selected_dup_row=len(self._rule_set.duplicate_rules) - 1)
         self.rule_changed.emit(self._rule_set)
 
     def _delete_duplicate_rule(self) -> None:
         idx = self.dup_list.currentRow()
         if self._rule_set and idx >= 0:
             del self._rule_set.duplicate_rules[idx]
-            self._refresh_lists()
+            self._refresh_lists(selected_dup_row=idx)
             self.rule_changed.emit(self._rule_set)
 
     def _save_rule_set(self) -> None:

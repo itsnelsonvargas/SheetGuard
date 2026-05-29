@@ -89,24 +89,34 @@ QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
     border-radius: 6px;
     padding: 8px;
 }
-QListWidget#ruleLibrary {
+QListWidget#ruleLibrary,
+QListWidget#ruleColumns,
+QListWidget#duplicateRules {
     padding: 4px;
     outline: none;
 }
-QListWidget#ruleLibrary::item {
+QListWidget#ruleLibrary::item,
+QListWidget#ruleColumns::item,
+QListWidget#duplicateRules::item {
     border-radius: 5px;
     padding: 8px 10px;
     margin: 1px 0;
 }
-QListWidget#ruleLibrary::item:hover {
+QListWidget#ruleLibrary::item:hover,
+QListWidget#ruleColumns::item:hover,
+QListWidget#duplicateRules::item:hover {
     background-color: rgba(37, 99, 235, 20);
 }
-QListWidget#ruleLibrary::item:selected {
+QListWidget#ruleLibrary::item:selected,
+QListWidget#ruleColumns::item:selected,
+QListWidget#duplicateRules::item:selected {
     background-color: #DBEAFE;
     color: #0F172A;
     font-weight: 700;
 }
-QListWidget#ruleLibrary::item:selected:!active {
+QListWidget#ruleLibrary::item:selected:!active,
+QListWidget#ruleColumns::item:selected:!active,
+QListWidget#duplicateRules::item:selected:!active {
     background-color: #DBEAFE;
     color: #0F172A;
 }
@@ -274,24 +284,34 @@ QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
     padding: 8px;
     color: #F8FAFC;
 }
-QListWidget#ruleLibrary {
+QListWidget#ruleLibrary,
+QListWidget#ruleColumns,
+QListWidget#duplicateRules {
     padding: 4px;
     outline: none;
 }
-QListWidget#ruleLibrary::item {
+QListWidget#ruleLibrary::item,
+QListWidget#ruleColumns::item,
+QListWidget#duplicateRules::item {
     border-radius: 5px;
     padding: 8px 10px;
     margin: 1px 0;
 }
-QListWidget#ruleLibrary::item:hover {
+QListWidget#ruleLibrary::item:hover,
+QListWidget#ruleColumns::item:hover,
+QListWidget#duplicateRules::item:hover {
     background-color: rgba(59, 130, 246, 45);
 }
-QListWidget#ruleLibrary::item:selected {
+QListWidget#ruleLibrary::item:selected,
+QListWidget#ruleColumns::item:selected,
+QListWidget#duplicateRules::item:selected {
     background-color: #2563EB;
     color: #F8FAFC;
     font-weight: 700;
 }
-QListWidget#ruleLibrary::item:selected:!active {
+QListWidget#ruleLibrary::item:selected:!active,
+QListWidget#ruleColumns::item:selected:!active,
+QListWidget#duplicateRules::item:selected:!active {
     background-color: #2563EB;
     color: #F8FAFC;
 }
