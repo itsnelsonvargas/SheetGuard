@@ -28,6 +28,13 @@ def rules_library_dir() -> Path:
     return lib
 
 
+def lookups_library_dir() -> Path:
+    """Default directory for saved lookup tables."""
+    lib = app_root() / "data" / "lookups_library"
+    lib.mkdir(parents=True, exist_ok=True)
+    return lib
+
+
 def logs_dir() -> Path:
     """Directory for log files."""
     d = app_root() / "logs"

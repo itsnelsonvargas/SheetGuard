@@ -30,6 +30,7 @@ from PySide6.QtWidgets import (
 )
 
 from sheetguard.core.exporter import WorkbookExporter
+from sheetguard.gui.lookup_manager_dialog import LookupTableManagerDialog
 from sheetguard.core.rule_engine import RuleEngine
 from sheetguard.gui.results_view import ResultsView
 from sheetguard.gui.bug_report_dialog import BugReportDialog
@@ -319,6 +320,11 @@ class MainWindow(QMainWindow):
         lib_btns_row2.addWidget(self.btn_delete_rule)
         sidebar_layout.addLayout(lib_btns_row2)
 
+        self.btn_lookup_manager = QPushButton("📚 Lookup Tables")
+        self.btn_lookup_manager.setObjectName("secondary")
+        self.btn_lookup_manager.setToolTip("Import and manage reusable lookup tables")
+        sidebar_layout.addWidget(self.btn_lookup_manager)
+
         self.rule_builder = RuleBuilderPanel()
         self.rule_builder.rule_changed.connect(self._on_rule_changed)
         self.rule_builder.rule_saved.connect(self._refresh_library)
@@ -395,6 +401,7 @@ class MainWindow(QMainWindow):
         self.btn_export_rule.clicked.connect(self._export_rule)
         self.btn_clone_rule.clicked.connect(self._clone_rule)
         self.btn_delete_rule.clicked.connect(self._delete_rule)
+        self.btn_lookup_manager.clicked.connect(self._open_lookup_manager)
         self.btn_export_full.clicked.connect(lambda: self._export("full"))
         self.btn_export_clean.clicked.connect(lambda: self._export("cleaned"))
         self.btn_export_errors.clicked.connect(lambda: self._export("validation"))
@@ -869,6 +876,11 @@ class MainWindow(QMainWindow):
     def _open_help(self) -> None:
         """Open the in-app usage guide."""
         dlg = HelpDialog(self)
+        dlg.exec()
+
+    def _open_lookup_manager(self) -> None:
+        """Open lookup table management."""
+        dlg = LookupTableManagerDialog(self)
         dlg.exec()
 
 
