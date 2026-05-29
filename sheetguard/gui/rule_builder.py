@@ -28,6 +28,7 @@ from PySide6.QtWidgets import (
 
 from sheetguard.core.rule_engine import RuleEngine
 from sheetguard.models.rules import ColumnRule, DuplicateRule, RuleSet
+from sheetguard.services.lookup_service import LookupService
 
 CLEANING_DESCRIPTIONS = {
     "trim": "Remove leading/trailing spaces",
@@ -197,6 +198,16 @@ class ColumnRuleEditor(QDialog):
         self.lookup = QComboBox()
         self.lookup.setEditable(True)
         self.lookup.setPlaceholderText("Search reference lists...")
+        
+        # Populate with saved lookups
+        try:
+            ls = LookupService()
+            entries = ls.list_entries()
+            for entry in entries:
+                self.lookup.addItem(entry.name)
+        except Exception:
+            pass
+
         if rule and rule.lookup:
             self.lookup.setCurrentText(rule.lookup)
         val_layout.addRow("Lookup Table:", self.lookup)
