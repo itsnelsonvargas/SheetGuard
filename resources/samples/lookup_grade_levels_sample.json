@@ -1,0 +1,37 @@
+[
+  {
+    "grade_level": "Kindergarten",
+    "sort_order": 0,
+    "category": "Early Education"
+  },
+  {
+    "grade_level": "Grade 1",
+    "sort_order": 1,
+    "category": "Elementary"
+  },
+  {
+    "grade_level": "Grade 2",
+    "sort_order": 2,
+    "category": "Elementary"
+  },
+  {
+    "grade_level": "Grade 3",
+    "sort_order": 3,
+    "category": "Elementary"
+  },
+  {
+    "grade_level": "Grade 4",
+    "sort_order": 4,
+    "category": "Elementary"
+  },
+  {
+    "grade_level": "Grade 5",
+    "sort_order": 5,
+    "category": "Elementary"
+  },
+  {
+    "grade_level": "Grade 6",
+    "sort_order": 6,
+    "category": "Elementary"
+  }
+]

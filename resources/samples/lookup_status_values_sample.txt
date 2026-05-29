@@ -1,0 +1,6 @@
+status,description
+ACTIVE,Currently enrolled or valid
+INACTIVE,Not currently active
+TRANSFERRED,Moved to another school
+GRADUATED,Completed the program
+DROPPED,No longer attending
