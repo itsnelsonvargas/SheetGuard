@@ -269,8 +269,8 @@ class RuleBuilderPanel(QWidget):
 
         meta = QGroupBox("Rule Set")
         meta_layout = QFormLayout(meta)
-        self.rule_name = QTextEdit()
-        self.rule_name.setMaximumHeight(32)
+        self.rule_name = QLineEdit()
+        self.rule_name.setPlaceholderText("Rule set name")
         meta_layout.addRow("Name", self.rule_name)
         layout.addWidget(meta)
 
@@ -346,14 +346,14 @@ class RuleBuilderPanel(QWidget):
             self.column_list.clear()
             self.dup_list.clear()
             return
-        self.rule_name.setPlainText(rule_set.rule_name)
+        self.rule_name.setText(rule_set.rule_name)
         self._refresh_lists()
         self.rule_changed.emit(rule_set)
 
     def get_rule_set(self) -> RuleSet | None:
         if not self._rule_set:
             return None
-        self._rule_set.rule_name = self.rule_name.toPlainText().strip() or "Untitled"
+        self._rule_set.rule_name = self.rule_name.text().strip() or "Untitled"
         return self._rule_set
 
     def _refresh_lists(
