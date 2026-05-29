@@ -15,6 +15,7 @@ class LookupSource:
     key_column: str
     value_column: str | None = None
     sheet: str | None = None
+    match_mode: str = "fuzzy"
     fuzzy_threshold: float = 90.0
 
     @classmethod
@@ -25,6 +26,7 @@ class LookupSource:
             key_column=data["key_column"],
             value_column=data.get("value_column"),
             sheet=data.get("sheet"),
+            match_mode=data.get("match_mode", "fuzzy"),
             fuzzy_threshold=float(data.get("fuzzy_threshold", 90.0)),
         )
 
@@ -33,6 +35,7 @@ class LookupSource:
             "name": self.name,
             "path": self.path,
             "key_column": self.key_column,
+            "match_mode": self.match_mode,
         }
         if self.value_column:
             out["value_column"] = self.value_column

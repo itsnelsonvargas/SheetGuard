@@ -271,6 +271,7 @@ class DataValidator:
             return
         src = next((l for l in self.rule_set.lookups if l.name == col_rule.lookup), None)
         threshold = src.fuzzy_threshold if src else 90.0
+        mode = src.match_mode if src else "fuzzy"
 
         for idx, val in series.items():
             if pd.isna(val) or str(val).strip() == "":
@@ -278,6 +279,21 @@ class DataValidator:
             s = str(val).strip().upper()
             if s in keys:
                 continue
+
+            # If mode is exact, don't attempt fuzzy matching
+            if mode == "exact":
+                self._add(
+                    int(idx),
+                    col_rule,
+                    col_name,
+                    self._severity(col_rule),
+                    f"Value '{val}' not found in lookup '{col_rule.lookup}' (Exact Mode)",
+                    val,
+                    val,
+                    "lookup",
+                )
+                continue
+
             match = process.extractOne(
                 s,
                 list(keys),

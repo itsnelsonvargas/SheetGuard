@@ -27,7 +27,7 @@ from PySide6.QtWidgets import (
 )
 
 from sheetguard.core.rule_engine import RuleEngine
-from sheetguard.models.rules import ColumnRule, DuplicateRule, RuleSet
+from sheetguard.models.rules import ColumnRule, DuplicateRule, LookupSource, RuleSet
 from sheetguard.services.lookup_service import LookupService
 
 CLEANING_DESCRIPTIONS = {
@@ -365,7 +365,42 @@ class RuleBuilderPanel(QWidget):
         if not self._rule_set:
             return None
         self._rule_set.rule_name = self.rule_name.text().strip() or "Untitled"
+        self._sync_lookups()
         return self._rule_set
+
+    def _sync_lookups(self) -> None:
+        """Resolve named lookups from the library into LookupSource objects."""
+        if not self._rule_set:
+            return
+
+        lookup_names = {c.lookup for c in self._rule_set.columns if c.lookup}
+        from sheetguard.services.lookup_service import LookupService
+        ls = LookupService()
+        entries = {e.name: e for e in ls.list_entries()}
+
+        new_lookups = []
+        for name in lookup_names:
+            if name in entries:
+                meta = entries[name]
+                new_lookups.append(
+                    LookupSource(
+                        name=meta.name,
+                        path=meta.stored_path,
+                        key_column=meta.key_column,
+                        match_mode=meta.match_mode,
+                        fuzzy_threshold=meta.fuzzy_threshold,
+                    )
+                )
+            else:
+                # Keep existing if manually configured or if it doesn't exist in library
+                existing = next((l for l in self._rule_set.lookups if l.name == name), None)
+                if existing:
+                    new_lookups.append(existing)
+                else:
+                    # Create a placeholder if it's just a name
+                    new_lookups.append(LookupSource(name=name, path=name, key_column="0"))
+
+        self._rule_set.lookups = new_lookups
 
     def _refresh_lists(
         self,
