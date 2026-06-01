@@ -7,10 +7,10 @@ import logging
 from pathlib import Path
 from urllib.parse import quote
 
-from PySide6.QtCore import QThread, Signal, Slot, Qt
+from PySide6.QtCore import QThread, Signal, Slot, Qt, QSize
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QApplication,
-    QComboBox,
     QDialog,
     QFileDialog,
     QFrame,
@@ -323,21 +323,82 @@ class MainWindow(QMainWindow):
         btn_browse.setObjectName("secondary")
         btn_browse.clicked.connect(self._browse_file)
         file_btns.addWidget(btn_browse)
-
-        self.btn_ai_review = QPushButton("🤖 AI Review")
-        self.btn_ai_review.setObjectName("success")
-        self.btn_ai_review.clicked.connect(self._run_ai_review)
-        file_btns.addWidget(self.btn_ai_review)
-
         sidebar_layout.addLayout(file_btns)
 
-        ai_config_row = QHBoxLayout()
-        ai_config_row.addWidget(QLabel("AI Engine:"))
-        self.ai_model_combo = QComboBox()
-        self.ai_model_combo.addItems(["Gemini (Flash)", "ChatGPT (GPT-4o)", "Groq (Llama 3.3)"])
-        self.ai_model_combo.setToolTip("Select the AI engine to use for reviews.")
-        ai_config_row.addWidget(self.ai_model_combo)
-        sidebar_layout.addLayout(ai_config_row)
+        sidebar_layout.addWidget(QLabel("AI ANALYSIS"))
+        ai_btns_layout = QVBoxLayout()
+        ai_btns_layout.setSpacing(8)
+
+        self.btn_gemini = self._create_ai_button(
+            "Gemini (Flash)", 
+            "gemini.png", 
+            "✨", 
+            "Analyze data with Google Gemini",
+            lambda: self._run_ai_review("gemini", "Gemini"),
+            height=36,
+            icon_size=20
+        )
+        self.btn_gemini.setStyleSheet("""
+            QPushButton { 
+                background-color: #8E75FF; 
+                color: white; 
+                border: none; 
+                border-radius: 6px; 
+                font-weight: bold;
+                font-size: 13px;
+                text-align: center;
+            } 
+            QPushButton:hover { background-color: #7A5FFF; }
+        """)
+        ai_btns_layout.addWidget(self.btn_gemini)
+
+        self.btn_chatgpt = self._create_ai_button(
+            "ChatGPT (GPT-4o)", 
+            "openai.png", 
+            "🧠", 
+            "Analyze data with OpenAI ChatGPT",
+            lambda: self._run_ai_review("openai", "ChatGPT"),
+            height=36,
+            icon_size=24
+        )
+        self.btn_chatgpt.setStyleSheet("""
+            QPushButton { 
+                background-color: #10a37f; 
+                color: white; 
+                border: none; 
+                border-radius: 6px; 
+                font-weight: bold;
+                font-size: 13px;
+                text-align: center;
+            } 
+            QPushButton:hover { background-color: #0d8a6a; }
+        """)
+        ai_btns_layout.addWidget(self.btn_chatgpt)
+
+        self.btn_groq = self._create_ai_button(
+            "Groq (Llama 3.3)", 
+            "groq.png", 
+            "⚡", 
+            "Analyze data with Groq (High Speed)",
+            lambda: self._run_ai_review("groq", "Groq"),
+            height=36,
+            icon_size=18
+        )
+        self.btn_groq.setStyleSheet("""
+            QPushButton { 
+                background-color: #f55036; 
+                color: white; 
+                border: none; 
+                border-radius: 6px; 
+                font-weight: bold;
+                font-size: 13px;
+                text-align: center;
+            } 
+            QPushButton:hover { background-color: #d4442e; }
+        """)
+        ai_btns_layout.addWidget(self.btn_groq)
+
+        sidebar_layout.addLayout(ai_btns_layout)
 
         sidebar_layout.addWidget(QLabel("RULE LIBRARY"))
         self.library_list = QListWidget()
@@ -551,27 +612,38 @@ class MainWindow(QMainWindow):
         self.file_drop.clear()
         QMessageBox.warning(self, "Load Error", f"Could not load file:\n{message}")
 
-    def _run_ai_review(self) -> None:
+    def _create_ai_button(self, name: str, icon_file: str, fallback_emoji: str, tooltip: str, slot: callable, height: int = 36, icon_size: int = 20) -> QPushButton:
+        """Helper to create an AI button with an icon or fallback emoji."""
+        icon_path = resource_path("resources", "icons", icon_file)
+        
+        btn = QPushButton()
+        
+        if icon_path.exists():
+            btn.setText(f" {name}")
+            btn.setIcon(QIcon(str(icon_path)))
+            btn.setIconSize(QSize(icon_size, icon_size))
+        else:
+            btn.setText(f"{fallback_emoji} {name}")
+            
+        btn.setFixedHeight(height)
+        btn.setObjectName("success")
+        btn.setToolTip(tooltip)
+        btn.clicked.connect(slot)
+        return btn
+
+    def _toggle_ai_buttons(self, enabled: bool) -> None:
+        """Enable or disable all AI buttons."""
+        for btn in (self.btn_gemini, self.btn_chatgpt, self.btn_groq):
+            btn.setEnabled(enabled)
+
+    def _run_ai_review(self, model_type: str, model_name: str) -> None:
         if self._source_df is None:
             QMessageBox.warning(self, "AI Review", "Please select and load a file first.")
             return
             
         df = self._source_df
         
-        # Check if ai_model_combo exists (to avoid NameError if UI wasn't built correctly)
-        model_type = "gemini"
-        model_name = "Gemini"
-        if hasattr(self, "ai_model_combo"):
-            model_name = self.ai_model_combo.currentText()
-            if "ChatGPT" in model_name:
-                model_type = "openai"
-            elif "Groq" in model_name:
-                model_type = "groq"
-            else:
-                model_type = "gemini"
-            
-        self.btn_ai_review.setEnabled(False)
-        self.btn_ai_review.setText("🤖 Reviewing...")
+        self._toggle_ai_buttons(False)
         self.processing_overlay.show_processing(f"AI Review ({model_name})")
         self.status.showMessage(f"AI ({model_name}) is reviewing data...")
         
@@ -582,8 +654,7 @@ class MainWindow(QMainWindow):
 
     @Slot(str)
     def _on_ai_finished(self, insights: str) -> None:
-        self.btn_ai_review.setEnabled(True)
-        self.btn_ai_review.setText("🤖 AI Review")
+        self._toggle_ai_buttons(True)
         self.processing_overlay.hide()
         self.status.showMessage("AI Review complete.")
         
@@ -593,15 +664,14 @@ class MainWindow(QMainWindow):
 
     @Slot(str)
     def _on_ai_failed(self, message: str) -> None:
-        self.btn_ai_review.setEnabled(True)
-        self.btn_ai_review.setText("🤖 AI Review")
+        self._toggle_ai_buttons(True)
         self.processing_overlay.hide()
         
         if "429" in message or "insufficient_quota" in message.lower():
             error_msg = (
                 "AI Review Failed: Quota Exceeded.\n\n"
-                "This usually means your OpenAI account has no credits. "
-                "Try switching the AI Engine to 'Gemini (Flash)' or 'Groq (Llama 3.3)' in the sidebar, "
+                "This usually means your AI account has no credits. "
+                "Try switching to 'Gemini (Flash)' or 'Groq (Llama 3.3)', "
                 "which both have generous free tiers."
             )
             QMessageBox.warning(self, "AI Quota Exceeded", error_msg)
