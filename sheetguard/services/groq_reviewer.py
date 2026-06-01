@@ -11,7 +11,7 @@ class GroqReviewService:
         self.api_key = os.getenv("GROQ_API_KEY")
         if self.api_key:
             self.client = Groq(api_key=self.api_key)
-            self.model = "llama3-8b-8192" # High speed, free tier model
+            self.model = "llama-3.3-70b-versatile" # Latest flagship model
         else:
             self.client = None
             self.model = None

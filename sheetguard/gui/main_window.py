@@ -334,7 +334,7 @@ class MainWindow(QMainWindow):
         ai_config_row = QHBoxLayout()
         ai_config_row.addWidget(QLabel("AI Engine:"))
         self.ai_model_combo = QComboBox()
-        self.ai_model_combo.addItems(["Gemini (Flash)", "ChatGPT (GPT-4o)", "Groq (Llama 3)"])
+        self.ai_model_combo.addItems(["Gemini (Flash)", "ChatGPT (GPT-4o)", "Groq (Llama 3.3)"])
         self.ai_model_combo.setToolTip("Select the AI engine to use for reviews.")
         ai_config_row.addWidget(self.ai_model_combo)
         sidebar_layout.addLayout(ai_config_row)
@@ -601,7 +601,7 @@ class MainWindow(QMainWindow):
             error_msg = (
                 "AI Review Failed: Quota Exceeded.\n\n"
                 "This usually means your OpenAI account has no credits. "
-                "Try switching the AI Engine to 'Gemini (Flash)' or 'Groq (Llama 3)' in the sidebar, "
+                "Try switching the AI Engine to 'Gemini (Flash)' or 'Groq (Llama 3.3)' in the sidebar, "
                 "which both have generous free tiers."
             )
             QMessageBox.warning(self, "AI Quota Exceeded", error_msg)
