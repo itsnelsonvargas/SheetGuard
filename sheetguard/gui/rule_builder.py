@@ -279,10 +279,22 @@ class RuleBuilderPanel(QWidget):
         layout.addWidget(QLabel("Rule Builder"))
 
         meta = QGroupBox("Rule Set")
-        meta_layout = QFormLayout(meta)
-        self.rule_name = QLineEdit()
-        self.rule_name.setPlaceholderText("Rule set name")
-        meta_layout.addRow("Name", self.rule_name)
+        meta_layout = QVBoxLayout(meta)
+        
+        name_row = QHBoxLayout()
+        self.rule_name_label = QLabel("Untitled")
+        self.rule_name_label.setStyleSheet("font-weight: bold; font-size: 14px; color: #1E293B;")
+        
+        self.btn_rename = QPushButton("✏️")
+        self.btn_rename.setFixedSize(28, 28)
+        self.btn_rename.setToolTip("Rename this rule set")
+        self.btn_rename.setObjectName("secondary")
+        
+        name_row.addWidget(self.rule_name_label)
+        name_row.addStretch()
+        name_row.addWidget(self.btn_rename)
+        
+        meta_layout.addLayout(name_row)
         layout.addWidget(meta)
 
         self.column_list = QListWidget()
@@ -347,24 +359,39 @@ class RuleBuilderPanel(QWidget):
         self.btn_down_col.clicked.connect(lambda: self._move_column(1))
         self.btn_add_dup.clicked.connect(self._add_duplicate_rule)
         self.btn_del_dup.clicked.connect(self._delete_duplicate_rule)
+        self.btn_rename.clicked.connect(self._rename_rule_set)
         self.btn_save.clicked.connect(self._save_rule_set)
         self.btn_new.clicked.connect(self._new_rule_set)
+
+    def _rename_rule_set(self) -> None:
+        """Prompt the user to rename the current rule set."""
+        if not self._rule_set:
+            return
+            
+        new_name, ok = QInputDialog.getText(
+            self, "Rename Rule Set", "New Name:", 
+            text=self.rule_name_label.text()
+        )
+        if ok and new_name.strip():
+            self.rule_name_label.setText(new_name.strip())
+            self._rule_set.rule_name = new_name.strip()
+            self.rule_changed.emit(self._rule_set)
 
     def load_rule_set(self, rule_set: RuleSet | None) -> None:
         self._rule_set = rule_set
         if not rule_set:
-            self.rule_name.clear()
+            self.rule_name_label.setText("None")
             self.column_list.clear()
             self.dup_list.clear()
             return
-        self.rule_name.setText(rule_set.rule_name)
+        self.rule_name_label.setText(rule_set.rule_name)
         self._refresh_lists()
         self.rule_changed.emit(rule_set)
 
     def get_rule_set(self) -> RuleSet | None:
         if not self._rule_set:
             return None
-        self._rule_set.rule_name = self.rule_name.text().strip() or "Untitled"
+        self._rule_set.rule_name = self.rule_name_label.text()
         self._sync_lookups()
         return self._rule_set
 
