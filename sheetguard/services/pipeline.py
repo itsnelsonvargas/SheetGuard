@@ -60,7 +60,6 @@ class ProcessingPipeline:
             "total_rows": len(cleaned_df),
             "total_columns": len(cleaned_df.columns),
             "rule_name": self.rule_set.rule_name,
-            "rule_version": self.rule_set.version,
         }
 
         result = ProcessingResult(

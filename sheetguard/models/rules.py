@@ -141,7 +141,6 @@ class RuleSet:
     """Complete rule configuration for a spreadsheet template."""
 
     rule_name: str
-    version: str = "1.0"
     description: str = ""
     columns: list[ColumnRule] = field(default_factory=list)
     duplicate_rules: list[DuplicateRule] = field(default_factory=list)
@@ -153,7 +152,6 @@ class RuleSet:
     def from_dict(cls, data: dict[str, Any]) -> RuleSet:
         return cls(
             rule_name=data["rule_name"],
-            version=data.get("version", "1.0"),
             description=data.get("description", ""),
             columns=[ColumnRule.from_dict(c) for c in data.get("columns", [])],
             duplicate_rules=[
@@ -167,7 +165,6 @@ class RuleSet:
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {
             "rule_name": self.rule_name,
-            "version": self.version,
             "columns": [c.to_dict() for c in self.columns],
         }
         if self.description:

@@ -49,16 +49,10 @@ class RuleEngine:
         return path
 
     @staticmethod
-    def clone(rule_set: RuleSet, new_name: str, bump_version: bool = True) -> RuleSet:
+    def clone(rule_set: RuleSet, new_name: str) -> RuleSet:
         """Create a copy of a rule set with a new name."""
         data = rule_set.to_dict()
         data["rule_name"] = new_name
-        if bump_version:
-            try:
-                major, minor = rule_set.version.split(".")
-                data["version"] = f"{major}.{int(minor) + 1}"
-            except ValueError:
-                data["version"] = rule_set.version + ".1"
         return RuleSet.from_dict(data)
 
     @staticmethod
@@ -96,7 +90,6 @@ class RuleEngine:
                     {
                         "path": str(path),
                         "rule_name": rs.rule_name,
-                        "version": rs.version,
                         "columns": len(rs.columns),
                     }
                 )

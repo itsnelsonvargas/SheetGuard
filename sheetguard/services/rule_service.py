@@ -22,7 +22,7 @@ class RuleService:
         return slug or "rule_set"
 
     def library_path(self, rule_set: RuleSet) -> Path:
-        return self.library_dir / f"{self._safe_filename(rule_set.rule_name)}_v{rule_set.version}.json"
+        return self.library_dir / f"{self._safe_filename(rule_set.rule_name)}.json"
 
     def save_to_library(self, rule_set: RuleSet) -> Path:
         path = self.library_path(rule_set)
@@ -40,7 +40,6 @@ class RuleService:
                     {
                         "path": str(path),
                         "rule_name": rs.rule_name,
-                        "version": rs.version,
                         "description": rs.description,
                         "columns": len(rs.columns),
                     }

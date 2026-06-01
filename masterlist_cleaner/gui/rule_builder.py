@@ -224,7 +224,7 @@ class RuleBuilderPanel(QWidget):
             self.dup_list.addItem(f"{dup.name}: {' + '.join(dup.fields)}")
 
     def _new_rule_set(self) -> None:
-        self._rule_set = RuleSet(rule_name="New Rule Set", version="1.0", columns=[])
+        self._rule_set = RuleSet(rule_name="New Rule Set", columns=[])
         self.load_rule_set(self._rule_set)
 
     def _add_column(self) -> None:

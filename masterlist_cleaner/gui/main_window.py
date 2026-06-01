@@ -226,7 +226,7 @@ class MainWindow(QMainWindow):
         self.library_list.clear()
         for entry in self._rule_service.list_entries():
             self.library_list.addItem(
-                f"{entry['rule_name']} (v{entry['version']}) — {entry['columns']} cols"
+                f"{entry['rule_name']} — {entry['columns']} cols"
             )
             item = self.library_list.item(self.library_list.count() - 1)
             item.setData(256, entry["path"])  # Qt.UserRole
