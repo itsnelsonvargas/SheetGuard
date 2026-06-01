@@ -10,6 +10,7 @@ from urllib.parse import quote
 from PySide6.QtCore import QThread, Signal, Slot, Qt
 from PySide6.QtWidgets import (
     QApplication,
+    QComboBox,
     QDialog,
     QFileDialog,
     QFrame,
@@ -245,18 +246,24 @@ class AIWorker(QThread):
     finished_ok = Signal(str)
     failed = Signal(str)
 
-    def __init__(self, df) -> None:
+    def __init__(self, df, model_type="gemini") -> None:
         super().__init__()
         self.df = df
+        self.model_type = model_type
 
     def run(self) -> None:
         try:
-            from sheetguard.services.ai_reviewer import AIReviewService
-            service = AIReviewService()
+            if self.model_type == "openai":
+                from sheetguard.services.openai_reviewer import OpenAIReviewService
+                service = OpenAIReviewService()
+            else:
+                from sheetguard.services.ai_reviewer import AIReviewService
+                service = AIReviewService()
+                
             insights = service.review_data(self.df)
             self.finished_ok.emit(insights)
         except Exception as exc:
-            logger.exception("AI Review failed")
+            logger.exception(f"AI Review ({self.model_type}) failed")
             self.failed.emit(str(exc))
 
 
@@ -320,6 +327,14 @@ class MainWindow(QMainWindow):
         file_btns.addWidget(self.btn_ai_review)
 
         sidebar_layout.addLayout(file_btns)
+
+        ai_config_row = QHBoxLayout()
+        ai_config_row.addWidget(QLabel("AI Engine:"))
+        self.ai_model_combo = QComboBox()
+        self.ai_model_combo.addItems(["Gemini (Flash)", "ChatGPT (GPT-4o)"])
+        self.ai_model_combo.setToolTip("Select the AI engine to use for reviews.")
+        ai_config_row.addWidget(self.ai_model_combo)
+        sidebar_layout.addLayout(ai_config_row)
 
         sidebar_layout.addWidget(QLabel("RULE LIBRARY"))
         self.library_list = QListWidget()
@@ -539,13 +554,20 @@ class MainWindow(QMainWindow):
             return
             
         df = self._source_df
+        
+        # Check if ai_model_combo exists (to avoid NameError if UI wasn't built correctly)
+        model_type = "gemini"
+        model_name = "Gemini"
+        if hasattr(self, "ai_model_combo"):
+            model_name = self.ai_model_combo.currentText()
+            model_type = "openai" if "ChatGPT" in model_name else "gemini"
             
         self.btn_ai_review.setEnabled(False)
         self.btn_ai_review.setText("🤖 Reviewing...")
-        self.processing_overlay.show_processing("AI Data Review")
-        self.status.showMessage("AI is reviewing data...")
+        self.processing_overlay.show_processing(f"AI Review ({model_name})")
+        self.status.showMessage(f"AI ({model_name}) is reviewing data...")
         
-        self._ai_worker = AIWorker(df)
+        self._ai_worker = AIWorker(df, model_type=model_type)
         self._ai_worker.finished_ok.connect(self._on_ai_finished)
         self._ai_worker.failed.connect(self._on_ai_failed)
         self._ai_worker.start()
