@@ -256,6 +256,9 @@ class AIWorker(QThread):
             if self.model_type == "openai":
                 from sheetguard.services.openai_reviewer import OpenAIReviewService
                 service = OpenAIReviewService()
+            elif self.model_type == "groq":
+                from sheetguard.services.groq_reviewer import GroqReviewService
+                service = GroqReviewService()
             else:
                 from sheetguard.services.ai_reviewer import AIReviewService
                 service = AIReviewService()
@@ -331,7 +334,7 @@ class MainWindow(QMainWindow):
         ai_config_row = QHBoxLayout()
         ai_config_row.addWidget(QLabel("AI Engine:"))
         self.ai_model_combo = QComboBox()
-        self.ai_model_combo.addItems(["Gemini (Flash)", "ChatGPT (GPT-4o)"])
+        self.ai_model_combo.addItems(["Gemini (Flash)", "ChatGPT (GPT-4o)", "Groq (Llama 3)"])
         self.ai_model_combo.setToolTip("Select the AI engine to use for reviews.")
         ai_config_row.addWidget(self.ai_model_combo)
         sidebar_layout.addLayout(ai_config_row)
@@ -560,7 +563,12 @@ class MainWindow(QMainWindow):
         model_name = "Gemini"
         if hasattr(self, "ai_model_combo"):
             model_name = self.ai_model_combo.currentText()
-            model_type = "openai" if "ChatGPT" in model_name else "gemini"
+            if "ChatGPT" in model_name:
+                model_type = "openai"
+            elif "Groq" in model_name:
+                model_type = "groq"
+            else:
+                model_type = "gemini"
             
         self.btn_ai_review.setEnabled(False)
         self.btn_ai_review.setText("🤖 Reviewing...")
@@ -588,7 +596,18 @@ class MainWindow(QMainWindow):
         self.btn_ai_review.setEnabled(True)
         self.btn_ai_review.setText("🤖 AI Review")
         self.processing_overlay.hide()
-        QMessageBox.critical(self, "AI Review Failed", f"AI Review failed:\n{message}")
+        
+        if "429" in message or "insufficient_quota" in message.lower():
+            error_msg = (
+                "AI Review Failed: Quota Exceeded.\n\n"
+                "This usually means your OpenAI account has no credits. "
+                "Try switching the AI Engine to 'Gemini (Flash)' or 'Groq (Llama 3)' in the sidebar, "
+                "which both have generous free tiers."
+            )
+            QMessageBox.warning(self, "AI Quota Exceeded", error_msg)
+        else:
+            QMessageBox.critical(self, "AI Review Failed", f"AI Review failed:\n{message}")
+            
         self.status.showMessage("AI Review failed.")
 
     def _preview_rule_test(self) -> None:
