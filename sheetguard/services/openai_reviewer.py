@@ -11,7 +11,7 @@ class OpenAIReviewService:
         self.api_key = os.getenv("OPENAI_API_KEY")
         if self.api_key:
             self.client = OpenAI(api_key=self.api_key)
-            self.model = "gpt-4o"
+            self.model = "gpt-4o-mini"
         else:
             self.client = None
             self.model = None
