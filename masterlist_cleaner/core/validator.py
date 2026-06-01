@@ -248,7 +248,7 @@ class DataValidator:
             logger.warning("Lookup '%s' not loaded", col_rule.lookup)
             return
         src = next((l for l in self.rule_set.lookups if l.name == col_rule.lookup), None)
-        threshold = src.fuzzy_threshold if src else 90.0
+        threshold = src.fuzzy_threshold if src else 100.0
 
         for idx, val in series.items():
             if pd.isna(val) or str(val).strip() == "":

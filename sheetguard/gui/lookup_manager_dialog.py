@@ -180,14 +180,19 @@ class LookupTableManagerDialog(QDialog):
         import_layout.addRow("Key Column", self.key_column)
 
         self.match_mode = QComboBox()
-        self.match_mode.addItems(["fuzzy", "exact"])
+        self.match_mode.addItems(["exact", "fuzzy"])
+        self.match_mode.setCurrentText("exact")
         import_layout.addRow("Match Mode", self.match_mode)
 
         self.fuzzy_threshold = QSpinBox()
         self.fuzzy_threshold.setRange(0, 100)
-        self.fuzzy_threshold.setValue(90)
+        self.fuzzy_threshold.setValue(100)
         self.fuzzy_threshold.setSuffix("%")
         import_layout.addRow("Fuzzy Threshold", self.fuzzy_threshold)
+
+        # Connect signals after both widgets are created
+        self.match_mode.currentTextChanged.connect(self._on_match_mode_changed)
+        self.fuzzy_threshold.valueChanged.connect(self._on_fuzzy_threshold_changed)
 
         self.case_sensitive = QCheckBox("Case sensitive")
         self.trim_spaces = QCheckBox("Trim spaces before matching")
@@ -227,6 +232,24 @@ class LookupTableManagerDialog(QDialog):
 
     # ── File import slots ────────────────────────────────────────────
 
+    def _on_match_mode_changed(self, mode: str) -> None:
+        """Handle match mode changes: exact mode forces 100% threshold."""
+        if mode == "exact":
+            if self.fuzzy_threshold.value() != 100:
+                self.fuzzy_threshold.setValue(100)
+        elif mode == "fuzzy":
+            if self.fuzzy_threshold.value() == 100:
+                self.fuzzy_threshold.setValue(90)
+
+    def _on_fuzzy_threshold_changed(self, value: int) -> None:
+        """Handle threshold changes: 100% is exact, <100% is fuzzy."""
+        if value == 100:
+            if self.match_mode.currentText() != "exact":
+                self.match_mode.setCurrentText("exact")
+        else:
+            if self.match_mode.currentText() != "fuzzy":
+                self.match_mode.setCurrentText("fuzzy")
+
     def _choose_file(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
             self,
@@ -240,6 +263,10 @@ class LookupTableManagerDialog(QDialog):
         self._source_path = Path(path)
         self.source_path.setText(str(self._source_path))
         self.lookup_name.setText(self._source_path.stem.replace("_", " ").title())
+
+        # Reset defaults when a new source is selected
+        self.match_mode.setCurrentText("exact")
+        self.fuzzy_threshold.setValue(100)
 
         try:
             sheets = self._service.sheets(self._source_path)
@@ -315,8 +342,14 @@ class LookupTableManagerDialog(QDialog):
         self.lookup_name.setText(metadata.name)
         self.key_column.clear()
         self.key_column.addItem(metadata.key_column)
+        
+        self.match_mode.blockSignals(True)
+        self.fuzzy_threshold.blockSignals(True)
         self.match_mode.setCurrentText(metadata.match_mode)
         self.fuzzy_threshold.setValue(int(metadata.fuzzy_threshold))
+        self.match_mode.blockSignals(False)
+        self.fuzzy_threshold.blockSignals(False)
+
         self.case_sensitive.setChecked(metadata.case_sensitive)
         self.trim_spaces.setChecked(metadata.trim_spaces)
 

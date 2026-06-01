@@ -24,10 +24,10 @@ class LookupMetadata:
     stored_path: str
     key_column: str
     sheet: str | None = None
-    match_mode: str = "fuzzy"
+    match_mode: str = "exact"
     case_sensitive: bool = False
     trim_spaces: bool = True
-    fuzzy_threshold: float = 90.0
+    fuzzy_threshold: float = 100.0
     original_path: str = ""
     created_at: str = ""
     updated_at: str = ""
@@ -40,10 +40,10 @@ class LookupMetadata:
             stored_path=data["stored_path"],
             key_column=data["key_column"],
             sheet=data.get("sheet"),
-            match_mode=data.get("match_mode", "fuzzy"),
+            match_mode=data.get("match_mode", "exact"),
             case_sensitive=bool(data.get("case_sensitive", False)),
             trim_spaces=bool(data.get("trim_spaces", True)),
-            fuzzy_threshold=float(data.get("fuzzy_threshold", 90.0)),
+            fuzzy_threshold=float(data.get("fuzzy_threshold", 100.0)),
             original_path=data.get("original_path", ""),
             created_at=data.get("created_at", ""),
             updated_at=data.get("updated_at", ""),

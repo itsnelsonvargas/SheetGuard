@@ -15,7 +15,7 @@ class LookupSource:
     key_column: str
     value_column: str | None = None
     sheet: str | None = None
-    fuzzy_threshold: float = 90.0
+    fuzzy_threshold: float = 100.0
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> LookupSource:
@@ -25,7 +25,7 @@ class LookupSource:
             key_column=data["key_column"],
             value_column=data.get("value_column"),
             sheet=data.get("sheet"),
-            fuzzy_threshold=float(data.get("fuzzy_threshold", 90.0)),
+            fuzzy_threshold=float(data.get("fuzzy_threshold", 100.0)),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,7 +38,7 @@ class LookupSource:
             out["value_column"] = self.value_column
         if self.sheet:
             out["sheet"] = self.sheet
-        if self.fuzzy_threshold != 90.0:
+        if self.fuzzy_threshold != 100.0:
             out["fuzzy_threshold"] = self.fuzzy_threshold
         return out
 
