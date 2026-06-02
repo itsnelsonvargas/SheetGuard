@@ -59,10 +59,62 @@ class QualityScoreDial(QWidget):
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setFixedSize(80, 80)
-        self._score = 87
+        self._score = 0  # Start at 0 until data is processed
+        self._is_hovering = False
+        self._errors = 0
+        self._warnings = 0
+        self._duplicates = 0
+        self._corrections = 0
+        self.setMouseTracking(True)
+        self._update_tooltip()
 
-    def set_score(self, score: int) -> None:
+    def set_score(self, score: int, errors: int = 0, warnings: int = 0, duplicates: int = 0, corrections: int = 0) -> None:
+        """Set score and update calculation metrics."""
         self._score = score
+        self._errors = errors
+        self._warnings = warnings
+        self._duplicates = duplicates
+        self._corrections = corrections
+        self._update_tooltip()
+        self.update()
+
+    def _update_tooltip(self) -> None:
+        """Generate detailed tooltip showing the calculation formula."""
+        if self._score == 0 and self._errors == 0 and self._warnings == 0 and self._duplicates == 0 and self._corrections == 0:
+            tooltip = "Data Quality Score\n\nCalculation Formula:\nBase Score: 100\n- (Errors × 5)\n- (Warnings × 2)\n- (Duplicates × 3)\n+ (Corrections × 1, max +10)\n= Final Score (0-100)\n\nLoad data to calculate."
+        else:
+            # Calculate step by step
+            base = 100
+            error_deduct = self._errors * 5
+            warning_deduct = self._warnings * 2
+            duplicate_deduct = self._duplicates * 3
+            correction_bonus = min(self._corrections, 10)
+            
+            tooltip = f"Data Quality Score: {self._score}\n\n"
+            tooltip += "Calculation Breakdown:\n"
+            tooltip += f"Base Score:           +100\n"
+            tooltip += f"Errors ({self._errors} × -5):      -{error_deduct}\n"
+            tooltip += f"Warnings ({self._warnings} × -2):    -{warning_deduct}\n"
+            tooltip += f"Duplicates ({self._duplicates} × -3):  -{duplicate_deduct}\n"
+            tooltip += f"Corrections ({self._corrections} × +1):  +{correction_bonus}\n"
+            tooltip += "─" * 32 + "\n"
+            tooltip += f"Final Score:          {self._score}/100\n\n"
+            tooltip += "Legend:\n"
+            tooltip += "• Errors: Critical validation issues\n"
+            tooltip += "• Warnings: Minor anomalies\n"
+            tooltip += "• Duplicates: Duplicate records found\n"
+            tooltip += "• Corrections: Issues automatically fixed"
+        
+        self.setToolTip(tooltip)
+
+    def enterEvent(self, event) -> None:
+        """Handle mouse enter - show calculation indicator."""
+        self._is_hovering = True
+        self.update()
+
+    def leaveEvent(self, event) -> None:
+        """Handle mouse leave - hide calculation indicator."""
+        self._is_hovering = False
         self.update()
 
     def paintEvent(self, event) -> None:
@@ -95,6 +147,21 @@ class QualityScoreDial(QWidget):
         font.setBold(True)
         painter.setFont(font)
         painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, str(self._score))
+        
+        # Show "Calculating..." when hovering
+        if self._is_hovering:
+            # Semi-transparent overlay
+            overlay_color = QColor(11, 14, 20, 200)  # Dark background with transparency
+            painter.fillRect(QRectF(0, 0, 80, 80), overlay_color)
+            
+            # Draw "Calculating..." text
+            painter.setPen(QColor("#00D4FF"))
+            calc_font = painter.font()
+            calc_font.setPixelSize(10)
+            calc_font.setWeight(600)
+            painter.setFont(calc_font)
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, "Calculating...")
+
 
 
 class SummaryCards(QFrame):
@@ -183,10 +250,26 @@ class SummaryCards(QFrame):
         self._cards["duplicates"].setText(str(duplicates))
         self._cards["corrections"].setText(str(corrections))
         
-        # Simple heuristic for score
-        total_issues = errors + warnings + duplicates
-        score = max(0, 100 - total_issues)
-        self.dial.set_score(score)
+        # Weighted quality score calculation
+        # Start at 100 and deduct points based on issues
+        score = 100
+        
+        # Deduct for errors (most critical - 5 points each)
+        score -= errors * 5
+        
+        # Deduct for warnings (less critical - 2 points each)
+        score -= warnings * 2
+        
+        # Deduct for duplicates (3 points each)
+        score -= duplicates * 3
+        
+        # Add bonus for corrections (1 point each, up to 10)
+        score += min(corrections, 10)
+        
+        # Clamp score between 0 and 100
+        score = max(0, min(100, score))
+        
+        self.dial.set_score(score, errors=errors, warnings=warnings, duplicates=duplicates, corrections=corrections)
 
     def reset(self) -> None:
         self.update_counts(0, 0, 0, 0)
