@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QPushButton,
     QScrollArea,
+    QSizePolicy,
     QSpinBox,
     QTextEdit,
     QVBoxLayout,
@@ -266,7 +267,7 @@ class ColumnRuleEditor(QDialog):
 
 
 class RuleBuilderPanel(QWidget):
-    """Sidebar panel for building and editing rule sets."""
+    """Sidebar panel for building and editing rule sets (Compact Ultra Edition)."""
 
     rule_changed = Signal(object)
     rule_saved = Signal()
@@ -276,87 +277,91 @@ class RuleBuilderPanel(QWidget):
         self._rule_set: RuleSet | None = None
 
         layout = QVBoxLayout(self)
-        layout.addWidget(QLabel("Rule Builder"))
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(10)
 
-        meta = QGroupBox("Rule Set")
-        meta_layout = QVBoxLayout(meta)
-        
-        name_row = QHBoxLayout()
+        # 1. Rule Set Header (Compact)
         self.rule_name_label = QLabel("Untitled")
-        self.rule_name_label.setStyleSheet("font-weight: bold; font-size: 14px; color: #1E293B;")
+        self.rule_name_label.setStyleSheet("font-weight: 800; font-size: 13px; color: #00D4FF;")
+        self.rule_name_label.setWordWrap(True)
         
         self.btn_rename = QPushButton("✏️")
-        self.btn_rename.setFixedSize(28, 28)
-        self.btn_rename.setToolTip("Rename this rule set")
-        self.btn_rename.setObjectName("secondary")
+        self.btn_rename.setFixedSize(26, 26)
+        self.btn_rename.setObjectName("actionSecondary")
         
+        name_row = QHBoxLayout()
         name_row.addWidget(self.rule_name_label)
         name_row.addStretch()
         name_row.addWidget(self.btn_rename)
-        
-        meta_layout.addLayout(name_row)
-        layout.addWidget(meta)
+        layout.addLayout(name_row)
 
+        # 2. Columns List (Compact)
+        lbl_cols = QLabel("COLUMNS")
+        lbl_cols.setObjectName("groupHeader")
+        lbl_cols.setWordWrap(True)
+        layout.addWidget(lbl_cols)
+        
         self.column_list = QListWidget()
         self.column_list.setObjectName("ruleColumns")
-        self.column_list.setMinimumHeight(160)
-        layout.addWidget(QLabel("Columns"))
-        layout.addWidget(self.column_list)
+        self.column_list.setMinimumHeight(80)
+        self.column_list.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        layout.addWidget(self.column_list, stretch=1)
 
         col_btns = QHBoxLayout()
-        self.btn_add_col = QPushButton("➕ Add")
-        self.btn_add_col.setObjectName("success")
-        self.btn_add_col.setToolTip("Add a new column rule")
-        self.btn_edit_col = QPushButton("✏️ Edit")
-        self.btn_edit_col.setToolTip("Edit the selected column rule")
-        self.btn_del_col = QPushButton("🗑️ Delete")
-        self.btn_del_col.setObjectName("danger")
-        self.btn_del_col.setToolTip("Remove the selected column rule")
-        self.btn_up_col = QPushButton("🔼 Up")
-        self.btn_up_col.setToolTip("Move the selected rule up")
-        self.btn_down_col = QPushButton("🔽 Down")
-        self.btn_down_col.setToolTip("Move the selected rule down")
-        for b in (self.btn_add_col, self.btn_edit_col, self.btn_del_col, self.btn_up_col, self.btn_down_col):
-            col_btns.addWidget(b)
+        col_btns.setSpacing(5)
+        self.btn_add_col = QPushButton("+ Add")
+        self.btn_edit_col = QPushButton("Edit")
+        self.btn_del_col = QPushButton("Del")
+        self.btn_del_col.setObjectName("deleteAction")
+        for b in (self.btn_add_col, self.btn_edit_col, self.btn_del_col):
+            b.setObjectName("actionSecondary") if b != self.btn_del_col else None
+            b.setMinimumHeight(28)
+            b.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+            col_btns.addWidget(b, stretch=1)
         layout.addLayout(col_btns)
 
-        dup_group = QGroupBox("Duplicate Check Rules")
-        dup_layout = QVBoxLayout(dup_group)
-        
-        dup_help = QLabel("Define combinations of columns that identify a duplicate row:")
-        dup_help.setStyleSheet("color: #64748B; font-size: 11px;")
-        dup_layout.addWidget(dup_help)
+        # 3. Duplicate Rules (Compact)
+        lbl_dups = QLabel("DUPLICATE RULES")
+        lbl_dups.setObjectName("groupHeader")
+        lbl_dups.setWordWrap(True)
+        layout.addWidget(lbl_dups)
 
         self.dup_list = QListWidget()
         self.dup_list.setObjectName("duplicateRules")
-        self.dup_list.setMinimumHeight(160)
-        dup_layout.addWidget(self.dup_list)
+        self.dup_list.setMinimumHeight(60)
+        self.dup_list.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        layout.addWidget(self.dup_list, stretch=1)
+        
         dup_btns = QHBoxLayout()
-        self.btn_add_dup = QPushButton("➕ Add Dup Rule")
-        self.btn_add_dup.setObjectName("success")
-        self.btn_add_dup.setToolTip("Create a new duplicate detection rule")
-        self.btn_del_dup = QPushButton("🗑️ Remove")
-        self.btn_del_dup.setObjectName("danger")
-        self.btn_del_dup.setToolTip("Remove the selected duplicate rule")
-        dup_btns.addWidget(self.btn_add_dup)
-        dup_btns.addWidget(self.btn_del_dup)
-        dup_layout.addLayout(dup_btns)
-        layout.addWidget(dup_group)
+        dup_btns.setSpacing(5)
+        self.btn_add_dup = QPushButton("+ Dup")
+        self.btn_del_dup = QPushButton("Del")
+        self.btn_del_dup.setObjectName("deleteAction")
+        for b in (self.btn_add_dup, self.btn_del_dup):
+            b.setObjectName("actionSecondary") if b != self.btn_del_dup else None
+            b.setMinimumHeight(28)
+            b.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+            dup_btns.addWidget(b, stretch=1)
+        layout.addLayout(dup_btns)
 
+        # 4. Save/New Actions
+        layout.addSpacing(5)
         save_row = QHBoxLayout()
         self.btn_save = QPushButton("💾 Save Rule Set")
-        self.btn_save.setToolTip("Save the current rule set to the library")
+        self.btn_save.setObjectName("primary")
+        self.btn_save.setMinimumHeight(34)
+        self.btn_save.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.btn_new = QPushButton("📄 New")
-        self.btn_new.setToolTip("Create a brand new empty rule set")
-        save_row.addWidget(self.btn_new)
-        save_row.addWidget(self.btn_save)
+        self.btn_new.setObjectName("actionSecondary")
+        self.btn_new.setMinimumHeight(34)
+        self.btn_new.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        save_row.addWidget(self.btn_new, stretch=1)
+        save_row.addWidget(self.btn_save, stretch=1)
         layout.addLayout(save_row)
 
         self.btn_add_col.clicked.connect(self._add_column)
         self.btn_edit_col.clicked.connect(self._edit_column)
         self.btn_del_col.clicked.connect(self._delete_column)
-        self.btn_up_col.clicked.connect(lambda: self._move_column(-1))
-        self.btn_down_col.clicked.connect(lambda: self._move_column(1))
         self.btn_add_dup.clicked.connect(self._add_duplicate_rule)
         self.btn_del_dup.clicked.connect(self._delete_duplicate_rule)
         self.btn_rename.clicked.connect(self._rename_rule_set)
