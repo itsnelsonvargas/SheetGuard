@@ -27,6 +27,17 @@ from sheetguard.models.results import ProcessingResult
 if TYPE_CHECKING:
     from sheetguard.models.rules import RuleSet
 
+FINDING_COLUMNS = [
+    "row",
+    "field_id",
+    "column",
+    "severity",
+    "message",
+    "original_value",
+    "cleaned_value",
+    "rule_type",
+]
+
 
 class ResultsView(QWidget):
     """Main results area: tabbed tables."""
@@ -116,26 +127,40 @@ class ResultsView(QWidget):
         # 1. Preview Tab: Show cleaned data with inline error markers
         self.preview_table.set_dataframe(result.cleaned_df, errors=result.issues)
         
-        # 2. Issues Tab: Show only rows with validation errors
-        self.issues_table.set_dataframe(self._issues_df(result))
+        # 2. Issues Tab: Show all findings with severity color coding
+        findings_df = self._findings_df(result)
+        findings_count = len(result.issues) + sum(len(group.row_indices) for group in result.duplicates)
+        self.issues_table.set_dataframe(findings_df)
         
         # 3. Resolved Tab: Show duplicate detection results with Delete action
-        self.resolved_table.set_dataframe(
-            self._duplicates_df(result), 
-            action_column="Delete", 
-            on_action=self._on_row_action
-        )
+        duplicates_df = self._duplicates_df(result)
+        if duplicates_df.empty:
+            self.resolved_table.set_dataframe(self._empty_resolved_df(result.cleaned_df, "No duplicate rows found."))
+        else:
+            self.resolved_table.set_dataframe(
+                duplicates_df,
+                action_column="Delete",
+                on_action=self._on_row_action,
+            )
         
         # 4. Summary Tab: Show statistical and data quality metrics
         self.summary_table.set_dataframe(self._generate_column_summary(result.cleaned_df, result.rule_set))
+        self._update_tab_titles(result, findings_count)
+        if findings_count:
+            self.tabs.setCurrentWidget(self.issues_table)
 
     def show_preview(self, df: pd.DataFrame, rule_set: RuleSet | None = None) -> None:
         # Initial preview before cleaning
         self.preview_table.set_dataframe(df)
         self.summary_table.set_dataframe(self._generate_column_summary(df, rule_set))
-        self.issues_table.set_dataframe(None)
-        self.resolved_table.set_dataframe(None)
+        self.issues_table.set_dataframe(
+            self._empty_findings_df("Run Clean Validate to populate issues, warnings, and duplicates.")
+        )
+        self.resolved_table.set_dataframe(
+            self._empty_resolved_df(df, "Run Clean Validate to populate duplicate rows.")
+        )
         self.summary.reset()
+        self._reset_tab_titles()
 
     def focus_preview_cell(self, row_index: int, column_name: str) -> bool:
         """Switch to the Preview tab and focus a specific row/column."""
@@ -149,6 +174,8 @@ class ResultsView(QWidget):
 
         try:
             # issue_df_idx is the original index in the issues list (from UserRole)
+            if issue_df_idx >= len(self._result.issues):
+                return
             issue = self._result.issues[issue_df_idx]
             row_idx = issue.row_index
             
@@ -181,8 +208,21 @@ class ResultsView(QWidget):
         self.summary.reset()
         self.preview_table.set_dataframe(None)
         self.summary_table.set_dataframe(None)
-        self.issues_table.set_dataframe(None)
-        self.resolved_table.set_dataframe(None)
+        self.issues_table.set_dataframe(self._empty_findings_df("No file loaded."))
+        self.resolved_table.set_dataframe(self._empty_resolved_df(None, "No file loaded."))
+        self._reset_tab_titles()
+
+    def _update_tab_titles(self, result: ProcessingResult, findings_count: int) -> None:
+        self.tabs.setTabText(0, "Preview")
+        self.tabs.setTabText(1, f"Issues ({findings_count})")
+        self.tabs.setTabText(2, f"Resolved ({sum(len(g.row_indices) for g in result.duplicates)})")
+        self.tabs.setTabText(3, "Summary")
+
+    def _reset_tab_titles(self) -> None:
+        self.tabs.setTabText(0, "Preview")
+        self.tabs.setTabText(1, "Issues")
+        self.tabs.setTabText(2, "Resolved")
+        self.tabs.setTabText(3, "Summary")
 
     @staticmethod
     def _generate_column_summary(df: pd.DataFrame, rule_set: RuleSet | None = None) -> pd.DataFrame:
@@ -344,12 +384,63 @@ class ResultsView(QWidget):
         return pd.DataFrame([i.to_dict() for i in result.issues])
 
     @staticmethod
+    def _findings_df(result: ProcessingResult) -> pd.DataFrame:
+        rows = [i.to_dict() for i in result.issues]
+        for group in result.duplicates:
+            key = ", ".join(f"{field}={value}" for field, value in group.key_values.items())
+            for row_idx in group.row_indices:
+                rows.append(
+                    {
+                        "row": row_idx + 1,
+                        "field_id": "duplicate",
+                        "column": ", ".join(group.key_values.keys()),
+                        "severity": "duplicate",
+                        "message": f"Duplicate match in '{group.rule_name}'",
+                        "original_value": key,
+                        "cleaned_value": "",
+                        "rule_type": "duplicate",
+                    }
+                )
+        if rows:
+            return pd.DataFrame(rows, columns=FINDING_COLUMNS)
+        return ResultsView._empty_findings_df("No issues, warnings, or duplicates found.")
+
+    @staticmethod
     def _duplicates_df(result: ProcessingResult) -> pd.DataFrame:
         rows = []
         for g in result.duplicates:
             for idx in g.row_indices:
                 row = result.cleaned_df.iloc[idx].to_dict()
+                row["severity"] = "duplicate"
                 row["duplicate_rule"] = g.rule_name
                 row["row_number"] = idx + 1
                 rows.append(row)
         return pd.DataFrame(rows) if rows else pd.DataFrame()
+
+    @staticmethod
+    def _empty_findings_df(message: str) -> pd.DataFrame:
+        return pd.DataFrame(
+            [
+                {
+                    "row": "",
+                    "field_id": "status",
+                    "column": "",
+                    "severity": "",
+                    "message": message,
+                    "original_value": "",
+                    "cleaned_value": "",
+                    "rule_type": "",
+                }
+            ],
+            columns=FINDING_COLUMNS,
+        )
+
+    @staticmethod
+    def _empty_resolved_df(df: pd.DataFrame | None, message: str) -> pd.DataFrame:
+        columns = list(df.columns) if df is not None else []
+        if not columns:
+            columns = ["status"]
+        columns.extend(["severity", "duplicate_rule", "row_number"])
+        row = {column: "" for column in columns}
+        row[columns[0]] = message
+        return pd.DataFrame([row], columns=columns)

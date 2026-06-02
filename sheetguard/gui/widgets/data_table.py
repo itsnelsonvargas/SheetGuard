@@ -24,6 +24,11 @@ from sheetguard.utils.column_utils import coerce_cell
 
 
 TABLE_TEXT_COLOR = QColor("#FFFFFF")
+ISSUE_TEXT_COLORS = {
+    "error": QColor("#FF4D4D"),
+    "warning": QColor("#F59E0B"),
+    "duplicate": QColor("#00D4FF"),
+}
 
 
 def apply_table_text_palette(table: QTableWidget) -> None:
@@ -46,9 +51,11 @@ class DataTableDelegate(QStyledItemDelegate):
     def paint(self, painter: QPainter, option: QStyleOptionViewItem, index) -> None:
         # Standard background/selection
         self.initStyleOption(option, index)
-        option.palette.setColor(QPalette.ColorRole.Text, TABLE_TEXT_COLOR)
-        option.palette.setColor(QPalette.ColorRole.WindowText, TABLE_TEXT_COLOR)
-        option.palette.setColor(QPalette.ColorRole.HighlightedText, TABLE_TEXT_COLOR)
+        foreground = index.data(Qt.ItemDataRole.ForegroundRole)
+        text_color = foreground.color() if isinstance(foreground, QBrush) else TABLE_TEXT_COLOR
+        option.palette.setColor(QPalette.ColorRole.Text, text_color)
+        option.palette.setColor(QPalette.ColorRole.WindowText, text_color)
+        option.palette.setColor(QPalette.ColorRole.HighlightedText, text_color)
         painter.save()
         
         # Check if cell is "loading" (skeletal)
@@ -77,7 +84,7 @@ class DataTableDelegate(QStyledItemDelegate):
             # Draw normal text explicitly so body cells remain readable on the dark grid.
             text_rect = option.rect.adjusted(8, 0, -8, 0)
             text = option.fontMetrics.elidedText(str(text), Qt.TextElideMode.ElideRight, text_rect.width())
-            painter.setPen(TABLE_TEXT_COLOR)
+            painter.setPen(text_color)
             painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, text)
 
         # Draw Error Marker (Red Triangle in top right)
@@ -205,9 +212,10 @@ class DataTableWidget(QWidget):
     def _render(self, df: pd.DataFrame | None) -> None:
         self._table.blockSignals(True)
         self._table.clear()
-        if df is None or df.empty:
+        if df is None:
             self._table.setRowCount(0)
             self._table.setColumnCount(0)
+            self._table.blockSignals(False)
             return
 
         cols = list(df.columns)
@@ -218,7 +226,13 @@ class DataTableWidget(QWidget):
         self._table.setColumnCount(len(cols))
         self._table.setHorizontalHeaderLabels([str(c) for c in cols])
 
+        if df.empty:
+            self._table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+            self._table.blockSignals(False)
+            return
+
         for r in range(len(df)):
+            row_color = self._row_text_color(df.iloc[r])
             for c, col in enumerate(df.columns):
                 val = coerce_cell(df.iloc[r, c])
                 item = QTableWidgetItem()
@@ -241,8 +255,8 @@ class DataTableWidget(QWidget):
                 else:
                     item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
                 
-                item.setForeground(TABLE_TEXT_COLOR)
-                item.setData(Qt.ItemDataRole.ForegroundRole, QBrush(TABLE_TEXT_COLOR))
+                item.setForeground(row_color)
+                item.setData(Qt.ItemDataRole.ForegroundRole, QBrush(row_color))
                 
                 item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 self._table.setItem(r, c, item)
@@ -275,6 +289,13 @@ class DataTableWidget(QWidget):
             original_idx = item.data(Qt.ItemDataRole.UserRole)
             new_value = item.text()
             self._manual_edits.add((original_idx, column_name))
-            item.setForeground(TABLE_TEXT_COLOR)
-            item.setData(Qt.ItemDataRole.ForegroundRole, QBrush(TABLE_TEXT_COLOR))
             self.cell_changed.emit(original_idx, column_name, new_value)
+
+    @staticmethod
+    def _row_text_color(row: pd.Series) -> QColor:
+        for key in ("severity", "issue_type", "status"):
+            if key in row.index:
+                value = str(row.get(key, "")).strip().lower()
+                if value in ISSUE_TEXT_COLORS:
+                    return ISSUE_TEXT_COLORS[value]
+        return TABLE_TEXT_COLOR
