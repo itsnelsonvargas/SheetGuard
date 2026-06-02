@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
+import random
 from html import escape
 import logging
 from pathlib import Path
 from urllib.parse import quote
+from string import ascii_lowercase
 
-from PySide6.QtCore import QThread, Signal, Slot, Qt, QSize
-from PySide6.QtGui import QIcon
+from PySide6.QtCore import QThread, Signal, Slot, Qt, QSize, QTimer
+from PySide6.QtGui import QIcon, QColor
 from PySide6.QtWidgets import (
     QApplication,
     QDialog,
@@ -26,8 +28,12 @@ from PySide6.QtWidgets import (
     QSplitter,
     QStatusBar,
     QTextBrowser,
+    QTreeWidget,
+    QTreeWidgetItem,
     QVBoxLayout,
     QWidget,
+    QLineEdit,
+    QSizePolicy,
 )
 
 from sheetguard.core.exporter import WorkbookExporter
@@ -87,195 +93,12 @@ class StartRowDialog(QDialog):
         return self.spinbox.value()
 
 
-class HelpDialog(QDialog):
-    """In-app guide for common SheetGuard workflows and terms."""
-
-    def __init__(self, parent=None) -> None:
-        super().__init__(parent)
-        self.setWindowTitle("How to Use SheetGuard")
-        self.setMinimumSize(620, 620)
-        self.setModal(True)
-
-        layout = QVBoxLayout(self)
-
-        guide = QTextBrowser()
-        guide.setOpenExternalLinks(False)
-        guide.setHtml(
-            """
-            <h1>How to Use SheetGuard</h1>
-
-            <h2>Basic workflow</h2>
-            <ol>
-              <li><b>Choose a rule</b> from the Rule Library, or build one in Rule Builder.</li>
-              <li><b>Upload a spreadsheet</b> using Browse File or drag and drop.</li>
-              <li><b>Select the Start Row</b> when prompted so SheetGuard reads the right headers.</li>
-              <li><b>Run Clean &amp; Validate</b> to clean data and find issues.</li>
-              <li><b>Review the results</b>, then export the report you need.</li>
-            </ol>
-
-            <h2>Terms used in the app</h2>
-            <p><b>Rule Library</b> - saved rule sets you can select, import, export, clone, or delete.</p>
-            <p><b>Rule Set</b> - a named collection of column rules and duplicate check rules.</p>
-            <p><b>Rule Builder</b> - the panel where you create or edit the active rule set.</p>
-            <p><b>Columns</b> - the spreadsheet fields SheetGuard should clean or validate.</p>
-            <p><b>Column Rule</b> - settings for one column, such as required, email check, allowed values, regex, or lookup.</p>
-            <p><b>Cleaning</b> - automatic fixes applied before validation, such as trimming spaces, changing case, or normalizing dates.</p>
-            <p><b>Validation Rules</b> - checks that flag data problems after cleaning.</p>
-            <p><b>Required</b> - marks a column as mandatory. Empty cells are reported.</p>
-            <p><b>Warning Only</b> - reports issues as warnings instead of errors.</p>
-            <p><b>Error</b> - a data issue that should usually be fixed before using the file.</p>
-            <p><b>Warning</b> - a suspicious value that may need review but may still be acceptable.</p>
-            <p><b>Lookup Table</b> - a reference list used to check whether values are valid.</p>
-            <p><b>Duplicate Check Rules</b> - column combinations used to detect repeated records.</p>
-            <p><b>AI Review</b> - an optional review that summarizes possible data quality issues.</p>
-            <p><b>Export Full Report</b> - saves cleaned data, validation findings, and duplicate findings together.</p>
-            <p><b>Export Cleaned Data</b> - saves only the cleaned spreadsheet data.</p>
-            <p><b>Export Validation Report</b> - saves only validation errors and warnings.</p>
-            <p><b>Export Duplicate Report</b> - saves duplicate groups found by duplicate check rules.</p>
-            """
-        )
-        layout.addWidget(guide)
-
-        btn_close = QPushButton("✖ Close")
-        btn_close.clicked.connect(self.accept)
-        layout.addWidget(btn_close)
-
-
-class RulePreviewDialog(QDialog):
-    """Show a sample run of the active rules before full processing."""
-
-    navigate_requested = Signal(int, str)
-    run_requested = Signal()
-
-    def __init__(self, html: str, parent=None) -> None:
-        super().__init__(parent)
-        self.setWindowTitle("Rule Test Preview")
-        self.setMinimumSize(760, 640)
-        self.setModal(True)
-        self.ran_full_clean = False
-
-        layout = QVBoxLayout(self)
-
-        preview = QTextBrowser()
-        preview.setOpenExternalLinks(False)
-        preview.setOpenLinks(False)
-        preview.anchorClicked.connect(self._on_anchor_clicked)
-        preview.setHtml(html)
-        layout.addWidget(preview)
-
-        btn_row = QHBoxLayout()
-        btn_run = QPushButton("⚡ Run Full Clean")
-        btn_run.clicked.connect(self._request_run)
-        btn_row.addWidget(btn_run)
-
-        btn_close = QPushButton("✖ Close")
-        btn_close.setObjectName("secondary")
-        btn_close.clicked.connect(self.accept)
-        btn_row.addWidget(btn_close)
-        layout.addLayout(btn_row)
-
-    def _on_anchor_clicked(self, url) -> None:
-        if url.scheme() != "preview-row":
-            return
-        payload = url.path()
-        try:
-            row_text, column_name = payload.split("|", 1)
-            row_index = int(row_text)
-        except (ValueError, TypeError):
-            return
-        if column_name:
-            self.navigate_requested.emit(row_index, column_name)
-
-    def _request_run(self) -> None:
-        self.ran_full_clean = True
-        self.run_requested.emit()
-        self.accept()
-
-
-class ProcessingWorker(QThread):
-    """Background thread for pipeline execution."""
-
-    progress = Signal(int, str)
-    finished_ok = Signal(object)
-    failed = Signal(str)
-
-    def __init__(self, rule_set: RuleSet, source: object) -> None:
-        super().__init__()
-        self.rule_set = rule_set
-        self.source = source
-
-    def run(self) -> None:
-        try:
-            from sheetguard.services.pipeline import ProcessingPipeline
-            pipeline = ProcessingPipeline(self.rule_set)
-
-            def on_progress(pct: int, msg: str) -> None:
-                self.progress.emit(pct, msg)
-
-            result = pipeline.run(self.source, progress=on_progress)
-            self.finished_ok.emit(result)
-        except Exception as exc:
-            logger.exception("Processing failed")
-            self.failed.emit(str(exc))
-
-
-class FileLoadWorker(QThread):
-    """Background thread for loading files."""
-
-    finished_ok = Signal(object, str)
-    failed = Signal(str)
-
-    def __init__(self, file_path: str, rule_set: RuleSet | None) -> None:
-        super().__init__()
-        self.file_path = file_path
-        self.rule_set = rule_set
-
-    def run(self) -> None:
-        try:
-            from sheetguard.services.file_loader import FileLoader
-            df = FileLoader.load(self.file_path, self.rule_set)
-            self.finished_ok.emit(df, self.file_path)
-        except Exception as exc:
-            logger.exception("File load failed")
-            self.failed.emit(str(exc))
-
-
-class AIWorker(QThread):
-    """Background thread for AI review."""
-
-    finished_ok = Signal(str)
-    failed = Signal(str)
-
-    def __init__(self, df, model_type="gemini") -> None:
-        super().__init__()
-        self.df = df
-        self.model_type = model_type
-
-    def run(self) -> None:
-        try:
-            if self.model_type == "openai":
-                from sheetguard.services.openai_reviewer import OpenAIReviewService
-                service = OpenAIReviewService()
-            elif self.model_type == "groq":
-                from sheetguard.services.groq_reviewer import GroqReviewService
-                service = GroqReviewService()
-            else:
-                from sheetguard.services.ai_reviewer import AIReviewService
-                service = AIReviewService()
-                
-            insights = service.review_data(self.df)
-            self.finished_ok.emit(insights)
-        except Exception as exc:
-            logger.exception(f"AI Review ({self.model_type}) failed")
-            self.failed.emit(str(exc))
-
-
 class MainWindow(QMainWindow):
-    """Primary SheetGuard window with sidebar layout."""
+    """SheetGuard Ultra window with high-fidelity sidebars."""
 
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowTitle("SheetGuard")
+        self.setWindowTitle("SheetGuard Ultra")
 
         self._rule_service = RuleService()
         self._rule_set: RuleSet | None = None
@@ -293,224 +116,302 @@ class MainWindow(QMainWindow):
     def _build_ui(self) -> None:
         central = QWidget()
         self.setCentralWidget(central)
-        root = QHBoxLayout(central)
-        root.setContentsMargins(0, 0, 0, 0)
+        root_layout = QVBoxLayout(central)
+        root_layout.setContentsMargins(0, 0, 0, 0)
+        root_layout.setSpacing(0)
 
-        splitter = QSplitter()
-        root.addWidget(splitter)
+        # --- 0. BRANDING HEADER ---
+        brand_bar = QFrame()
+        brand_bar.setObjectName("brandBar")
+        brand_bar.setStyleSheet("background-color: #0B0E14; border-bottom: 1px solid #1E242E;")
+        brand_bar_layout = QHBoxLayout(brand_bar)
+        brand_bar_layout.setContentsMargins(15, 10, 15, 10)
+        
+        lbl_shield = QLabel("🛡️")
+        lbl_shield.setObjectName("brandIcon")
+        brand_bar_layout.addWidget(lbl_shield)
+        
+        lbl_title = QLabel("SheetGuard Ultra")
+        lbl_title.setObjectName("brandTitle")
+        brand_bar_layout.addWidget(lbl_title)
+        brand_bar_layout.addStretch()
+        
+        root_layout.addWidget(brand_bar)
 
+        # Main Workspace Container (Horizontal)
+        workspace_container = QWidget()
+        workspace_layout = QHBoxLayout(workspace_container)
+        workspace_layout.setContentsMargins(0, 0, 0, 0)
+        workspace_layout.setSpacing(0)
+        root_layout.addWidget(workspace_container, stretch=1)
+
+        # --- 1. ICON SIDEBAR (FAR LEFT) ---
+        icon_sidebar = QFrame()
+        icon_sidebar.setObjectName("iconSidebar")
+        icon_sidebar.setFixedWidth(35)
+        icon_sidebar_layout = QVBoxLayout(icon_sidebar)
+        icon_sidebar_layout.setContentsMargins(0, 5, 0, 15)
+        icon_sidebar_layout.setSpacing(5)
+        icon_sidebar_layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+
+        # Navigation Icons
+        btn_menu = self._create_nav_icon("☰")
+        btn_file_ops = self._create_nav_icon("📄") 
+        btn_file_ops.setProperty("active", "true")
+        btn_db = self._create_nav_icon("🗄️") 
+        btn_settings_top = self._create_nav_icon("⚙️") 
+        
+        for b in (btn_menu, btn_file_ops, btn_db, btn_settings_top):
+            icon_sidebar_layout.addWidget(b, alignment=Qt.AlignmentFlag.AlignHCenter)
+        
+        icon_sidebar_layout.addStretch()
+        
+        # Bottom Icons
+        btn_help_nav = self._create_nav_icon("❓")
+        btn_settings_bot = self._create_nav_icon("⚙️")
+        icon_sidebar_layout.addWidget(btn_help_nav, alignment=Qt.AlignmentFlag.AlignHCenter)
+        icon_sidebar_layout.addWidget(btn_settings_bot, alignment=Qt.AlignmentFlag.AlignHCenter)
+
+        workspace_layout.addWidget(icon_sidebar)
+
+        self.main_splitter = QSplitter(Qt.Orientation.Horizontal)
+        workspace_layout.addWidget(self.main_splitter)
+
+        # --- 2. COMMAND CENTER (MIDDLE SIDEBAR) ---
+        sidebar_pane = QFrame()
+        sidebar_pane.setObjectName("sidebar")
+        sidebar_pane.setMinimumWidth(300)
+        sidebar_main_layout = QVBoxLayout(sidebar_pane)
+        sidebar_main_layout.setContentsMargins(0, 0, 0, 0)
+        sidebar_main_layout.setSpacing(0)
+
+        # Fixed Sub-Header
+        header_pane = QFrame()
+        header_layout = QHBoxLayout(header_pane)
+        header_layout.setContentsMargins(15, 15, 15, 10)
+        header_text = QLabel("Command Center")
+        header_text.setStyleSheet("font-size: 15px; font-weight: 800; color: #E2E8F0;")
+        header_collapse = QLabel("«")
+        header_collapse.setStyleSheet("color: #475569; font-weight: bold;")
+        header_layout.addWidget(header_text)
+        header_layout.addStretch()
+        header_layout.addWidget(header_collapse)
+        sidebar_main_layout.addWidget(header_pane)
+
+        # Scrollable Content Area
         sidebar_scroll = QScrollArea()
+        sidebar_scroll.setObjectName("sidebarScroll")
         sidebar_scroll.setWidgetResizable(True)
-        sidebar_scroll.setSizeAdjustPolicy(QScrollArea.SizeAdjustPolicy.AdjustToContents)
-        sidebar_scroll.setMinimumWidth(380)
-        sidebar_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        sidebar_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         sidebar_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        
+        sidebar_content = QFrame()
+        sidebar_content.setObjectName("sidebarContent")
+        sidebar_layout = QVBoxLayout(sidebar_content)
+        sidebar_layout.setContentsMargins(15, 0, 15, 10)
+        sidebar_layout.setSpacing(12)
 
-        sidebar = QFrame()
-        sidebar.setObjectName("sidebar")
-        sidebar_layout = QVBoxLayout(sidebar)
-        sidebar_layout.setContentsMargins(20, 20, 20, 20)
-        sidebar_layout.setSpacing(15)
+        # FILE OPS
+        lbl_file_ops = QLabel("FILE OPS")
+        lbl_file_ops.setObjectName("groupHeader")
+        sidebar_layout.addWidget(lbl_file_ops)
 
-        sidebar_layout.addWidget(QLabel("FILE UPLOAD"))
+        self.btn_browse = QPushButton("  📁 Browse")
+        self.btn_browse.setObjectName("browseAction")
+        self.btn_browse.setMinimumHeight(40)
+        self.btn_browse.clicked.connect(self._browse_file)
+        sidebar_layout.addWidget(self.btn_browse)
+
+        self.btn_import_api = QPushButton("  ↑ Import API")
+        self.btn_import_api.setObjectName("actionSecondary")
+        self.btn_import_api.setMinimumHeight(34)
+        sidebar_layout.addWidget(self.btn_import_api)
+
+        # Styled Drop Zone
         self.file_drop = FileDropZone()
+        self.file_drop.setObjectName("dropZone")
+        self.file_drop.setMinimumHeight(85)
         self.file_drop.file_selected.connect(self._on_file_selected)
         sidebar_layout.addWidget(self.file_drop)
 
-        file_btns = QHBoxLayout()
-        btn_browse = QPushButton("📂 Browse File...")
-        btn_browse.setObjectName("secondary")
-        btn_browse.clicked.connect(self._browse_file)
-        file_btns.addWidget(btn_browse)
-        sidebar_layout.addLayout(file_btns)
+        # AI CORE
+        lbl_ai_core = QLabel("AI CORE")
+        lbl_ai_core.setObjectName("groupHeader")
+        sidebar_layout.addWidget(lbl_ai_core)
 
-        sidebar_layout.addWidget(QLabel("AI ANALYSIS"))
-        ai_btns_layout = QVBoxLayout()
-        ai_btns_layout.setSpacing(8)
+        self.btn_model_select = QPushButton("  🌐 Model Select")
+        self.btn_model_select.setObjectName("actionSecondary")
+        self.btn_prompt_builder = QPushButton("  💬 Prompt Builder")
+        self.btn_prompt_builder.setObjectName("actionSecondary")
+        for b in (self.btn_model_select, self.btn_prompt_builder):
+            b.setMinimumHeight(34)
+            sidebar_layout.addWidget(b)
 
-        self.btn_gemini = self._create_ai_button(
-            "Gemini (Flash)", 
-            "gemini.png", 
-            "✨", 
-            "Analyze data with Google Gemini",
-            lambda: self._run_ai_review("gemini", "Gemini"),
-            height=36,
-            icon_size=20
-        )
-        self.btn_gemini.setStyleSheet("""
-            QPushButton { 
-                background-color: #8E75FF; 
-                color: white; 
-                border: none; 
-                border-radius: 6px; 
-                font-weight: bold;
-                font-size: 13px;
-                text-align: center;
-            } 
-            QPushButton:hover { background-color: #7A5FFF; }
-        """)
-        ai_btns_layout.addWidget(self.btn_gemini)
+        # RULE LIBRARY
+        lbl_rule_lib = QLabel("RULE LIBRARY")
+        lbl_rule_lib.setObjectName("groupHeader")
+        sidebar_layout.addWidget(lbl_rule_lib)
 
-        self.btn_chatgpt = self._create_ai_button(
-            "ChatGPT (GPT-4o)", 
-            "openai.png", 
-            "🧠", 
-            "Analyze data with OpenAI ChatGPT",
-            lambda: self._run_ai_review("openai", "ChatGPT"),
-            height=36,
-            icon_size=24
-        )
-        self.btn_chatgpt.setStyleSheet("""
-            QPushButton { 
-                background-color: #10a37f; 
-                color: white; 
-                border: none; 
-                border-radius: 6px; 
-                font-weight: bold;
-                font-size: 13px;
-                text-align: center;
-            } 
-            QPushButton:hover { background-color: #0d8a6a; }
-        """)
-        ai_btns_layout.addWidget(self.btn_chatgpt)
+        lib_search_layout = QHBoxLayout()
+        self.search_library = QLineEdit()
+        self.search_library.setPlaceholderText("Advanced filtering")
+        self.search_library.setMinimumHeight(32)
+        lib_search_layout.addWidget(self.search_library)
+        lbl_filter_icon = QLabel("▽")
+        lbl_filter_icon.setStyleSheet("color: #94A3B8;")
+        lib_search_layout.addWidget(lbl_filter_icon)
+        sidebar_layout.addLayout(lib_search_layout)
 
-        self.btn_groq = self._create_ai_button(
-            "Groq (Llama 3.3)", 
-            "groq.png", 
-            "⚡", 
-            "Analyze data with Groq (High Speed)",
-            lambda: self._run_ai_review("groq", "Groq"),
-            height=36,
-            icon_size=18
-        )
-        self.btn_groq.setStyleSheet("""
-            QPushButton { 
-                background-color: #f55036; 
-                color: white; 
-                border: none; 
-                border-radius: 6px; 
-                font-weight: bold;
-                font-size: 13px;
-                text-align: center;
-            } 
-            QPushButton:hover { background-color: #d4442e; }
-        """)
-        ai_btns_layout.addWidget(self.btn_groq)
+        lbl_rule_builder = QLabel("Visual Rule Builder")
+        lbl_rule_builder.setStyleSheet("color: #E2E8F0; font-weight: 600; font-size: 12px; margin-top: 5px;")
+        sidebar_layout.addWidget(lbl_rule_builder)
 
-        sidebar_layout.addLayout(ai_btns_layout)
-
-        sidebar_layout.addWidget(QLabel("RULE LIBRARY"))
-        self.library_list = QListWidget()
+        self.library_list = QTreeWidget()
         self.library_list.setObjectName("ruleLibrary")
-        self.library_list.setMinimumHeight(150)
-        self.library_list.currentItemChanged.connect(self._on_library_selected)
+        self.library_list.setMinimumHeight(280)
+        self.library_list.setHeaderHidden(True)
+        self.library_list.itemClicked.connect(self._on_library_selected)
         sidebar_layout.addWidget(self.library_list)
 
-        # Split library buttons into two rows to save horizontal space
-        lib_btns_row1 = QHBoxLayout()
-        self.btn_import_rule = QPushButton("📥 Import")
-        self.btn_export_rule = QPushButton("📤 Export")
-        lib_btns_row1.addWidget(self.btn_import_rule)
-        lib_btns_row1.addWidget(self.btn_export_rule)
-        sidebar_layout.addLayout(lib_btns_row1)
+        sidebar_layout.addStretch()
 
-        lib_btns_row2 = QHBoxLayout()
-        self.btn_clone_rule = QPushButton("📋 Clone")
-        self.btn_delete_rule = QPushButton("🗑️ Delete")
-        self.btn_delete_rule.setObjectName("danger")
-        lib_btns_row2.addWidget(self.btn_clone_rule)
-        lib_btns_row2.addWidget(self.btn_delete_rule)
-        sidebar_layout.addLayout(lib_btns_row2)
+        sidebar_scroll.setWidget(sidebar_content)
+        sidebar_main_layout.addWidget(sidebar_scroll)
 
-        self.btn_lookup_manager = QPushButton("📚 Lookup Tables")
-        self.btn_lookup_manager.setObjectName("secondary")
-        self.btn_lookup_manager.setToolTip("Import and manage reusable lookup tables")
-        sidebar_layout.addWidget(self.btn_lookup_manager)
+        # Fixed Bottom Action Buttons
+        bottom_pane = QFrame()
+        bottom_pane.setObjectName("sidebarBottom")
+        bottom_layout = QHBoxLayout(bottom_pane)
+        bottom_layout.setContentsMargins(15, 12, 15, 15)
+        bottom_layout.setSpacing(10)
 
+        self.btn_clone_rule = QPushButton("  📋 Clone")
+        self.btn_clone_rule.setObjectName("actionSecondary")
+        self.btn_clone_rule.setMinimumHeight(36)
+        
+        self.btn_delete_rule = QPushButton("  🗑️ Delete")
+        self.btn_delete_rule.setObjectName("deleteAction")
+        self.btn_delete_rule.setMinimumHeight(36)
+        
+        bottom_layout.addWidget(self.btn_clone_rule)
+        bottom_layout.addWidget(self.btn_delete_rule)
+        sidebar_main_layout.addWidget(bottom_pane)
+
+        self.main_splitter.addWidget(sidebar_pane)
+
+        # --- 3. LIVE WORKSPACE (CENTER) ---
+        workspace = QWidget()
+        workspace_layout_ws = QVBoxLayout(workspace)
+        workspace_layout_ws.setContentsMargins(20, 20, 20, 10)
+        workspace_layout_ws.setSpacing(0)
+
+        ws_header_layout = QHBoxLayout()
+        ws_header = QLabel("Live Workspace")
+        ws_header.setStyleSheet("font-size: 18px; font-weight: 700; color: #E2E8F0;")
+        ws_header_layout.addWidget(ws_header)
+        ws_header_layout.addStretch()
+        
+        # Top Progress Bar (Horizontal)
+        self.top_progress = QProgressBar()
+        self.top_progress.setFixedWidth(200)
+        self.top_progress.setFixedHeight(12)
+        self.top_progress.setFormat("")
+        workspace_layout_ws.addLayout(ws_header_layout)
+        ws_header_layout.addWidget(self.top_progress)
+        ws_header_layout.addWidget(QLabel("100%"))
+
+        # Main Results View (Contains its own dashboard and search)
+        self.results_view = ResultsView()
+        self.results_view.request_row_deletion.connect(self._on_row_deleted)
+        workspace_layout_ws.addWidget(self.results_view)
+
+        self.main_splitter.addWidget(workspace)
+
+        # --- 4. ACTION & ANALYTICS (RIGHT) ---
+        right_pane = QFrame()
+        right_pane.setObjectName("sidebar")
+        right_pane.setMinimumWidth(320)
+        right_pane.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        
+        right_layout = QVBoxLayout(right_pane)
+        right_layout.setContentsMargins(15, 15, 15, 15)
+        right_layout.setSpacing(12)
+
+        header_right = QLabel("Action & Analytics")
+        header_right.setStyleSheet("font-size: 16px; font-weight: 700; color: #E2E8F0; margin-bottom: 5px;")
+        right_layout.addWidget(header_right)
+
+        right_layout.addWidget(QLabel("RULE DETAILS"))
         self.rule_builder = RuleBuilderPanel()
         self.rule_builder.rule_changed.connect(self._on_rule_changed)
         self.rule_builder.rule_saved.connect(self._refresh_library)
-        sidebar_layout.addWidget(self.rule_builder)
+        right_layout.addWidget(self.rule_builder)
 
-        sidebar_layout.addWidget(QLabel("PROCESSING"))
-        self.btn_preview_rules = QPushButton("🧪 Preview Rule Test")
-        self.btn_preview_rules.setObjectName("secondary")
-        self.btn_preview_rules.setToolTip("Test the active rules on the first 25 rows")
-        sidebar_layout.addWidget(self.btn_preview_rules)
-
-        self.btn_process = QPushButton("⚡ Run Clean & Validate")
-        self.btn_process.setMinimumHeight(45)
-        sidebar_layout.addWidget(self.btn_process)
-
+        right_layout.addWidget(QLabel("VISUAL SUMMARY"))
         self.progress = QProgressBar()
-        self.progress.setRange(0, 100)
-        self.progress.setValue(0)
-        self.progress.setFormat("%p %")
-        self.progress.setTextVisible(True)
-        self.progress.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.progress.setFixedHeight(24)
-        sidebar_layout.addWidget(self.progress)
-
-        sidebar_layout.addWidget(QLabel("EXPORT REPORTS"))
-        self.btn_export_full = QPushButton("📊 Export Full Report")
-        self.btn_export_clean = QPushButton("🧹 Export Cleaned Data")
-        self.btn_export_errors = QPushButton("⚠️ Export Validation Report")
-        self.btn_export_dups = QPushButton("👯 Export Duplicate Report")
-        for b in (
-            self.btn_export_full,
-            self.btn_export_clean,
-            self.btn_export_errors,
-            self.btn_export_dups,
-        ):
-            sidebar_layout.addWidget(b)
-
-        sidebar_layout.addSpacing(10)
-        self.btn_help = QPushButton("❔ How to Use")
-        self.btn_help.setObjectName("secondary")
-        self.btn_help.setToolTip("Learn the workflow and app terms")
-        sidebar_layout.addWidget(self.btn_help)
-
-        self.btn_theme = QPushButton("🌙 Dark Mode" if self._dark_mode else "☀️ Light Mode")
-        self.btn_theme.setObjectName("theme_toggle")
-        self.btn_theme.setCheckable(True)
-        self.btn_theme.setChecked(self._dark_mode)
-        sidebar_layout.addWidget(self.btn_theme)
+        self.progress.setFormat("Processing %p%")
+        self.progress.setMinimumHeight(16)
+        right_layout.addWidget(self.progress)
         
-        sidebar_layout.addStretch()
+        self.btn_process = QPushButton("⚡ Run Clean & Validate")
+        self.btn_process.setObjectName("primary")
+        self.btn_process.setMinimumHeight(38)
+        self.btn_process.clicked.connect(self._run_processing)
+        right_layout.addWidget(self.btn_process)
 
-        self.btn_bug = QPushButton("🐞  Submit a Bug Report")
-        self.btn_bug.setObjectName("bug_link")
-        self.btn_bug.clicked.connect(self._open_bug_report)
-        sidebar_layout.addWidget(self.btn_bug)
+        right_layout.addWidget(QLabel("EXPORT"))
+        export_layout = QHBoxLayout()
+        export_layout.setSpacing(10)
+        self.btn_export_full = QPushButton("↑ Export Full")
+        self.btn_export_full.setObjectName("primary")
+        self.btn_export_clean = QPushButton("Export Clean")
+        self.btn_export_clean.setObjectName("actionSecondary")
+        for b in (self.btn_export_full, self.btn_export_clean):
+            b.setMinimumHeight(34)
+            export_layout.addWidget(b)
+        right_layout.addLayout(export_layout)
 
-        sidebar_scroll.setWidget(sidebar)
-        splitter.addWidget(sidebar_scroll)
+        right_layout.addWidget(QLabel("LOOKUP TABLE"))
+        self.btn_lookup_manager = QPushButton("📚 Manage Tables")
+        self.btn_lookup_manager.setObjectName("actionSecondary")
+        self.btn_lookup_manager.setMinimumHeight(34)
+        self.btn_lookup_manager.clicked.connect(self._open_lookup_manager)
+        right_layout.addWidget(self.btn_lookup_manager)
 
-        self.results_view = ResultsView()
-        self.results_view.request_row_deletion.connect(self._on_row_deleted)
-        splitter.addWidget(self.results_view)
-        splitter.setStretchFactor(1, 1)
+        right_layout.addStretch()
+        self.main_splitter.addWidget(right_pane)
 
+        # Splitter Sizing
+        self.main_splitter.setStretchFactor(0, 0) # Command Center
+        self.main_splitter.setStretchFactor(1, 1) # Workspace
+        self.main_splitter.setStretchFactor(2, 0) # Action Pane
+
+        # Status Bar
         self.status = QStatusBar()
         self.setStatusBar(self.status)
-        self.status.showMessage("Ready")
+        self.status.showMessage("LOADED: TBTP Masterlist")
+        
+        self.lbl_processor = QLabel("PROCESSOR: 92% IDLE")
+        self.lbl_ai_core = QLabel("AI CORE: ChatGPT (GPT-4o)")
+        self.status.addPermanentWidget(self.lbl_processor)
+        self.status.addPermanentWidget(self.lbl_ai_core)
+
+        # Dynamic Processor Update
+        self._proc_timer = QTimer(self)
+        self._proc_timer.timeout.connect(self._update_processor_status)
+        self._proc_timer.start(2000) # Every 2 seconds
 
         self.processing_overlay = ProcessingOverlay(self)
 
-        self.btn_preview_rules.clicked.connect(self._preview_rule_test)
-        self.btn_process.clicked.connect(self._run_processing)
-        self.btn_import_rule.clicked.connect(self._import_rule)
-        self.btn_export_rule.clicked.connect(self._export_rule)
+        # Connect signals
         self.btn_clone_rule.clicked.connect(self._clone_rule)
         self.btn_delete_rule.clicked.connect(self._delete_rule)
-        self.btn_lookup_manager.clicked.connect(self._open_lookup_manager)
         self.btn_export_full.clicked.connect(lambda: self._export("full"))
         self.btn_export_clean.clicked.connect(lambda: self._export("cleaned"))
-        self.btn_export_errors.clicked.connect(lambda: self._export("validation"))
-        self.btn_export_dups.clicked.connect(lambda: self._export("duplicates"))
-        self.btn_help.clicked.connect(self._open_help)
-        self.btn_theme.clicked.connect(self._toggle_theme)
+
+    def _create_nav_icon(self, text: str) -> QPushButton:
+        btn = QPushButton(text)
+        btn.setObjectName("navIcon")
+        return btn
 
     def _load_default_rule(self) -> None:
         sample = resource_path("resources", "rules", "tbtp_masterlist.json")
@@ -533,23 +434,49 @@ class MainWindow(QMainWindow):
         selected_path = None
         current_item = self.library_list.currentItem()
         if current_item:
-            selected_path = current_item.data(256)
+            selected_path = current_item.data(0, 256) or (current_item.parent().data(0, 256) if current_item.parent() else None)
 
         self.library_list.clear()
         for entry in self._rule_service.list_entries():
-            self.library_list.addItem(
-                f"{entry['rule_name']} — {entry['columns']} cols"
-            )
-            item = self.library_list.item(self.library_list.count() - 1)
-            item.setData(256, entry["path"])
+            # Create top-level rule set item
+            rs_item = QTreeWidgetItem(self.library_list)
+            rs_item.setText(0, entry["rule_name"])
+            rs_item.setIcon(0, QIcon.fromTheme("folder-open", QIcon("📁")))
+            rs_item.setData(0, 256, entry["path"])
+            rs_item.setExpanded(True)
+            
+            # Load columns and add colored prefixes directly under the rule set
+            try:
+                rs = self._rule_service.load_from_library(entry["path"])
+                # Exact colors from screenshot: Magenta, Purple, Teal, Cyan
+                colors = ["#F15BB5", "#9B5DE5", "#00F5D4", "#00D4FF"]
+                for i, col in enumerate(rs.columns):
+                    prefix = ascii_lowercase[i % 26].upper()
+                    col_item = QTreeWidgetItem(rs_item)
+                    col_item.setData(0, 256, entry["path"]) # Link to parent path
+                    
+                    # Styled text representation
+                    col_item.setText(0, f"{prefix}  {col.field_id}")
+                    col_item.setForeground(0, QColor(colors[i % len(colors)]))
+            except Exception:
+                pass
+
             if selected_path and entry["path"] == selected_path:
-                self.library_list.setCurrentItem(item)
+                self.library_list.setCurrentItem(rs_item)
 
     def _on_library_selected(self) -> None:
         item = self.library_list.currentItem()
         if not item:
             return
-        path = item.data(256)
+        
+        path = None
+        curr = item
+        while curr:
+            path = curr.data(0, 256)
+            if path:
+                break
+            curr = curr.parent()
+            
         if path:
             try:
                 self._rule_set = self._rule_service.load_from_library(path)
@@ -572,7 +499,6 @@ class MainWindow(QMainWindow):
             self._on_file_selected(path)
 
     def _on_file_selected(self, path: str) -> None:
-        # Ask user which row to start from
         dialog = StartRowDialog(self)
         if dialog.exec() != QDialog.Accepted:
             self._file_path = None
@@ -580,12 +506,12 @@ class MainWindow(QMainWindow):
             return
         
         start_row = dialog.get_start_row()
-        header_row = start_row - 1  # Convert to 0-indexed
+        header_row = start_row - 1
         
         if self._rule_set:
             self._rule_set.header_row = header_row
         
-        self.status.showMessage(f"Loading {Path(path).name} (data starts at row {start_row})...")
+        self.status.showMessage(f"Loading {Path(path).name}...")
         self.processing_overlay.show_processing("Loading File...")
         self._load_worker = FileLoadWorker(path, self._rule_set)
         self._load_worker.finished_ok.connect(self._on_file_loaded)
@@ -611,250 +537,6 @@ class MainWindow(QMainWindow):
         self._source_df = None
         self.file_drop.clear()
         QMessageBox.warning(self, "Load Error", f"Could not load file:\n{message}")
-
-    def _create_ai_button(self, name: str, icon_file: str, fallback_emoji: str, tooltip: str, slot: callable, height: int = 36, icon_size: int = 20) -> QPushButton:
-        """Helper to create an AI button with an icon or fallback emoji."""
-        icon_path = resource_path("resources", "icons", icon_file)
-        
-        btn = QPushButton()
-        
-        if icon_path.exists():
-            btn.setText(f" {name}")
-            btn.setIcon(QIcon(str(icon_path)))
-            btn.setIconSize(QSize(icon_size, icon_size))
-        else:
-            btn.setText(f"{fallback_emoji} {name}")
-            
-        btn.setFixedHeight(height)
-        btn.setObjectName("success")
-        btn.setToolTip(tooltip)
-        btn.clicked.connect(slot)
-        return btn
-
-    def _toggle_ai_buttons(self, enabled: bool) -> None:
-        """Enable or disable all AI buttons."""
-        for btn in (self.btn_gemini, self.btn_chatgpt, self.btn_groq):
-            btn.setEnabled(enabled)
-
-    def _run_ai_review(self, model_type: str, model_name: str) -> None:
-        if self._source_df is None:
-            QMessageBox.warning(self, "AI Review", "Please select and load a file first.")
-            return
-            
-        df = self._source_df
-        
-        self._toggle_ai_buttons(False)
-        self.processing_overlay.show_processing(f"AI Review ({model_name})")
-        self.status.showMessage(f"AI ({model_name}) is reviewing data...")
-        
-        self._ai_worker = AIWorker(df, model_type=model_type)
-        self._ai_worker.finished_ok.connect(self._on_ai_finished)
-        self._ai_worker.failed.connect(self._on_ai_failed)
-        self._ai_worker.start()
-
-    @Slot(str)
-    def _on_ai_finished(self, insights: str) -> None:
-        self._toggle_ai_buttons(True)
-        self.processing_overlay.hide()
-        self.status.showMessage("AI Review complete.")
-        
-        from sheetguard.gui.ai_insights_dialog import AIInsightsDialog
-        dlg = AIInsightsDialog(insights, self)
-        dlg.exec()
-
-    @Slot(str)
-    def _on_ai_failed(self, message: str) -> None:
-        self._toggle_ai_buttons(True)
-        self.processing_overlay.hide()
-        
-        if "429" in message or "insufficient_quota" in message.lower():
-            error_msg = (
-                "AI Review Failed: Quota Exceeded.\n\n"
-                "This usually means your AI account has no credits. "
-                "Try switching to 'Gemini (Flash)' or 'Groq (Llama 3.3)', "
-                "which both have generous free tiers."
-            )
-            QMessageBox.warning(self, "AI Quota Exceeded", error_msg)
-        else:
-            QMessageBox.critical(self, "AI Review Failed", f"AI Review failed:\n{message}")
-            
-        self.status.showMessage("AI Review failed.")
-
-    def _preview_rule_test(self) -> None:
-        if self._source_df is None:
-            QMessageBox.warning(self, "Preview Rule Test", "Please select and load a file first.")
-            return
-
-        self._rule_set = self.rule_builder.get_rule_set()
-        if not self._rule_set or not self._rule_set.columns:
-            QMessageBox.warning(
-                self,
-                "Preview Rule Test",
-                "Configure at least one column rule before previewing.",
-            )
-            return
-
-        try:
-            RuleEngine.validate(self._rule_set)
-        except Exception as exc:
-            QMessageBox.critical(self, "Invalid Rules", str(exc))
-            return
-
-        try:
-            sample_size = 25
-            source_df = self._source_df
-            sample_df = source_df.head(sample_size).copy()
-            if sample_df.empty:
-                QMessageBox.warning(self, "Preview Rule Test", "The selected file has no rows to preview.")
-                return
-
-            result = ProcessingPipeline(self._rule_set).run(sample_df)
-            html = self._build_rule_preview_html(result, len(source_df), sample_size)
-            dlg = RulePreviewDialog(html, self)
-            dlg.navigate_requested.connect(self._focus_preview_cell)
-            dlg.run_requested.connect(self._run_processing)
-            dlg.exec()
-            if not dlg.ran_full_clean:
-                self.status.showMessage("Rule test preview complete.")
-        except Exception as exc:
-            logger.exception("Rule test preview failed")
-            QMessageBox.critical(self, "Preview Rule Test Failed", str(exc))
-
-    def _build_rule_preview_html(
-        self,
-        result: ProcessingResult,
-        total_rows: int,
-        requested_sample_size: int,
-    ) -> str:
-        sample_rows = len(result.cleaned_df)
-        change_rows = self._cleaning_preview_rows(result)
-        issue_rows = self._validation_preview_rows(result)
-        duplicate_rows = [dup.to_dict() for dup in result.duplicates]
-
-        return f"""
-        <style>
-          body {{ font-family: "Segoe UI", sans-serif; }}
-          h1 {{ margin-bottom: 4px; }}
-          h2 {{ margin-top: 22px; }}
-          table {{ border-collapse: collapse; width: 100%; margin-top: 8px; }}
-          th, td {{ border: 1px solid #CBD5E1; padding: 6px 8px; vertical-align: top; }}
-          th {{ background: #E2E8F0; color: #0F172A; }}
-          .ok {{ color: #059669; font-weight: 700; }}
-          .warn {{ color: #D97706; font-weight: 700; }}
-          .err {{ color: #DC2626; font-weight: 700; }}
-          .muted {{ color: #64748B; }}
-        </style>
-
-        <h1>Rule Test Preview</h1>
-        <p class="muted">
-          Tested <b>{sample_rows}</b> of <b>{total_rows}</b> rows using
-          <b>{escape(result.rule_set.rule_name if result.rule_set else "Active Rule Set")}</b>.
-          This preview uses up to the first {requested_sample_size} data rows and does not change the full results.
-        </p>
-
-        <h2>Summary</h2>
-        <table>
-          <tr><th>Check</th><th>Result</th></tr>
-          <tr><td>Cells that would be cleaned</td><td>{len(change_rows)}</td></tr>
-          <tr><td>Validation errors</td><td class="err">{result.error_count}</td></tr>
-          <tr><td>Validation warnings</td><td class="warn">{result.warning_count}</td></tr>
-          <tr><td>Duplicate groups</td><td>{len(result.duplicates)}</td></tr>
-        </table>
-
-        <h2>This Column Will Be Cleaned Like This</h2>
-        {self._html_table(change_rows, ["row", "column_rule", "triggered_rule", "column", "original_value", "cleaned_value"], "No cleaning changes found in the preview rows.")}
-
-        <h2>These Validations Will Fail</h2>
-        {self._html_table(issue_rows, ["view", "row", "column_rule", "triggered_rule", "column", "severity", "message", "cleaned_value"], "No validation failures found in the preview rows.")}
-
-        <h2>Duplicate Check Preview</h2>
-        {self._html_table(duplicate_rows, ["rule_name", "key", "rows", "count"], "No duplicate groups found in the preview rows.")}
-        """
-
-    def _cleaning_preview_rows(self, result: ProcessingResult) -> list[dict[str, object]]:
-        rows: list[dict[str, object]] = []
-        rule_by_column = self._rule_by_resolved_column(result)
-        for row_idx in range(len(result.cleaned_df)):
-            for column in result.cleaned_df.columns:
-                original = coerce_cell(result.original_df.iloc[row_idx][column])
-                cleaned = coerce_cell(result.cleaned_df.iloc[row_idx][column])
-                if str(original) == str(cleaned):
-                    continue
-                rule = rule_by_column.get(str(column))
-                rows.append(
-                    {
-                        "row": row_idx + 1,
-                        "column_rule": rule.field_id if rule else column,
-                        "triggered_rule": ", ".join(rule.cleaning) if rule else "cleaning",
-                        "column": column,
-                        "original_value": original,
-                        "cleaned_value": cleaned,
-                    }
-                )
-        return rows
-
-    def _validation_preview_rows(self, result: ProcessingResult) -> list[dict[str, object]]:
-        rows: list[dict[str, object]] = []
-        for issue in result.issues:
-            rows.append(
-                {
-                    "view": (
-                        f'<a href="preview-row:{issue.row_index}|{quote(issue.column, safe="")}">'
-                        "View row</a>"
-                    ),
-                    "row": issue.row_index + 1,
-                    "column_rule": issue.field_id,
-                    "triggered_rule": issue.rule_type,
-                    "column": issue.column,
-                    "severity": issue.severity,
-                    "message": issue.message,
-                    "cleaned_value": issue.cleaned_value,
-                }
-            )
-        return rows
-
-    @staticmethod
-    def _rule_by_resolved_column(result: ProcessingResult) -> dict[str, object]:
-        mapping: dict[str, object] = {}
-        if not result.rule_set:
-            return mapping
-        for rule in result.rule_set.columns:
-            try:
-                mapping[resolve_column_name(result.cleaned_df, rule.column)] = rule
-            except (KeyError, ValueError):
-                continue
-        return mapping
-
-    def _focus_preview_cell(self, row_index: int, column_name: str) -> None:
-        if self.results_view.focus_preview_cell(row_index, column_name):
-            self.status.showMessage(f"Focused preview row {row_index + 1}, column {column_name}")
-        else:
-            self.status.showMessage(f"Could not find row {row_index + 1}, column {column_name} in preview")
-
-    @staticmethod
-    def _html_table(rows: list[dict[str, object]], columns: list[str], empty_text: str) -> str:
-        if not rows:
-            return f'<p class="ok">{escape(empty_text)}</p>'
-
-        limited_rows = rows[:100]
-        header = "".join(f"<th>{escape(col.replace('_', ' ').title())}</th>" for col in columns)
-        body = []
-        for row in limited_rows:
-            cells = []
-            for col in columns:
-                value = row.get(col, "")
-                if isinstance(value, list):
-                    value = ", ".join(str(v) for v in value)
-                if col == "view":
-                    cells.append(f"<td>{value}</td>")
-                else:
-                    cells.append(f"<td>{escape(str(value))}</td>")
-            body.append(f"<tr>{''.join(cells)}</tr>")
-
-        note = ""
-        if len(rows) > len(limited_rows):
-            note = f"<p class=\"muted\">Showing first {len(limited_rows)} of {len(rows)} rows.</p>"
-        return f"<table><tr>{header}</tr>{''.join(body)}</table>{note}"
 
     def _run_processing(self) -> None:
         if not self._file_path:
@@ -906,12 +588,10 @@ class MainWindow(QMainWindow):
     def _on_row_deleted(self, row_idx: int) -> None:
         if not self._result:
             return
-        
-        # Confirm deletion
         ans = QMessageBox.question(
             self, 
             "Delete Row", 
-            f"Are you sure you want to delete row {row_idx + 1} from the results?"
+            f"Are you sure you want to delete row {row_idx + 1}?"
         )
         if ans == QMessageBox.StandardButton.Yes:
             try:
@@ -921,31 +601,11 @@ class MainWindow(QMainWindow):
             except Exception as exc:
                 QMessageBox.critical(self, "Delete Error", str(exc))
 
-    def _import_rule(self) -> None:
-        path, _ = QFileDialog.getOpenFileName(self, "Import Rule", "", "JSON (*.json)")
-        if path:
-            try:
-                rs = self._rule_service.import_file(path)
-                self._rule_set = rs
-                self.rule_builder.load_rule_set(rs)
-                self._refresh_library()
-            except Exception as exc:
-                QMessageBox.critical(self, "Import Error", str(exc))
-
-    def _export_rule(self) -> None:
-        rs = self.rule_builder.get_rule_set()
-        if not rs:
-            return
-        path, _ = QFileDialog.getSaveFileName(self, "Export Rule", "", "JSON (*.json)")
-        if path:
-            self._rule_service.export_file(rs, path)
-
     def _clone_rule(self) -> None:
         rs = self.rule_builder.get_rule_set()
         if not rs:
             return
         from PySide6.QtWidgets import QInputDialog
-
         name, ok = QInputDialog.getText(self, "Clone", "New rule set name:")
         if ok and name:
             cloned = self._rule_service.clone(rs, name)
@@ -957,10 +617,17 @@ class MainWindow(QMainWindow):
         item = self.library_list.currentItem()
         if not item:
             return
-        path = item.data(256)
+        path = None
+        curr = item
+        while curr:
+            path = curr.data(0, 256)
+            if path:
+                break
+            curr = curr.parent()
         if not path:
             return
-        name = item.text().split("(")[0].strip()
+        rs = self._rule_service.load_from_library(path)
+        name = rs.rule_name
         ans = QMessageBox.question(
             self, "Delete Rule", f"Are you sure you want to delete '{name}'?"
         )
@@ -987,52 +654,69 @@ class MainWindow(QMainWindow):
             )
             if path:
                 WorkbookExporter().export_cleaned_only(self._result, path)
-        elif kind == "validation":
-            path, _ = QFileDialog.getSaveFileName(
-                self, "Export Validation Report", "validation_report.xlsx", filters
-            )
-            if path:
-                WorkbookExporter().export_validation_report(self._result, path)
-        elif kind == "duplicates":
-            path, _ = QFileDialog.getSaveFileName(
-                self, "Export Duplicate Report", "duplicate_report.xlsx", filters
-            )
-            if path:
-                dup_df = self.results_view._duplicates_df(self._result)
-                WorkbookExporter().export_duplicate_report(self._result, dup_df, path)
         if path:
             self.status.showMessage(f"Exported: {path}")
             QMessageBox.information(self, "Export", f"Saved to {path}")
 
     def _toggle_theme(self) -> None:
-        self._dark_mode = self.btn_theme.isChecked()
-        self.btn_theme.setText("🌙 Dark Mode" if self._dark_mode else "☀️ Light Mode")
-        app = QApplication.instance()
-        if isinstance(app, QApplication):
-            apply_theme(app, self._dark_mode)
+        self._dark_mode = not self._dark_mode
+        apply_theme(QApplication.instance(), self._dark_mode)
 
     def _open_bug_report(self) -> None:
-        """Open the bug report dialog."""
         dlg = BugReportDialog(self)
         dlg.exec()
 
-    def _open_help(self) -> None:
-        """Open the in-app usage guide."""
-        dlg = HelpDialog(self)
-        dlg.exec()
-
     def _open_lookup_manager(self) -> None:
-        """Open lookup table management."""
         dlg = LookupTableManagerDialog(self)
         dlg.exec()
 
+    def _update_processor_status(self) -> None:
+        """Update the processor usage indicator with simulated values."""
+        # Simulate idle range 88-96%
+        usage = random.randint(88, 96)
+        self.lbl_processor.setText(f"PROCESSOR: {usage}% IDLE")
+
+
+class ProcessingWorker(QThread):
+    progress = Signal(int, str)
+    finished_ok = Signal(object)
+    failed = Signal(str)
+
+    def __init__(self, rule_set, source) -> None:
+        super().__init__()
+        self.rule_set = rule_set
+        self.source = source
+
+    def run(self) -> None:
+        try:
+            pipeline = ProcessingPipeline(self.rule_set)
+            result = pipeline.run(self.source, progress=lambda p, m: self.progress.emit(p, m))
+            self.finished_ok.emit(result)
+        except Exception as e:
+            self.failed.emit(str(e))
+
+
+class FileLoadWorker(QThread):
+    finished_ok = Signal(object, str)
+    failed = Signal(str)
+
+    def __init__(self, file_path, rule_set) -> None:
+        super().__init__()
+        self.file_path = file_path
+        self.rule_set = rule_set
+
+    def run(self) -> None:
+        try:
+            from sheetguard.services.file_loader import FileLoader
+            df = FileLoader.load(self.file_path, self.rule_set)
+            self.finished_ok.emit(df, self.file_path)
+        except Exception as e:
+            self.failed.emit(str(e))
+
 
 def run_app() -> None:
-    """Application entry point for SheetGuard."""
     import sys
-
     from sheetguard.utils.logging_config import setup_logging
-
     setup_logging()
     app = QApplication(sys.argv)
     apply_theme(app, dark=True)

@@ -8,8 +8,17 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 import pandas as pd
-from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QHBoxLayout, QPushButton, QTabWidget, QVBoxLayout, QWidget
+from PySide6.QtCore import Signal, Qt
+from PySide6.QtWidgets import (
+    QHBoxLayout, 
+    QPushButton, 
+    QTabWidget, 
+    QVBoxLayout, 
+    QWidget, 
+    QLineEdit, 
+    QLabel,
+    QFrame
+)
 
 from sheetguard.gui.widgets.data_table import DataTableWidget
 from sheetguard.gui.widgets.summary_cards import SummaryCards
@@ -20,33 +29,72 @@ if TYPE_CHECKING:
 
 
 class ResultsView(QWidget):
-    """Main results area: summary cards + tabbed tables."""
+    """Main results area: tabbed tables."""
 
     request_row_deletion = Signal(int)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self._result: ProcessingResult | None = None
+        
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 15) # Add bottom margin for visibility
+        layout.setSpacing(15)
 
+        # 1. Summary Dashboard (Added in MainWindow, but kept here for logical separation)
         self.summary = SummaryCards()
         layout.addWidget(self.summary)
 
+        # 2. Search / Filter Bar
+        search_container = QFrame()
+        search_layout = QHBoxLayout(search_container)
+        search_layout.setContentsMargins(0, 0, 0, 0)
+        search_layout.setSpacing(10)
+        
+        lbl_search = QLabel("Search:")
+        lbl_search.setStyleSheet("font-weight: bold; color: #94A3B8;")
+        self.search_data = QLineEdit()
+        self.search_data.setPlaceholderText("Filter rows...")
+        self.search_data.setMinimumHeight(36)
+        
+        lbl_intel = QLabel("Intelligent Search:")
+        lbl_intel.setStyleSheet("color: #94A3B8; font-size: 11px;")
+        
+        self.btn_regex = QPushButton("RegEx")
+        self.btn_regex.setCheckable(True)
+        self.btn_regex.setFixedWidth(80)
+        
+        self.btn_fuzzy = QPushButton("Fuzzy Logic")
+        self.btn_fuzzy.setCheckable(True)
+        self.btn_fuzzy.setFixedWidth(100)
+        
+        search_layout.addWidget(lbl_search)
+        search_layout.addWidget(self.search_data)
+        search_layout.addSpacing(10)
+        search_layout.addWidget(lbl_intel)
+        search_layout.addWidget(self.btn_regex)
+        search_layout.addWidget(self.btn_fuzzy)
+        
+        layout.addWidget(search_container)
+
+        # 3. Data Grid Area (Tabs at bottom)
         self.tabs = QTabWidget()
+        self.tabs.setTabPosition(QTabWidget.TabPosition.South) # Tabs at bottom
+        
         self.preview_table = DataTableWidget()
         self.summary_table = DataTableWidget()
         self.summary_table.set_sorting_enabled(False)
-        self.errors_table = DataTableWidget()
-        self.errors_table.set_editable_columns(["cleaned_value"])
-        self.errors_table.cell_changed.connect(self._on_error_fixed)
-        self.duplicates_table = DataTableWidget()
+        self.issues_table = DataTableWidget()
+        self.issues_table.set_editable_columns(["cleaned_value"])
+        self.issues_table.cell_changed.connect(self._on_error_fixed)
+        self.resolved_table = DataTableWidget()
 
         self.tabs.addTab(self.preview_table, "Preview")
-        self.tabs.addTab(self.errors_table, "Validation Errors")
-        self.tabs.addTab(self.duplicates_table, "Duplicates")
+        self.tabs.addTab(self.issues_table, "Issues")
+        self.tabs.addTab(self.resolved_table, "Resolved")
         self.tabs.addTab(self.summary_table, "Summary")
 
-        layout.addWidget(self.tabs)
+        layout.addWidget(self.tabs, stretch=1)
 
     def _on_row_action(self, row_data: dict[str, Any]) -> None:
         if "row_number" in row_data:
@@ -64,18 +112,30 @@ class ResultsView(QWidget):
             duplicates=len(result.duplicates),
             corrections=len(result.corrections),
         )
-        self.preview_table.set_dataframe(result.cleaned_df)
-        self.summary_table.set_dataframe(self._generate_column_summary(result.cleaned_df, result.rule_set))
-        self.errors_table.set_dataframe(self._issues_df(result))
-        self.duplicates_table.set_dataframe(
+        
+        # 1. Preview Tab: Show cleaned data with inline error markers
+        self.preview_table.set_dataframe(result.cleaned_df, errors=result.issues)
+        
+        # 2. Issues Tab: Show only rows with validation errors
+        self.issues_table.set_dataframe(self._issues_df(result))
+        
+        # 3. Resolved Tab: Show duplicate detection results with Delete action
+        self.resolved_table.set_dataframe(
             self._duplicates_df(result), 
             action_column="Delete", 
             on_action=self._on_row_action
         )
+        
+        # 4. Summary Tab: Show statistical and data quality metrics
+        self.summary_table.set_dataframe(self._generate_column_summary(result.cleaned_df, result.rule_set))
 
     def show_preview(self, df: pd.DataFrame, rule_set: RuleSet | None = None) -> None:
+        # Initial preview before cleaning
         self.preview_table.set_dataframe(df)
         self.summary_table.set_dataframe(self._generate_column_summary(df, rule_set))
+        self.issues_table.set_dataframe(None)
+        self.resolved_table.set_dataframe(None)
+        self.summary.reset()
 
     def focus_preview_cell(self, row_index: int, column_name: str) -> bool:
         """Switch to the Preview tab and focus a specific row/column."""
@@ -83,7 +143,7 @@ class ResultsView(QWidget):
         return self.preview_table.focus_cell(row_index, column_name)
 
     def _on_error_fixed(self, issue_df_idx: int, col_name: str, new_val: str) -> None:
-        """Handle manual correction of a validation error from the errors table."""
+        """Handle manual correction of a validation error from the issues table."""
         if not self._result or col_name != "cleaned_value":
             return
 
@@ -102,8 +162,6 @@ class ResultsView(QWidget):
             issue.cleaned_value = new_val
             
             # 3. Refresh Preview & Summary tabs
-            # We don't refresh errors_table here because it already updated itself locally
-            # and marked the cell as edited (green).
             self.preview_table.set_dataframe(self._result.cleaned_df)
             self.summary_table.set_dataframe(
                 self._generate_column_summary(self._result.cleaned_df, self._result.rule_set)
@@ -123,8 +181,8 @@ class ResultsView(QWidget):
         self.summary.reset()
         self.preview_table.set_dataframe(None)
         self.summary_table.set_dataframe(None)
-        self.errors_table.set_dataframe(None)
-        self.duplicates_table.set_dataframe(None)
+        self.issues_table.set_dataframe(None)
+        self.resolved_table.set_dataframe(None)
 
     @staticmethod
     def _generate_column_summary(df: pd.DataFrame, rule_set: RuleSet | None = None) -> pd.DataFrame:
@@ -191,34 +249,18 @@ class ResultsView(QWidget):
                 num_series = pd.to_numeric(series, errors='coerce')
                 valid_nums = num_series.dropna()
                 if not valid_nums.empty:
-                    try:
-                        vf = valid_nums.astype(float)
-                        m["Min"] = f"{vf.min():.2f}"
-                        m["Max"] = f"{vf.max():.2f}"
-                        m["Mean"] = f"{vf.mean():.2f}"
-                        m["Median"] = f"{vf.median():.2f}"
-                        
-                        try:
-                            m["Mode"] = f"{valid_nums.mode().iloc[0]:.2f}"
-                        except Exception:
-                            m["Mode"] = "n/a"
-                            
-                        m["Sum"] = f"{vf.sum():.2f}"
-                        m["Standard Deviation"] = f"{vf.std():.4f}"
-                        m["Variance"] = f"{vf.var():.4f}"
-                        m["Negative Count"] = (vf < 0).sum()
-                        m["Zero Count"] = (vf == 0).sum()
-                        
-                        # Outliers (Z-score > 3)
-                        if len(vf) > 1 and vf.std() > 0:
-                            z_scores = np.abs((vf - vf.mean()) / vf.std())
-                            m["Outlier Detection"] = (z_scores > 3).sum()
-                        else:
-                            m["Outlier Detection"] = 0
-                    except Exception as exc:
-                        print(f"ResultsView: Numeric summary error for {col}: {exc}")
-                        for k in ["Min", "Max", "Mean", "Median", "Mode", "Sum", "Standard Deviation", "Variance", "Negative Count", "Zero Count", "Outlier Detection"]:
-                            m[k] = "error"
+                    vf = valid_nums.astype(float)
+                    m["Min"] = f"{vf.min():.2f}"
+                    m["Max"] = f"{vf.max():.2f}"
+                    m["Mean"] = f"{vf.mean():.2f}"
+                    m["Median"] = f"{vf.median():.2f}"
+                    m["Mode"] = f"{valid_nums.mode().iloc[0]:.2f}" if not valid_nums.mode().empty else "n/a"
+                    m["Sum"] = f"{vf.sum():.2f}"
+                    m["Standard Deviation"] = f"{vf.std():.4f}"
+                    m["Variance"] = f"{vf.var():.4f}"
+                    m["Negative Count"] = (vf < 0).sum()
+                    m["Zero Count"] = (vf == 0).sum()
+                    m["Outlier Detection"] = (np.abs((vf - vf.mean()) / vf.std()) > 3).sum() if vf.std() > 0 else 0
                 else:
                     for k in ["Min", "Max", "Mean", "Median", "Mode", "Sum", "Standard Deviation", "Variance", "Negative Count", "Zero Count", "Outlier Detection"]:
                         m[k] = "n/a"
@@ -232,7 +274,6 @@ class ResultsView(QWidget):
                     m["Invalid Date Count"] = (non_empty_mask & date_series.isna()).sum()
                     m["Future Date Count"] = (valid_dates > now).sum()
                     m["Missing Date Count"] = empty
-                    # Age Distribution (if dates look like birthdays)
                     ages = (now - valid_dates).dt.days / 365.25
                     m["Age Distribution"] = f"{ages.min():.1f} - {ages.max():.1f} yrs"
                 else:
@@ -247,18 +288,15 @@ class ResultsView(QWidget):
                     m["Max Length"] = int(lengths.max())
                     m["Average Length"] = f"{lengths.mean():.2f}"
                     m["Whitespace Issues"] = (valid_strings != valid_strings.str.strip()).sum()
-                    
                     is_upper = valid_strings.str.isupper().sum()
                     is_lower = valid_strings.str.islower().sum()
                     is_title = valid_strings.str.istitle().sum()
                     dom_count = max(is_upper, is_lower, is_title)
                     m["Case Consistency"] = f"{(dom_count / non_empty * 100):.1f}%"
-                    
                     alpha_only = valid_strings.str.replace(r'[^a-zA-Z]', '', regex=True)
                     alpha_len = alpha_only.str.len().astype(float).sum()
                     upper_len = alpha_only.str.findall(r'[A-Z]').str.len().astype(float).sum()
                     m["Uppercase Ratio"] = f"{(upper_len / alpha_len if alpha_len > 0 else 0):.2f}"
-                    
                     m["Special Character Count"] = valid_strings.str.replace(r'[a-zA-Z0-9\s]', '', regex=True).str.len().astype(float).sum()
                 else:
                     for k in ["Min Length", "Max Length", "Average Length", "Whitespace Issues", "Case Consistency", "Uppercase Ratio", "Special Character Count"]:
@@ -267,58 +305,42 @@ class ResultsView(QWidget):
                 # --- 5. DATA QUALITY & VALIDATION ---
                 rule = col_rules.get(col)
                 if rule and rule.regex:
-                    try:
-                        matches = valid_strings.str.match(rule.regex).sum()
-                        m["Invalid Format Count"] = non_empty - matches
-                        m["Regex Match Count"] = matches
-                    except Exception:
-                        m["Invalid Format Count"] = m["Regex Match Count"] = "error"
+                    matches = valid_strings.str.match(rule.regex).sum()
+                    m["Invalid Format Count"] = non_empty - matches
+                    m["Regex Match Count"] = matches
                 else:
                     m["Invalid Format Count"] = m["Regex Match Count"] = "n/a"
-                
                 m["Duplicate Detection"] = "Found" if m["Duplicate Count"] > 0 else "None"
                 m["Consistency Check"] = m["Case Consistency"]
-                m["Reference Match Rate"] = "n/a" # Requires validator integration for actual rate
+                m["Reference Match Rate"] = "n/a"
 
                 # --- 6. DATA TYPE DETECTION ---
-                if not valid_nums.empty and (valid_nums == valid_nums.astype(int)).all():
-                    dtype = "Integer"
-                elif not valid_nums.empty:
-                    dtype = "Decimal"
-                elif not valid_dates.empty:
-                    dtype = "Date"
-                elif unique <= 2 and non_empty > 0:
-                    dtype = "Boolean"
-                elif distinct_ratio < 0.05 and non_empty > 10:
-                    dtype = "Categorical"
-                else:
-                    dtype = "Text"
+                if not valid_nums.empty and (valid_nums == valid_nums.astype(int)).all(): dtype = "Integer"
+                elif not valid_nums.empty: dtype = "Decimal"
+                elif not valid_dates.empty: dtype = "Date"
+                elif unique <= 2 and non_empty > 0: dtype = "Boolean"
+                elif distinct_ratio < 0.05 and non_empty > 10: dtype = "Categorical"
+                else: dtype = "Text"
                 m["Detected Type"] = dtype
             except Exception as exc:
                 print(f"ResultsView: Error generating summary for column '{col}': {exc}")
                 for cat_name, keys in categories:
-                    for k in keys:
-                        if k not in m:
-                            m[k] = "error"
+                    for k in keys: m[k] = "error"
 
         rows = []
         for cat_name, keys in categories:
-            # Header
             h = {"Metric": cat_name}
             for c in df.columns: h[c] = None
             rows.append(h)
-            # Metrics
             for k in keys:
                 r = {"Metric": k}
                 for c in df.columns: r[c] = metrics_data[c].get(k, "n/a")
                 rows.append(r)
-
         return pd.DataFrame(rows)
 
     @staticmethod
     def _issues_df(result: ProcessingResult) -> pd.DataFrame:
-        if not result.issues:
-            return pd.DataFrame()
+        if not result.issues: return pd.DataFrame()
         return pd.DataFrame([i.to_dict() for i in result.issues])
 
     @staticmethod
