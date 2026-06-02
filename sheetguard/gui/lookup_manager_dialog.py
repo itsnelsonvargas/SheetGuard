@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
@@ -435,5 +436,7 @@ class LookupTableManagerDialog(QDialog):
         table.setHorizontalHeaderLabels([str(c) for c in df.columns])
         for r in range(len(df)):
             for c, col in enumerate(df.columns):
-                table.setItem(r, c, QTableWidgetItem(str(coerce_cell(df.iloc[r][col]))))
+                item = QTableWidgetItem(str(coerce_cell(df.iloc[r][col])))
+                item.setForeground(QColor("#FFFFFF"))
+                table.setItem(r, c, item)
         table.resizeColumnsToContents()

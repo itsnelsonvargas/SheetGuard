@@ -15,11 +15,29 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QHeaderView,
+    QStyle,
     QStyledItemDelegate,
     QStyleOptionViewItem,
 )
 
 from sheetguard.utils.column_utils import coerce_cell
+
+
+TABLE_TEXT_COLOR = QColor("#FFFFFF")
+
+
+def apply_table_text_palette(table: QTableWidget) -> None:
+    """Force all table text palette roles to white."""
+    palette = table.palette()
+    for group in (
+        QPalette.ColorGroup.Active,
+        QPalette.ColorGroup.Inactive,
+        QPalette.ColorGroup.Disabled,
+    ):
+        palette.setColor(group, QPalette.ColorRole.Text, TABLE_TEXT_COLOR)
+        palette.setColor(group, QPalette.ColorRole.WindowText, TABLE_TEXT_COLOR)
+        palette.setColor(group, QPalette.ColorRole.HighlightedText, TABLE_TEXT_COLOR)
+    table.setPalette(palette)
 
 
 class DataTableDelegate(QStyledItemDelegate):
@@ -28,6 +46,9 @@ class DataTableDelegate(QStyledItemDelegate):
     def paint(self, painter: QPainter, option: QStyleOptionViewItem, index) -> None:
         # Standard background/selection
         self.initStyleOption(option, index)
+        option.palette.setColor(QPalette.ColorRole.Text, TABLE_TEXT_COLOR)
+        option.palette.setColor(QPalette.ColorRole.WindowText, TABLE_TEXT_COLOR)
+        option.palette.setColor(QPalette.ColorRole.HighlightedText, TABLE_TEXT_COLOR)
         painter.save()
         
         # Check if cell is "loading" (skeletal)
@@ -37,7 +58,7 @@ class DataTableDelegate(QStyledItemDelegate):
 
         # Background
         painter.fillRect(option.rect, option.palette.base())
-        if option.state & QStyledItemDelegate.State_Selected:
+        if option.state & QStyle.StateFlag.State_Selected:
             painter.fillRect(option.rect, option.palette.highlight())
 
         if is_skeletal:
@@ -53,8 +74,11 @@ class DataTableDelegate(QStyledItemDelegate):
             start_x = option.rect.left() + (option.rect.width() - w) / 2
             painter.drawLine(start_x, center_y, start_x + w, center_y)
         else:
-            # Draw normal text
-            super().paint(painter, option, index)
+            # Draw normal text explicitly so body cells remain readable on the dark grid.
+            text_rect = option.rect.adjusted(8, 0, -8, 0)
+            text = option.fontMetrics.elidedText(str(text), Qt.TextElideMode.ElideRight, text_rect.width())
+            painter.setPen(TABLE_TEXT_COLOR)
+            painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, text)
 
         # Draw Error Marker (Red Triangle in top right)
         if has_error:
@@ -87,6 +111,11 @@ class FrozenTable(QTableWidget):
         self._frozen_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self._frozen_table.setSelectionMode(QTableWidget.SelectionMode.NoSelection)
         self._frozen_table.setAlternatingRowColors(True)
+        self._frozen_table.setStyleSheet(
+            "QTableWidget { color: #FFFFFF; gridline-color: #1E242E; border: none; } "
+            "QTableWidget::item { color: #FFFFFF; }"
+        )
+        apply_table_text_palette(self._frozen_table)
         
         self.viewport().stackUnder(self._frozen_table)
         self.verticalScrollBar().valueChanged.connect(self._frozen_table.verticalScrollBar().setValue)
@@ -136,7 +165,12 @@ class DataTableWidget(QWidget):
         self._table.setEditTriggers(QTableWidget.EditTrigger.DoubleClicked | QTableWidget.EditTrigger.EditKeyPressed)
         self._table.setMouseTracking(True)
         self._table.setShowGrid(True)
-        self._table.setStyleSheet("QTableWidget { gridline-color: #1E242E; border: none; }")
+        self._table.setStyleSheet(
+            "QTableWidget { color: #FFFFFF; gridline-color: #1E242E; border: none; } "
+            "QTableWidget::item { color: #FFFFFF; } "
+            "QTableWidget::item:selected { color: #FFFFFF; }"
+        )
+        apply_table_text_palette(self._table)
         
         # Apply Delegate
         self._delegate = DataTableDelegate(self)
@@ -207,9 +241,8 @@ class DataTableWidget(QWidget):
                 else:
                     item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
                 
-                # Manual edits styling
-                if (original_df_idx, col) in self._manual_edits:
-                    item.setForeground(QColor("#10B981"))
+                item.setForeground(TABLE_TEXT_COLOR)
+                item.setData(Qt.ItemDataRole.ForegroundRole, QBrush(TABLE_TEXT_COLOR))
                 
                 item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 self._table.setItem(r, c, item)
@@ -242,5 +275,6 @@ class DataTableWidget(QWidget):
             original_idx = item.data(Qt.ItemDataRole.UserRole)
             new_value = item.text()
             self._manual_edits.add((original_idx, column_name))
-            item.setForeground(QColor("#10B981"))
+            item.setForeground(TABLE_TEXT_COLOR)
+            item.setData(Qt.ItemDataRole.ForegroundRole, QBrush(TABLE_TEXT_COLOR))
             self.cell_changed.emit(original_idx, column_name, new_value)

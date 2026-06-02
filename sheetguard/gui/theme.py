@@ -84,9 +84,16 @@ QPushButton#secondary {
 
 QLineEdit, QComboBox, QTextEdit, QListWidget, QTableWidget {
     background-color: #FFFFFF;
+    color: #FFFFFF;
     border: 1px solid #CBD5E1;
     border-radius: 8px;
     padding: 8px;
+}
+QTableWidget::item {
+    color: #FFFFFF;
+}
+QTableWidget::item:selected {
+    color: #FFFFFF;
 }
 QTabWidget::pane { border: 1px solid #E2E8F0; border-radius: 12px; background: #FFFFFF; }
 QTabBar::tab {
@@ -320,6 +327,15 @@ QStatusBar {
     border-top: 1px solid #1E242E;
     color: #94A3B8;
     font-size: 11px;
+}
+QTableWidget {
+    color: #FFFFFF;
+}
+QTableWidget::item {
+    color: #FFFFFF;
+}
+QTableWidget::item:selected {
+    color: #FFFFFF;
 }
 """
 

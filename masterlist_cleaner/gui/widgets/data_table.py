@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pandas as pd
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QBrush, QColor
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
@@ -61,6 +62,8 @@ class DataTableWidget(QWidget):
                 val = coerce_cell(df.iloc[r, c])
                 item = QTableWidgetItem(str(val))
                 item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                item.setForeground(QColor("#ffffff"))
+                item.setData(Qt.ItemDataRole.ForegroundRole, QBrush(QColor("#ffffff")))
                 self._table.setItem(r, c, item)
 
         self._table.resizeColumnsToContents()
