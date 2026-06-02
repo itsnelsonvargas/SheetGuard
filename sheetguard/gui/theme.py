@@ -13,6 +13,9 @@ QMainWindow, QWidget {
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 13px;
 }
+QLabel {
+    background-color: transparent;
+}
 QFrame#sidebar {
     background-color: #FFFFFF;
     border-right: 1px solid #CBD5E1;
@@ -115,6 +118,9 @@ QMainWindow, QWidget {
     color: #E2E8F0;
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 13px;
+}
+QLabel {
+    background-color: transparent;
 }
 
 /* Branding Area */

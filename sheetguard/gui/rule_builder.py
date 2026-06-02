@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QPushButton,
     QScrollArea,
+    QSizePolicy,
     QSpinBox,
     QTextEdit,
     QVBoxLayout,
@@ -282,6 +283,7 @@ class RuleBuilderPanel(QWidget):
         # 1. Rule Set Header (Compact)
         self.rule_name_label = QLabel("Untitled")
         self.rule_name_label.setStyleSheet("font-weight: 800; font-size: 13px; color: #00D4FF;")
+        self.rule_name_label.setWordWrap(True)
         
         self.btn_rename = QPushButton("✏️")
         self.btn_rename.setFixedSize(26, 26)
@@ -296,13 +298,14 @@ class RuleBuilderPanel(QWidget):
         # 2. Columns List (Compact)
         lbl_cols = QLabel("COLUMNS")
         lbl_cols.setObjectName("groupHeader")
+        lbl_cols.setWordWrap(True)
         layout.addWidget(lbl_cols)
         
         self.column_list = QListWidget()
         self.column_list.setObjectName("ruleColumns")
-        self.column_list.setMinimumHeight(120)
-        self.column_list.setMaximumHeight(150)
-        layout.addWidget(self.column_list)
+        self.column_list.setMinimumHeight(80)
+        self.column_list.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        layout.addWidget(self.column_list, stretch=1)
 
         col_btns = QHBoxLayout()
         col_btns.setSpacing(5)
@@ -313,19 +316,21 @@ class RuleBuilderPanel(QWidget):
         for b in (self.btn_add_col, self.btn_edit_col, self.btn_del_col):
             b.setObjectName("actionSecondary") if b != self.btn_del_col else None
             b.setMinimumHeight(28)
-            col_btns.addWidget(b)
+            b.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+            col_btns.addWidget(b, stretch=1)
         layout.addLayout(col_btns)
 
         # 3. Duplicate Rules (Compact)
         lbl_dups = QLabel("DUPLICATE RULES")
         lbl_dups.setObjectName("groupHeader")
+        lbl_dups.setWordWrap(True)
         layout.addWidget(lbl_dups)
 
         self.dup_list = QListWidget()
         self.dup_list.setObjectName("duplicateRules")
-        self.dup_list.setMinimumHeight(80)
-        self.dup_list.setMaximumHeight(100)
-        layout.addWidget(self.dup_list)
+        self.dup_list.setMinimumHeight(60)
+        self.dup_list.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        layout.addWidget(self.dup_list, stretch=1)
         
         dup_btns = QHBoxLayout()
         dup_btns.setSpacing(5)
@@ -335,7 +340,8 @@ class RuleBuilderPanel(QWidget):
         for b in (self.btn_add_dup, self.btn_del_dup):
             b.setObjectName("actionSecondary") if b != self.btn_del_dup else None
             b.setMinimumHeight(28)
-            dup_btns.addWidget(b)
+            b.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+            dup_btns.addWidget(b, stretch=1)
         layout.addLayout(dup_btns)
 
         # 4. Save/New Actions
@@ -344,11 +350,13 @@ class RuleBuilderPanel(QWidget):
         self.btn_save = QPushButton("💾 Save Rule Set")
         self.btn_save.setObjectName("primary")
         self.btn_save.setMinimumHeight(34)
+        self.btn_save.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.btn_new = QPushButton("📄 New")
         self.btn_new.setObjectName("actionSecondary")
         self.btn_new.setMinimumHeight(34)
-        save_row.addWidget(self.btn_new)
-        save_row.addWidget(self.btn_save)
+        self.btn_new.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        save_row.addWidget(self.btn_new, stretch=1)
+        save_row.addWidget(self.btn_save, stretch=1)
         layout.addLayout(save_row)
 
         self.btn_add_col.clicked.connect(self._add_column)

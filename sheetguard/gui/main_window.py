@@ -338,27 +338,40 @@ class MainWindow(QMainWindow):
 
         header_right = QLabel("Action & Analytics")
         header_right.setStyleSheet("font-size: 16px; font-weight: 700; color: #E2E8F0; margin-bottom: 5px;")
+        header_right.setWordWrap(True)
         right_layout.addWidget(header_right)
 
-        right_layout.addWidget(QLabel("RULE DETAILS"))
+        lbl_rule_details = QLabel("RULE DETAILS")
+        lbl_rule_details.setWordWrap(True)
+        right_layout.addWidget(lbl_rule_details)
+        
         self.rule_builder = RuleBuilderPanel()
         self.rule_builder.rule_changed.connect(self._on_rule_changed)
         self.rule_builder.rule_saved.connect(self._refresh_library)
-        right_layout.addWidget(self.rule_builder)
+        self.rule_builder.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        right_layout.addWidget(self.rule_builder, stretch=1)
 
-        right_layout.addWidget(QLabel("VISUAL SUMMARY"))
+        lbl_visual_summary = QLabel("VISUAL SUMMARY")
+        lbl_visual_summary.setWordWrap(True)
+        right_layout.addWidget(lbl_visual_summary)
+        
         self.progress = QProgressBar()
         self.progress.setFormat("Processing %p%")
         self.progress.setMinimumHeight(16)
+        self.progress.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         right_layout.addWidget(self.progress)
         
         self.btn_process = QPushButton("⚡ Run Clean & Validate")
         self.btn_process.setObjectName("primary")
         self.btn_process.setMinimumHeight(38)
+        self.btn_process.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.btn_process.clicked.connect(self._run_processing)
         right_layout.addWidget(self.btn_process)
 
-        right_layout.addWidget(QLabel("EXPORT"))
+        lbl_export = QLabel("EXPORT")
+        lbl_export.setWordWrap(True)
+        right_layout.addWidget(lbl_export)
+        
         export_layout = QHBoxLayout()
         export_layout.setSpacing(10)
         self.btn_export_full = QPushButton("↑ Export Full")
@@ -367,13 +380,20 @@ class MainWindow(QMainWindow):
         self.btn_export_clean.setObjectName("actionSecondary")
         for b in (self.btn_export_full, self.btn_export_clean):
             b.setMinimumHeight(34)
-            export_layout.addWidget(b)
+            b.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+            export_layout.addWidget(b, stretch=1)
+        export_layout.setStretchFactor(self.btn_export_full, 1)
+        export_layout.setStretchFactor(self.btn_export_clean, 1)
         right_layout.addLayout(export_layout)
 
-        right_layout.addWidget(QLabel("LOOKUP TABLE"))
+        lbl_lookup = QLabel("LOOKUP TABLE")
+        lbl_lookup.setWordWrap(True)
+        right_layout.addWidget(lbl_lookup)
+        
         self.btn_lookup_manager = QPushButton("📚 Manage Tables")
         self.btn_lookup_manager.setObjectName("actionSecondary")
         self.btn_lookup_manager.setMinimumHeight(34)
+        self.btn_lookup_manager.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.btn_lookup_manager.clicked.connect(self._open_lookup_manager)
         right_layout.addWidget(self.btn_lookup_manager)
 
