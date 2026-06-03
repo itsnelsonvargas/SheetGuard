@@ -170,9 +170,9 @@ class MainWindow(QMainWindow):
         btn_bug_nav = self._create_nav_icon("🐞")
         btn_help_nav = self._create_nav_icon("❓")
         btn_settings_bot = self._create_nav_icon("⚙️")
-        icon_sidebar_layout.addWidget(btn_bug_nav, alignment=Qt.AlignmentFlag.AlignHCenter)
-        icon_sidebar_layout.addWidget(btn_help_nav, alignment=Qt.AlignmentFlag.AlignHCenter)
-        icon_sidebar_layout.addWidget(btn_settings_bot, alignment=Qt.AlignmentFlag.AlignHCenter)
+
+        for b in (btn_bug_nav,btn_help_nav, btn_settings_bot, btn_settings_bot):
+            icon_sidebar_layout.addWidget(b, alignment=Qt.AlignmentFlag.AlignHCenter) 
 
         workspace_layout.addWidget(icon_sidebar)
 
