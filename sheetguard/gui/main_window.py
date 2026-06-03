@@ -167,8 +167,10 @@ class MainWindow(QMainWindow):
         icon_sidebar_layout.addStretch()
         
         # Bottom Icons
+        btn_bug_nav = self._create_nav_icon("🐞")
         btn_help_nav = self._create_nav_icon("❓")
         btn_settings_bot = self._create_nav_icon("⚙️")
+        icon_sidebar_layout.addWidget(btn_bug_nav, alignment=Qt.AlignmentFlag.AlignHCenter)
         icon_sidebar_layout.addWidget(btn_help_nav, alignment=Qt.AlignmentFlag.AlignHCenter)
         icon_sidebar_layout.addWidget(btn_settings_bot, alignment=Qt.AlignmentFlag.AlignHCenter)
 
