@@ -13,8 +13,8 @@ from PySide6.QtCore import QThread, Signal, Slot, Qt, QSize, QTimer
 from PySide6.QtGui import QIcon, QColor
 from PySide6.QtWidgets import (
     QApplication,
-    QDialog,
     QFileDialog,
+    QDialog,
     QFrame,
     QHBoxLayout,
     QLabel,
@@ -36,6 +36,7 @@ from PySide6.QtWidgets import (
     QSizePolicy,
 )
 
+from sheetguard.gui.model_select_dialog import ModelSelectDialog
 from sheetguard.core.exporter import WorkbookExporter
 from sheetguard.gui.lookup_manager_dialog import LookupTableManagerDialog
 from sheetguard.core.rule_engine import RuleEngine
@@ -228,6 +229,7 @@ class MainWindow(QMainWindow):
         self.btn_import_api = QPushButton("  ↑ Import API")
         self.btn_import_api.setObjectName("actionSecondary")
         self.btn_import_api.setMinimumHeight(34)
+        self.btn_import_api.clicked.connect(lambda: QMessageBox.information(self, "Import API", "Import API not implemented yet."))
         sidebar_layout.addWidget(self.btn_import_api)
 
         # Styled Drop Zone
@@ -241,14 +243,17 @@ class MainWindow(QMainWindow):
         lbl_ai_core = QLabel("AI CORE")
         lbl_ai_core.setObjectName("groupHeader")
         sidebar_layout.addWidget(lbl_ai_core)
-
         self.btn_model_select = QPushButton("  🌐 Model Select")
         self.btn_model_select.setObjectName("actionSecondary")
         self.btn_prompt_builder = QPushButton("  💬 Prompt Builder")
         self.btn_prompt_builder.setObjectName("actionSecondary")
-        for b in (self.btn_model_select, self.btn_prompt_builder):
-            b.setMinimumHeight(34)
-            sidebar_layout.addWidget(b)
+        # Connect buttons
+        self.btn_model_select.clicked.connect(self._open_model_select)
+        self.btn_prompt_builder.clicked.connect(lambda: QMessageBox.information(self, "Prompt Builder", "Prompt Builder not implemented yet."))
+        # Add buttons to the sidebar layout
+        sidebar_layout.addWidget(self.btn_model_select)
+        sidebar_layout.addWidget(self.btn_prompt_builder)
+
 
         # RULE LIBRARY
         lbl_rule_lib = QLabel("RULE LIBRARY")
@@ -690,6 +695,17 @@ class MainWindow(QMainWindow):
     def _open_bug_report(self) -> None:
         dlg = BugReportDialog(self)
         dlg.exec()
+
+    def _open_model_select(self) -> None:
+        """Open model selection dialog and update UI with chosen model."""
+        dlg = ModelSelectDialog(self)
+        if dlg.exec() == QDialog.Accepted and dlg.selected:
+            # Store selected model and reflect in status label
+            self._selected_model = dlg.selected
+            self.lbl_ai_core.setText(f"AI CORE: {dlg.selected}")
+        else:
+            # User cancelled; keep existing label
+            pass
 
     def _open_lookup_manager(self) -> None:
         dlg = LookupTableManagerDialog(self)
