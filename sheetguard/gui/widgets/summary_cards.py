@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, QRectF, QPointF
-from PySide6.QtGui import QColor, QPainter, QLinearGradient, QPen, QBrush
+from PySide6.QtGui import QColor, QPainter, QLinearGradient, QPen, QBrush, QFont
 from PySide6.QtWidgets import QFrame, QLabel, QHBoxLayout, QVBoxLayout, QWidget, QSizePolicy
 
 
@@ -158,7 +158,7 @@ class QualityScoreDial(QWidget):
             painter.setPen(QColor("#00D4FF"))
             calc_font = painter.font()
             calc_font.setPixelSize(10)
-            calc_font.setWeight(600)
+            calc_font.setWeight(QFont.Weight.Bold)
             painter.setFont(calc_font)
             painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, "Calculating...")
 

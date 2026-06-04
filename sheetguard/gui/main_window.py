@@ -264,6 +264,7 @@ class MainWindow(QMainWindow):
         lbl_filter_icon.setStyleSheet("color: #94A3B8;")
         lib_search_layout.addWidget(lbl_filter_icon)
         sidebar_layout.addLayout(lib_search_layout)
+        self.search_library.textChanged.connect(self._filter_library)
 
         lbl_rule_builder = QLabel("Visual Rule Builder")
         lbl_rule_builder.setStyleSheet("color: #E2E8F0; font-weight: 600; font-size: 12px; margin-top: 5px;")
@@ -693,6 +694,32 @@ class MainWindow(QMainWindow):
     def _open_lookup_manager(self) -> None:
         dlg = LookupTableManagerDialog(self)
         dlg.exec()
+
+    def _filter_library(self) -> None:
+        """Filter the rule library based on search input, ignoring surrounding % symbols."""
+        txt = self.search_library.text().lower()
+        # Remove any % symbols used as wildcards
+        txt = txt.replace('%', '')
+        root = self.library_list.invisibleRootItem()
+        for i in range(root.childCount()):
+            rs_item = root.child(i)
+            match_rs = False
+            for j in range(rs_item.childCount()):
+                child = rs_item.child(j)
+                match = txt in child.text(0).lower()
+                child.setHidden(not match)
+                if match:
+                    match_rs = True
+            # Also check the rule set name itself
+            rs_match = txt in rs_item.text(0).lower()
+            rs_item.setHidden(not (match_rs or rs_match) and txt != "")
+        if txt == "":
+            for i in range(root.childCount()):
+                rs_item = root.child(i)
+                rs_item.setHidden(False)
+                for j in range(rs_item.childCount()):
+                    rs_item.child(j).setHidden(False)
+
 
     def _update_processor_status(self) -> None:
         """Update the processor usage indicator with actual values."""
