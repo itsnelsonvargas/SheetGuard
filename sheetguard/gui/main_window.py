@@ -172,7 +172,9 @@ class MainWindow(QMainWindow):
         btn_settings_bot = self._create_nav_icon("⚙️")
 
         for b in (btn_bug_nav,btn_help_nav, btn_settings_bot, btn_settings_bot):
-            icon_sidebar_layout.addWidget(b, alignment=Qt.AlignmentFlag.AlignHCenter) 
+            icon_sidebar_layout.addWidget(b, alignment=Qt.AlignmentFlag.AlignHCenter)
+            # Connect bug report dialog
+            btn_bug_nav.clicked.connect(self._open_bug_report)
 
         workspace_layout.addWidget(icon_sidebar)
 
