@@ -693,10 +693,16 @@ class MainWindow(QMainWindow):
         dlg.exec()
 
     def _update_processor_status(self) -> None:
-        """Update the processor usage indicator with simulated values."""
-        # Simulate idle range 88-96%
-        usage = random.randint(88, 96)
-        self.lbl_processor.setText(f"PROCESSOR: {usage}% IDLE")
+        """Update the processor usage indicator with actual values."""
+        try:
+            import psutil
+            cpu_usage = psutil.cpu_percent(interval=None)
+            idle = max(0, 100 - int(cpu_usage))
+            self.lbl_processor.setText(f"PROCESSOR: {idle}% IDLE")
+        except ImportError:
+            import random
+            usage = random.randint(88, 96)
+            self.lbl_processor.setText(f"PROCESSOR: {usage}% IDLE (Sim)")
 
 
 class ProcessingWorker(QThread):
