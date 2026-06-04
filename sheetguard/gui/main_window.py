@@ -160,9 +160,11 @@ class MainWindow(QMainWindow):
         btn_file_ops = self._create_nav_icon("📄") 
         btn_file_ops.setProperty("active", "true")
         btn_db = self._create_nav_icon("🗄️") 
-        btn_settings_top = self._create_nav_icon("⚙️") 
+        btn_settings_top = self._create_nav_icon("⚙️")
+        self._btn_theme = self._create_nav_icon("🌙")
+        self._btn_theme.setToolTip("Toggle light/dark theme")
         
-        for b in (btn_menu, btn_file_ops, btn_db, btn_settings_top):
+        for b in (btn_menu, btn_file_ops, btn_db, btn_settings_top, self._btn_theme):
             icon_sidebar_layout.addWidget(b, alignment=Qt.AlignmentFlag.AlignHCenter)
         
         icon_sidebar_layout.addStretch()
@@ -172,10 +174,22 @@ class MainWindow(QMainWindow):
         btn_help_nav = self._create_nav_icon("❓")
         btn_settings_bot = self._create_nav_icon("⚙️")
 
-        for b in (btn_bug_nav,btn_help_nav, btn_settings_bot, btn_settings_bot):
+        for b in (btn_bug_nav, btn_help_nav, btn_settings_bot):
             icon_sidebar_layout.addWidget(b, alignment=Qt.AlignmentFlag.AlignHCenter)
-            # Connect bug report dialog
-            btn_bug_nav.clicked.connect(self._open_bug_report)
+        
+        # Connect bug report dialog
+        btn_bug_nav.clicked.connect(self._open_bug_report)
+        
+        # Theme toggle
+        self._btn_theme.clicked.connect(self._toggle_theme)
+        
+        # Placeholder connections for navigation icons
+        btn_menu.clicked.connect(lambda: QMessageBox.information(self, "Menu", "Menu clicked (not implemented)"))
+        btn_file_ops.clicked.connect(lambda: QMessageBox.information(self, "File Ops", "File Ops clicked (not implemented)"))
+        btn_db.clicked.connect(lambda: QMessageBox.information(self, "Database", "Database view not implemented"))
+        btn_settings_top.clicked.connect(lambda: QMessageBox.information(self, "Settings", "Settings clicked (not implemented)"))
+        btn_help_nav.clicked.connect(lambda: QMessageBox.information(self, "Help", "Help dialog not implemented"))
+        btn_settings_bot.clicked.connect(lambda: QMessageBox.information(self, "Settings", "Settings (bottom) not implemented"))
 
         workspace_layout.addWidget(icon_sidebar)
 
@@ -691,6 +705,7 @@ class MainWindow(QMainWindow):
     def _toggle_theme(self) -> None:
         self._dark_mode = not self._dark_mode
         apply_theme(QApplication.instance(), self._dark_mode)
+        self._btn_theme.setText("🌙" if self._dark_mode else "☀️")
 
     def _open_bug_report(self) -> None:
         dlg = BugReportDialog(self)
