@@ -342,11 +342,12 @@ class RuleBuilderPanel(QWidget):
     """Sidebar panel for building and editing rule sets (Compact Ultra Edition)."""
 
     rule_changed = Signal(object)
-    rule_saved = Signal()
+    rule_saved = Signal(str)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self._rule_set: RuleSet | None = None
+        self._current_path: str | None = None
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -461,9 +462,11 @@ class RuleBuilderPanel(QWidget):
             self.rule_name_label.setText(new_name.strip())
             self._rule_set.rule_name = new_name.strip()
             self.rule_changed.emit(self._rule_set)
+            self._save_rule_set()
 
-    def load_rule_set(self, rule_set: RuleSet | None) -> None:
+    def load_rule_set(self, rule_set: RuleSet | None, path: str | None = None) -> None:
         self._rule_set = rule_set
+        self._current_path = path
         if not rule_set:
             self.rule_name_label.setText("None")
             self.column_list.clear()
@@ -680,8 +683,10 @@ class RuleBuilderPanel(QWidget):
             RuleEngine.validate(rs)
             from sheetguard.services.rule_service import RuleService
 
-            path = RuleService().save_to_library(rs)
-            self.rule_saved.emit()
+            # Use old_path to handle renaming (actual move/delete)
+            path = RuleService().save_to_library(rs, old_path=self._current_path)
+            self._current_path = str(path)
+            self.rule_saved.emit(self._current_path)
             QMessageBox.information(self, "Saved", f"Rule set saved to:\n{path}")
         except Exception as exc:
             QMessageBox.critical(self, "Error", str(exc))

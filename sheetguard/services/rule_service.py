@@ -24,9 +24,21 @@ class RuleService:
     def library_path(self, rule_set: RuleSet) -> Path:
         return self.library_dir / f"{self._safe_filename(rule_set.rule_name)}.json"
 
-    def save_to_library(self, rule_set: RuleSet) -> Path:
-        path = self.library_path(rule_set)
-        return RuleEngine.save(rule_set, path)
+    def save_to_library(self, rule_set: RuleSet, old_path: str | Path | None = None) -> Path:
+        new_path = self.library_path(rule_set)
+        
+        # If we have an old path and it's different from the new one, delete the old file (Rename)
+        if old_path:
+            old_p = Path(old_path)
+            if old_p.exists() and old_p.resolve() != new_path.resolve():
+                old_p.unlink(missing_ok=True)
+                
+        return RuleEngine.save(rule_set, new_path)
+
+    def rename(self, rule_set: RuleSet, old_path: str | Path, new_name: str) -> Path:
+        """Explicitly rename a rule set, updating its name and cleaning up the old file."""
+        rule_set.rule_name = new_name
+        return self.save_to_library(rule_set, old_path=old_path)
 
     def load_from_library(self, path: str | Path) -> RuleSet:
         return RuleEngine.load(path)

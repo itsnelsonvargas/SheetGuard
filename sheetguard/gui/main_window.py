@@ -491,7 +491,7 @@ class MainWindow(QMainWindow):
         if sample.exists():
             try:
                 self._rule_set = RuleEngine.load(sample)
-                self.rule_builder.load_rule_set(self._rule_set)
+                self.rule_builder.load_rule_set(self._rule_set, path=str(sample))
                 self.status.showMessage(f"Loaded rule: {self._rule_set.rule_name}")
             except Exception as exc:
                 logger.warning("Could not load default rule: %s", exc)
@@ -501,11 +501,12 @@ class MainWindow(QMainWindow):
             self.rule_builder._new_rule_set()
             self._rule_set = self.rule_builder.get_rule_set()
 
-    def _refresh_library(self) -> None:
-        selected_path = None
-        current_item = self.library_list.currentItem()
-        if current_item:
-            selected_path = current_item.data(0, 256) or (current_item.parent().data(0, 256) if current_item.parent() else None)
+    def _refresh_library(self, to_select: str | None = None) -> None:
+        selected_path = to_select
+        if not selected_path:
+            current_item = self.library_list.currentItem()
+            if current_item:
+                selected_path = current_item.data(0, 256) or (current_item.parent().data(0, 256) if current_item.parent() else None)
 
         self.library_list.clear()
         for entry in self._rule_service.list_entries():
@@ -551,13 +552,15 @@ class MainWindow(QMainWindow):
         if path:
             try:
                 self._rule_set = self._rule_service.load_from_library(path)
-                self.rule_builder.load_rule_set(self._rule_set)
+                self.rule_builder.load_rule_set(self._rule_set, path=str(path))
                 self.status.showMessage(f"Active rule: {self._rule_set.rule_name}")
             except Exception as exc:
                 QMessageBox.critical(self, "Error", str(exc))
 
     def _on_rule_changed(self, rule_set: RuleSet) -> None:
         self._rule_set = rule_set
+        if rule_set:
+            self.status.showMessage(f"Active rule: {rule_set.rule_name}")
 
     def _browse_file(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
