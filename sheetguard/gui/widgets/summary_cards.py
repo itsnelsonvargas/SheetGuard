@@ -59,7 +59,8 @@ class QualityScoreDial(QWidget):
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setFixedSize(80, 80)
-        self._score = 0  # Start at 0 until data is processed
+        self._score = 0
+        self._calculated = False  # Track if a score has been calculated
         self._is_hovering = False
         self._errors = 0
         self._warnings = 0
@@ -71,6 +72,7 @@ class QualityScoreDial(QWidget):
     def set_score(self, score: int, errors: int = 0, warnings: int = 0, duplicates: int = 0, corrections: int = 0) -> None:
         """Set score and update calculation metrics."""
         self._score = score
+        self._calculated = True
         self._errors = errors
         self._warnings = warnings
         self._duplicates = duplicates
@@ -78,9 +80,28 @@ class QualityScoreDial(QWidget):
         self._update_tooltip()
         self.update()
 
+    def _get_score_color(self) -> QColor:
+        """Return a color from Red (0) to Yellow (50) to Green (100)."""
+        if not self._calculated:
+            return QColor("#64748B")  # Slate gray for N/A
+            
+        if self._score < 50:
+            # Red to Yellow
+            ratio = self._score / 50.0
+            r = 255
+            g = int(255 * ratio)
+            b = 0
+        else:
+            # Yellow to Green
+            ratio = (self._score - 50) / 50.0
+            r = int(255 * (1.0 - ratio))
+            g = 255
+            b = 0
+        return QColor(r, g, b)
+
     def _update_tooltip(self) -> None:
         """Generate detailed tooltip showing the calculation formula."""
-        if self._score == 0 and self._errors == 0 and self._warnings == 0 and self._duplicates == 0 and self._corrections == 0:
+        if not self._calculated:
             tooltip = "Data Quality Score\n\nCalculation Formula:\nBase Score: 100\n- (Errors × 5)\n- (Warnings × 2)\n- (Duplicates × 3)\n+ (Corrections × 1, max +10)\n= Final Score (0-100)\n\nLoad data to calculate."
         else:
             # Calculate step by step
@@ -128,28 +149,29 @@ class QualityScoreDial(QWidget):
         painter.setPen(pen_bg)
         painter.drawArc(rect, -45 * 16, 270 * 16)
         
-        # Draw active track (gradient)
-        gradient = QLinearGradient(0, 0, 80, 80)
-        gradient.setColorAt(0, QColor("#F15BB5")) # Magenta
-        gradient.setColorAt(1, QColor("#00D4FF")) # Cyan
-        
-        pen_active = QPen(QBrush(gradient), 8)
-        pen_active.setCapStyle(Qt.PenCapStyle.RoundCap)
-        painter.setPen(pen_active)
-        
-        span_angle = (self._score / 100.0) * 270
-        painter.drawArc(rect, 225 * 16, -span_angle * 16)
+        if self._calculated:
+            # Draw active track (dynamic color)
+            color = self._get_score_color()
+            pen_active = QPen(QBrush(color), 8)
+            pen_active.setCapStyle(Qt.PenCapStyle.RoundCap)
+            painter.setPen(pen_active)
+            
+            span_angle = (self._score / 100.0) * 270
+            painter.drawArc(rect, 225 * 16, -span_angle * 16)
         
         # Draw Score text
-        painter.setPen(QColor("#FFFFFF"))
+        text_color = self._get_score_color() if self._calculated else QColor("#FFFFFF")
+        painter.setPen(text_color)
         font = painter.font()
         font.setPixelSize(22)
         font.setBold(True)
         painter.setFont(font)
-        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, str(self._score))
+        
+        text = str(self._score) if self._calculated else "N/A"
+        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, text)
         
         # Show "Calculating..." when hovering
-        if self._is_hovering:
+        if self._is_hovering and not self._calculated:
             # Semi-transparent overlay
             overlay_color = QColor(11, 14, 20, 200)  # Dark background with transparency
             painter.fillRect(QRectF(0, 0, 80, 80), overlay_color)

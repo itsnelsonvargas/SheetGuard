@@ -365,7 +365,9 @@ class MainWindow(QMainWindow):
         self.top_progress.setFormat("")
         workspace_layout_ws.addLayout(ws_header_layout)
         ws_header_layout.addWidget(self.top_progress)
-        ws_header_layout.addWidget(QLabel("100%"))
+        self.lbl_top_score = QLabel("N/A")
+        self.lbl_top_score.setStyleSheet("font-weight: bold; color: #64748B; min-width: 40px;")
+        ws_header_layout.addWidget(self.lbl_top_score)
 
         # Main Results View (Contains its own dashboard and search)
         self.results_view = ResultsView()
@@ -646,10 +648,19 @@ class MainWindow(QMainWindow):
         self._result = result
         self.results_view.show_result(result)
         self.btn_process.setEnabled(True)
+        
+        # Calculate score manually for top progress bar (Sync with QualityScoreDial formula)
+        errors = result.error_count
+        warnings = result.warning_count
+        duplicates = len(result.duplicates)
+        corrections = len(result.corrections)
+        score = max(0, min(100, 100 - (errors*5) - (warnings*2) - (duplicates*3) + min(corrections, 10)))
+        
+        self.top_progress.setValue(score)
         self.progress.setValue(100)
         self.processing_overlay.hide()
         self.status.showMessage(
-            f"Done — {result.error_count} errors, {result.warning_count} warnings"
+            f"Done — Quality Score: {score}% ({result.error_count} errors, {result.warning_count} warnings)"
         )
 
     @Slot(str)
