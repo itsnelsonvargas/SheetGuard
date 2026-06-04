@@ -123,6 +123,8 @@ class DuplicateRule:
     name: str
     fields: list[str]
     keep: str = "all"
+    match_mode: str = "exact"  # "exact" or "fuzzy"
+    fuzzy_threshold: float = 90.0
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> DuplicateRule:
@@ -130,10 +132,18 @@ class DuplicateRule:
             name=data["name"],
             fields=list(data["fields"]),
             keep=data.get("keep", "all"),
+            match_mode=data.get("match_mode", "exact"),
+            fuzzy_threshold=float(data.get("fuzzy_threshold", 90.0)),
         )
 
     def to_dict(self) -> dict[str, Any]:
-        return {"name": self.name, "fields": self.fields, "keep": self.keep}
+        return {
+            "name": self.name,
+            "fields": self.fields,
+            "keep": self.keep,
+            "match_mode": self.match_mode,
+            "fuzzy_threshold": self.fuzzy_threshold,
+        }
 
 
 @dataclass

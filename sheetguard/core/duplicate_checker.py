@@ -42,6 +42,9 @@ class DuplicateChecker:
         for c in subset_cols:
             work[c] = work[c].astype(str).str.strip().str.upper()
 
+        if dup_rule.match_mode == "fuzzy":
+            return self._check_fuzzy(df, work, dup_rule)
+
         dup_mask = work.duplicated(keep=False)
         if not dup_mask.any():
             return []
@@ -68,6 +71,66 @@ class DuplicateChecker:
                 )
             )
         return grouped
+
+    def _check_fuzzy(self, df: pd.DataFrame, work: pd.DataFrame, dup_rule: DuplicateRule) -> list[DuplicateGroup]:
+        """Detect duplicates using fuzzy matching on concatenated keys."""
+        try:
+            from rapidfuzz import fuzz, process
+        except ImportError:
+            logger.warning("rapidfuzz not installed, falling back to exact matching")
+            dup_rule.match_mode = "exact"
+            return self._check_rule(df, dup_rule)
+
+        # Create a single string key for each row
+        keys = work.apply(lambda r: " | ".join(r.values), axis=1).tolist()
+        indices = work.index.tolist()
+        
+        visited = set()
+        groups: list[DuplicateGroup] = []
+        
+        threshold = dup_rule.fuzzy_threshold
+
+        for i in range(len(keys)):
+            if i in visited:
+                continue
+            
+            # Find similar keys
+            current_key = keys[i]
+            matches = process.extract(
+                current_key, 
+                keys[i+1:], 
+                scorer=fuzz.token_sort_ratio, 
+                score_cutoff=threshold
+            )
+            
+            if matches:
+                group_indices = [indices[i]]
+                visited.add(i)
+                
+                for _, score, idx_in_subset in matches:
+                    actual_idx = i + 1 + idx_in_subset
+                    if actual_idx not in visited:
+                        group_indices.append(indices[actual_idx])
+                        visited.add(actual_idx)
+                
+                if len(group_indices) > 1:
+                    # Representative key values
+                    row_data = df.loc[group_indices[0]]
+                    key_dict = {}
+                    for field in dup_rule.fields:
+                        col = next((c.column for c in self.rule_set.columns if c.field_id == field), field)
+                        actual_col = resolve_column_name(df, col)
+                        key_dict[field] = str(row_data.get(actual_col, ""))
+
+                    groups.append(
+                        DuplicateGroup(
+                            rule_name=f"{dup_rule.name} (Fuzzy)",
+                            key_values=key_dict,
+                            row_indices=[int(idx) for idx in group_indices],
+                        )
+                    )
+                    
+        return groups
 
     def duplicates_dataframe(self, df: pd.DataFrame, groups: list[DuplicateGroup]) -> pd.DataFrame:
         """Build a report DataFrame listing duplicate rows."""

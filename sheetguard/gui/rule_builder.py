@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
     QDialogButtonBox,
+    QFileDialog,
     QFormLayout,
     QGridLayout,
     QGroupBox,
@@ -266,6 +267,77 @@ class ColumnRuleEditor(QDialog):
         )
 
 
+class DuplicateRuleEditor(QDialog):
+    """Edit a duplicate detection rule."""
+
+    def __init__(self, rule: DuplicateRule | None = None, parent=None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("Edit Duplicate Rule")
+        self.setMinimumWidth(500)
+
+        layout = QVBoxLayout(self)
+        form = QFormLayout()
+
+        self.name = QLineEdit()
+        self.name.setPlaceholderText("e.g., Patient Identity, Address Check")
+        self.name.setText(rule.name if rule else "")
+        form.addRow("Rule Name:", self.name)
+
+        self.fields = QLineEdit()
+        self.fields.setPlaceholderText("Column names or IDs, separated by commas")
+        if rule:
+            self.fields.setText(", ".join(rule.fields))
+        form.addRow("Match Fields:", self.fields)
+
+        self.match_mode = QComboBox()
+        self.match_mode.addItems(["exact", "fuzzy"])
+        if rule:
+            self.match_mode.setCurrentText(rule.match_mode)
+        form.addRow("Match Mode:", self.match_mode)
+
+        self.threshold = QSpinBox()
+        self.threshold.setRange(50, 100)
+        self.threshold.setSuffix("%")
+        self.threshold.setValue(int(rule.fuzzy_threshold) if rule else 90)
+        self.threshold.setEnabled(self.match_mode.currentText() == "fuzzy")
+        form.addRow("Fuzzy Threshold:", self.threshold)
+
+        self.match_mode.currentTextChanged.connect(
+            lambda t: self.threshold.setEnabled(t == "fuzzy")
+        )
+
+        layout.addLayout(form)
+
+        help_text = QLabel(
+            "<small><b>Exact:</b> Rows must match perfectly after trimming.<br>"
+            "<b>Fuzzy:</b> Rows match if they are very similar (typos allowed).</small>"
+        )
+        help_text.setWordWrap(True)
+        help_text.setStyleSheet("color: #64748B;")
+        layout.addWidget(help_text)
+
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    def get_rule(self) -> DuplicateRule | None:
+        name = self.name.text().strip()
+        fields_raw = self.fields.text().strip()
+        if not name or not fields_raw:
+            return None
+        
+        field_list = [f.strip() for f in fields_raw.split(",") if f.strip()]
+        return DuplicateRule(
+            name=name,
+            fields=field_list,
+            match_mode=self.match_mode.currentText(),
+            fuzzy_threshold=float(self.threshold.value()),
+        )
+
+
 class RuleBuilderPanel(QWidget):
     """Sidebar panel for building and editing rule sets (Compact Ultra Edition)."""
 
@@ -335,9 +407,14 @@ class RuleBuilderPanel(QWidget):
         dup_btns = QHBoxLayout()
         dup_btns.setSpacing(5)
         self.btn_add_dup = QPushButton("+ Dup")
+        self.btn_edit_dup = QPushButton("Edit")
+        self.btn_import_dup = QPushButton("Import")
+        self.btn_import_dup.setToolTip("Import duplicate rules from a JSON file")
+        self.btn_export_dup = QPushButton("Export")
+        self.btn_export_dup.setToolTip("Export selected duplicate rule to a JSON file")
         self.btn_del_dup = QPushButton("Del")
         self.btn_del_dup.setObjectName("deleteAction")
-        for b in (self.btn_add_dup, self.btn_del_dup):
+        for b in (self.btn_add_dup, self.btn_edit_dup, self.btn_import_dup, self.btn_export_dup, self.btn_del_dup):
             b.setObjectName("actionSecondary") if b != self.btn_del_dup else None
             b.setMinimumHeight(28)
             b.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
@@ -363,6 +440,9 @@ class RuleBuilderPanel(QWidget):
         self.btn_edit_col.clicked.connect(self._edit_column)
         self.btn_del_col.clicked.connect(self._delete_column)
         self.btn_add_dup.clicked.connect(self._add_duplicate_rule)
+        self.btn_edit_dup.clicked.connect(self._edit_duplicate_rule)
+        self.btn_import_dup.clicked.connect(self._import_duplicate_rules)
+        self.btn_export_dup.clicked.connect(self._export_duplicate_rule)
         self.btn_del_dup.clicked.connect(self._delete_duplicate_rule)
         self.btn_rename.clicked.connect(self._rename_rule_set)
         self.btn_save.clicked.connect(self._save_rule_set)
@@ -457,7 +537,8 @@ class RuleBuilderPanel(QWidget):
             suffix = f" [{', '.join(flags)}]" if flags else ""
             self.column_list.addItem(f"{col.field_id} → {col.column}{suffix}")
         for dup in self._rule_set.duplicate_rules:
-            self.dup_list.addItem(f"{dup.name}: {' + '.join(dup.fields)}")
+            mode = " (Fuzzy)" if dup.match_mode == "fuzzy" else ""
+            self.dup_list.addItem(f"{dup.name}{mode}: {' + '.join(dup.fields)}")
 
         if self.column_list.count() and selected_column_row >= 0:
             self.column_list.setCurrentRow(min(selected_column_row, self.column_list.count() - 1))
@@ -512,17 +593,26 @@ class RuleBuilderPanel(QWidget):
 
     def _add_duplicate_rule(self) -> None:
         if not self._rule_set:
+            self._new_rule_set()
+        dlg = DuplicateRuleEditor(parent=self)
+        if dlg.exec() == QDialog.DialogCode.Accepted:
+            rule = dlg.get_rule()
+            if rule:
+                self._rule_set.duplicate_rules.append(rule)
+                self._refresh_lists(selected_dup_row=len(self._rule_set.duplicate_rules) - 1)
+                self.rule_changed.emit(self._rule_set)
+
+    def _edit_duplicate_rule(self) -> None:
+        idx = self.dup_list.currentRow()
+        if self._rule_set is None or idx < 0:
             return
-        name, ok = QInputDialog.getText(self, "Duplicate Rule", "Rule name:")
-        if not ok or not name:
-            return
-        fields, ok2 = QInputDialog.getText(self, "Fields", "Field IDs (comma-separated):")
-        if not ok2 or not fields:
-            return
-        field_list = [f.strip() for f in fields.split(",") if f.strip()]
-        self._rule_set.duplicate_rules.append(DuplicateRule(name=name, fields=field_list))
-        self._refresh_lists(selected_dup_row=len(self._rule_set.duplicate_rules) - 1)
-        self.rule_changed.emit(self._rule_set)
+        dlg = DuplicateRuleEditor(self._rule_set.duplicate_rules[idx], parent=self)
+        if dlg.exec() == QDialog.DialogCode.Accepted:
+            rule = dlg.get_rule()
+            if rule:
+                self._rule_set.duplicate_rules[idx] = rule
+                self._refresh_lists()
+                self.rule_changed.emit(self._rule_set)
 
     def _delete_duplicate_rule(self) -> None:
         idx = self.dup_list.currentRow()
@@ -530,6 +620,56 @@ class RuleBuilderPanel(QWidget):
             del self._rule_set.duplicate_rules[idx]
             self._refresh_lists(selected_dup_row=idx)
             self.rule_changed.emit(self._rule_set)
+
+    def _import_duplicate_rules(self) -> None:
+        """Import duplicate rules from a JSON file."""
+        if not self._rule_set:
+            self._new_rule_set()
+
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Import Duplicate Rule", "", "JSON Files (*.json)"
+        )
+        if not path:
+            return
+
+        try:
+            import json
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            if isinstance(data, list):
+                for item in data:
+                    self._rule_set.duplicate_rules.append(DuplicateRule.from_dict(item))
+            else:
+                self._rule_set.duplicate_rules.append(DuplicateRule.from_dict(data))
+
+            self._refresh_lists()
+            self.rule_changed.emit(self._rule_set)
+            QMessageBox.information(self, "Import", "Duplicate rule(s) imported successfully.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to import: {str(e)}")
+
+    def _export_duplicate_rule(self) -> None:
+        """Export the selected duplicate rule to a JSON file."""
+        idx = self.dup_list.currentRow()
+        if self._rule_set is None or idx < 0:
+            QMessageBox.warning(self, "Export", "Select a duplicate rule to export.")
+            return
+
+        rule = self._rule_set.duplicate_rules[idx]
+        path, _ = QFileDialog.getSaveFileName(
+            self, "Export Duplicate Rule", f"{rule.name}.json", "JSON Files (*.json)"
+        )
+        if not path:
+            return
+
+        try:
+            import json
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(rule.to_dict(), f, indent=2)
+            QMessageBox.information(self, "Export", "Duplicate rule exported successfully.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to export: {str(e)}")
 
     def _save_rule_set(self) -> None:
         rs = self.get_rule_set()

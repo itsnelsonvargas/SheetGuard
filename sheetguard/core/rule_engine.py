@@ -78,6 +78,8 @@ class RuleEngine:
         for dup in rule_set.duplicate_rules:
             if not dup.fields:
                 raise ValueError(f"Duplicate rule '{dup.name}' requires fields")
+            if dup.match_mode not in ("exact", "fuzzy"):
+                raise ValueError(f"Unsupported match mode: {dup.match_mode}")
 
     @staticmethod
     def list_library() -> list[dict[str, Any]]:

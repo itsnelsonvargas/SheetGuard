@@ -309,9 +309,14 @@ class MainWindow(QMainWindow):
         # Fixed Bottom Action Buttons
         bottom_pane = QFrame()
         bottom_pane.setObjectName("sidebarBottom")
-        bottom_layout = QHBoxLayout(bottom_pane)
-        bottom_layout.setContentsMargins(15, 12, 15, 15)
-        bottom_layout.setSpacing(10)
+        bottom_main_layout = QVBoxLayout(bottom_pane)
+        bottom_main_layout.setContentsMargins(15, 12, 15, 15)
+        bottom_main_layout.setSpacing(10)
+        
+        row1_layout = QHBoxLayout()
+        row1_layout.setSpacing(10)
+        row2_layout = QHBoxLayout()
+        row2_layout.setSpacing(10)
 
         self.btn_clone_rule = QPushButton("  📋 Clone")
         self.btn_clone_rule.setObjectName("actionSecondary")
@@ -320,9 +325,23 @@ class MainWindow(QMainWindow):
         self.btn_delete_rule = QPushButton("  🗑️ Delete")
         self.btn_delete_rule.setObjectName("deleteAction")
         self.btn_delete_rule.setMinimumHeight(36)
+
+        self.btn_import_rule = QPushButton("  📥 Import")
+        self.btn_import_rule.setObjectName("actionSecondary")
+        self.btn_import_rule.setMinimumHeight(36)
+
+        self.btn_export_rule = QPushButton("  📤 Export")
+        self.btn_export_rule.setObjectName("actionSecondary")
+        self.btn_export_rule.setMinimumHeight(36)
         
-        bottom_layout.addWidget(self.btn_clone_rule)
-        bottom_layout.addWidget(self.btn_delete_rule)
+        row1_layout.addWidget(self.btn_clone_rule)
+        row1_layout.addWidget(self.btn_delete_rule)
+        
+        row2_layout.addWidget(self.btn_import_rule)
+        row2_layout.addWidget(self.btn_export_rule)
+
+        bottom_main_layout.addLayout(row1_layout)
+        bottom_main_layout.addLayout(row2_layout)
         sidebar_main_layout.addWidget(bottom_pane)
 
         self.main_splitter.addWidget(self._sidebar_pane)
@@ -454,6 +473,8 @@ class MainWindow(QMainWindow):
         # Connect signals
         self.btn_clone_rule.clicked.connect(self._clone_rule)
         self.btn_delete_rule.clicked.connect(self._delete_rule)
+        self.btn_import_rule.clicked.connect(self._import_rule)
+        self.btn_export_rule.clicked.connect(self._export_rule)
         self.btn_export_full.clicked.connect(lambda: self._export("full"))
         self.btn_export_clean.clicked.connect(lambda: self._export("cleaned"))
         self._btn_collapse_cc.clicked.connect(self._toggle_command_center)
@@ -685,6 +706,65 @@ class MainWindow(QMainWindow):
             self._rule_service.delete(path)
             self._refresh_library()
             self.status.showMessage(f"Deleted rule: {name}")
+
+    def _import_rule(self) -> None:
+        path, _ = QFileDialog.getOpenFileName(self, "Import Rule Set", "", "JSON (*.json)")
+        if not path:
+            return
+        try:
+            # Validate JSON file contents using RuleEngine.load (parses and runs validate)
+            rs = RuleEngine.load(path)
+            # Save it to the local library
+            imported_rs = self._rule_service.import_file(path)
+            self._rule_set = imported_rs
+            self.rule_builder.load_rule_set(imported_rs)
+            self._refresh_library()
+            self.status.showMessage(f"Imported rule set: {imported_rs.rule_name}")
+            QMessageBox.information(
+                self, 
+                "Import Successful", 
+                f"Rule set '{imported_rs.rule_name}' successfully validated and imported."
+            )
+        except Exception as exc:
+            QMessageBox.critical(
+                self, 
+                "Import/Validation Error", 
+                f"Failed to import invalid rule set:\n{str(exc)}"
+            )
+
+    def _export_rule(self) -> None:
+        rs = self.rule_builder.get_rule_set()
+        if not rs:
+            QMessageBox.warning(self, "Export Rule", "No active rule set to export.")
+            return
+        
+        # Prompt user to name/rename duplicate rules before export
+        if rs.duplicate_rules:
+            from PySide6.QtWidgets import QInputDialog
+            for idx, dup in enumerate(rs.duplicate_rules):
+                new_name, ok = QInputDialog.getText(
+                    self, 
+                    "Name Duplicate Rule", 
+                    f"Enter name for duplicate rule #{idx + 1} with fields ({', '.join(dup.fields)}):",
+                    text=dup.name
+                )
+                if ok and new_name.strip():
+                    dup.name = new_name.strip()
+            # Update the visual builder representation with the new names
+            self.rule_builder.load_rule_set(rs)
+        
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Export Rule Set",
+            f"{rs.rule_name.replace(' ', '_').lower()}_rules.json",
+            "JSON (*.json)"
+        )
+        if path:
+            try:
+                self._rule_service.export_file(rs, path)
+                QMessageBox.information(self, "Export Successful", f"Rule set exported to:\n{path}")
+            except Exception as exc:
+                QMessageBox.critical(self, "Export Error", str(exc))
 
     def _export(self, kind: str) -> None:
         if not self._result:
