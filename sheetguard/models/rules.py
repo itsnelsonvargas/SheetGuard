@@ -156,6 +156,7 @@ class RuleSet:
     duplicate_rules: list[DuplicateRule] = field(default_factory=list)
     lookups: list[LookupSource] = field(default_factory=list)
     header_row: int = 0
+    end_row: int | None = None
     sheet_name: str | None = None
 
     @classmethod
@@ -169,6 +170,7 @@ class RuleSet:
             ],
             lookups=[LookupSource.from_dict(l) for l in data.get("lookups", [])],
             header_row=int(data.get("header_row", 0)),
+            end_row=data.get("end_row"),
             sheet_name=data.get("sheet_name"),
         )
 
@@ -185,6 +187,8 @@ class RuleSet:
             out["lookups"] = [l.to_dict() for l in self.lookups]
         if self.header_row:
             out["header_row"] = self.header_row
+        if self.end_row:
+            out["end_row"] = self.end_row
         if self.sheet_name:
             out["sheet_name"] = self.sheet_name
         return out

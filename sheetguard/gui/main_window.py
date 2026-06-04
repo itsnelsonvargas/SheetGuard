@@ -33,6 +33,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QLineEdit,
+    QFormLayout,
     QSizePolicy,
 )
 
@@ -56,32 +57,50 @@ from sheetguard.utils.paths import resource_path
 logger = logging.getLogger(__name__)
 
 
-class StartRowDialog(QDialog):
-    """Dialog to select which row data should start from."""
+class RangeSelectionDialog(QDialog):
+    """Dialog to select which rows to process."""
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
-        self.setWindowTitle("Select Data Start Row")
+        self.setWindowTitle("Select Data Range")
         self.setMinimumWidth(350)
         self.setModal(True)
 
         layout = QVBoxLayout(self)
-        layout.addWidget(QLabel("Which row should data start from?"))
-        layout.addWidget(QLabel("(1 = first row, 2 = second row, etc.)"))
+        layout.setSpacing(15)
+        
+        info_lbl = QLabel("Specify the row range to validate in this spreadsheet.")
+        info_lbl.setStyleSheet("color: #94A3B8; font-size: 11px;")
+        layout.addWidget(info_lbl)
 
-        row_layout = QHBoxLayout()
-        row_layout.addWidget(QLabel("Start Row:"))
-        self.spinbox = QSpinBox()
-        self.spinbox.setMinimum(1)
-        self.spinbox.setMaximum(9999)
-        self.spinbox.setValue(1)
-        self.spinbox.setMinimumWidth(100)
-        row_layout.addWidget(self.spinbox)
-        row_layout.addStretch()
-        layout.addLayout(row_layout)
+        form = QFormLayout()
+        
+        self.start_row = QSpinBox()
+        self.start_row.setRange(0, 999999)
+        self.start_row.setValue(1)
+        self.start_row.setSpecialValueText("No Header (Letters A, B, C...)")
+        self.start_row.setMinimumWidth(180)
+        form.addRow("Start Row (Header):", self.start_row)
+
+        self.end_row = QSpinBox()
+        self.end_row.setRange(0, 999999)
+        self.end_row.setValue(0)
+        self.end_row.setSpecialValueText("End of File")
+        self.end_row.setMinimumWidth(120)
+        form.addRow("End Row (Optional):", self.end_row)
+        
+        layout.addLayout(form)
+
+        help_txt = QLabel(
+            "<small><b>Start Row:</b> The row containing column headers.<br>"
+            "<b>End Row:</b> Stop processing at this row (0 = process all).</small>"
+        )
+        help_txt.setStyleSheet("color: #64748B;")
+        layout.addWidget(help_txt)
 
         btn_layout = QHBoxLayout()
-        btn_ok = QPushButton("📂 Load File")
+        btn_ok = QPushButton("📂 Load Range")
+        btn_ok.setObjectName("primary")
         btn_cancel = QPushButton("✖ Cancel")
         btn_ok.clicked.connect(self.accept)
         btn_cancel.clicked.connect(self.reject)
@@ -89,9 +108,11 @@ class StartRowDialog(QDialog):
         btn_layout.addWidget(btn_cancel)
         layout.addLayout(btn_layout)
 
-    def get_start_row(self) -> int:
-        """Return the selected start row (1-indexed)."""
-        return self.spinbox.value()
+    def get_range(self) -> tuple[int, int | None]:
+        """Return (start_row, end_row) where start is 1-indexed and end is 1-indexed or None."""
+        start = self.start_row.value()
+        end = self.end_row.value()
+        return start, (end if end > 0 else None)
 
 
 class MainWindow(QMainWindow):
@@ -575,17 +596,18 @@ class MainWindow(QMainWindow):
             self._on_file_selected(path)
 
     def _on_file_selected(self, path: str) -> None:
-        dialog = StartRowDialog(self)
+        dialog = RangeSelectionDialog(self)
         if dialog.exec() != QDialog.Accepted:
             self._file_path = None
             self.file_drop.clear()
             return
         
-        start_row = dialog.get_start_row()
+        start_row, end_row = dialog.get_range()
         header_row = start_row - 1
         
         if self._rule_set:
             self._rule_set.header_row = header_row
+            self._rule_set.end_row = end_row
         
         self.status.showMessage(f"Loading {Path(path).name}...")
         self.processing_overlay.show_processing("Loading File...")
@@ -657,11 +679,27 @@ class MainWindow(QMainWindow):
         score = max(0, min(100, 100 - (errors*5) - (warnings*2) - (duplicates*3) + min(corrections, 10)))
         
         self.top_progress.setValue(score)
+        
+        # Dynamic color for top score label
+        color = self._get_score_color(score)
+        self.lbl_top_score.setText(f"{score}%")
+        self.lbl_top_score.setStyleSheet(f"font-weight: bold; color: {color.name()}; min-width: 40px;")
+        
         self.progress.setValue(100)
         self.processing_overlay.hide()
         self.status.showMessage(
             f"Done — Quality Score: {score}% ({result.error_count} errors, {result.warning_count} warnings)"
         )
+
+    def _get_score_color(self, score: int) -> QColor:
+        """Helper to get Red-to-Green color for MainWindow labels."""
+        if score < 50:
+            ratio = score / 50.0
+            r, g = 255, int(255 * ratio)
+        else:
+            ratio = (score - 50) / 50.0
+            r, g = int(255 * (1.0 - ratio)), 255
+        return QColor(r, g, 0)
 
     @Slot(str)
     def _on_failed(self, message: str) -> None:
