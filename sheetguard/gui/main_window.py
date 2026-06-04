@@ -156,15 +156,16 @@ class MainWindow(QMainWindow):
         icon_sidebar_layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
 
         # Navigation Icons
-        btn_menu = self._create_nav_icon("☰")
-        btn_file_ops = self._create_nav_icon("📄") 
-        btn_file_ops.setProperty("active", "true")
+        self._btn_toggle_cc = self._create_nav_icon("🎛️")
+        self._btn_toggle_cc.setToolTip("Hide Command Center")
+        self._btn_toggle_aa = self._create_nav_icon("📊")
+        self._btn_toggle_aa.setToolTip("Hide Action & Analytics")
         btn_db = self._create_nav_icon("🗄️") 
         btn_settings_top = self._create_nav_icon("⚙️")
         self._btn_theme = self._create_nav_icon("🌙")
         self._btn_theme.setToolTip("Toggle light/dark theme")
         
-        for b in (btn_menu, btn_file_ops, btn_db, btn_settings_top, self._btn_theme):
+        for b in (self._btn_toggle_cc, self._btn_toggle_aa, btn_db, btn_settings_top, self._btn_theme):
             icon_sidebar_layout.addWidget(b, alignment=Qt.AlignmentFlag.AlignHCenter)
         
         icon_sidebar_layout.addStretch()
@@ -183,9 +184,11 @@ class MainWindow(QMainWindow):
         # Theme toggle
         self._btn_theme.clicked.connect(self._toggle_theme)
         
-        # Placeholder connections for navigation icons
-        btn_menu.clicked.connect(lambda: QMessageBox.information(self, "Menu", "Menu clicked (not implemented)"))
-        btn_file_ops.clicked.connect(lambda: QMessageBox.information(self, "File Ops", "File Ops clicked (not implemented)"))
+        # Show/hide panel toggles
+        self._btn_toggle_cc.clicked.connect(self._toggle_command_center)
+        self._btn_toggle_aa.clicked.connect(self._toggle_action_analytics)
+        
+        # Placeholder connections for remaining navigation icons
         btn_db.clicked.connect(lambda: QMessageBox.information(self, "Database", "Database view not implemented"))
         btn_settings_top.clicked.connect(lambda: QMessageBox.information(self, "Settings", "Settings clicked (not implemented)"))
         btn_help_nav.clicked.connect(lambda: QMessageBox.information(self, "Help", "Help dialog not implemented"))
@@ -197,10 +200,10 @@ class MainWindow(QMainWindow):
         workspace_layout.addWidget(self.main_splitter)
 
         # --- 2. COMMAND CENTER (MIDDLE SIDEBAR) ---
-        sidebar_pane = QFrame()
-        sidebar_pane.setObjectName("sidebar")
-        sidebar_pane.setMinimumWidth(300)
-        sidebar_main_layout = QVBoxLayout(sidebar_pane)
+        self._sidebar_pane = QFrame()
+        self._sidebar_pane.setObjectName("sidebar")
+        self._sidebar_pane.setMinimumWidth(300)
+        sidebar_main_layout = QVBoxLayout(self._sidebar_pane)
         sidebar_main_layout.setContentsMargins(0, 0, 0, 0)
         sidebar_main_layout.setSpacing(0)
 
@@ -210,11 +213,13 @@ class MainWindow(QMainWindow):
         header_layout.setContentsMargins(15, 15, 15, 10)
         header_text = QLabel("Command Center")
         header_text.setStyleSheet("font-size: 15px; font-weight: 800; color: #E2E8F0;")
-        header_collapse = QLabel("«")
-        header_collapse.setStyleSheet("color: #475569; font-weight: bold;")
+        self._btn_collapse_cc = QPushButton("«")
+        self._btn_collapse_cc.setObjectName("navIcon")
+        self._btn_collapse_cc.setToolTip("Hide Command Center")
+        self._btn_collapse_cc.setFixedSize(24, 24)
         header_layout.addWidget(header_text)
         header_layout.addStretch()
-        header_layout.addWidget(header_collapse)
+        header_layout.addWidget(self._btn_collapse_cc)
         sidebar_main_layout.addWidget(header_pane)
 
         # Scrollable Content Area
@@ -320,7 +325,7 @@ class MainWindow(QMainWindow):
         bottom_layout.addWidget(self.btn_delete_rule)
         sidebar_main_layout.addWidget(bottom_pane)
 
-        self.main_splitter.addWidget(sidebar_pane)
+        self.main_splitter.addWidget(self._sidebar_pane)
 
         # --- 3. LIVE WORKSPACE (CENTER) ---
         workspace = QWidget()
@@ -351,12 +356,12 @@ class MainWindow(QMainWindow):
         self.main_splitter.addWidget(workspace)
 
         # --- 4. ACTION & ANALYTICS (RIGHT) ---
-        right_pane = QFrame()
-        right_pane.setObjectName("sidebar")
-        right_pane.setMinimumWidth(320)
-        right_pane.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        self._right_pane = QFrame()
+        self._right_pane.setObjectName("sidebar")
+        self._right_pane.setMinimumWidth(320)
+        self._right_pane.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         
-        right_layout = QVBoxLayout(right_pane)
+        right_layout = QVBoxLayout(self._right_pane)
         right_layout.setContentsMargins(15, 15, 15, 15)
         right_layout.setSpacing(12)
 
@@ -422,7 +427,7 @@ class MainWindow(QMainWindow):
         right_layout.addWidget(self.btn_lookup_manager)
 
         right_layout.addStretch()
-        self.main_splitter.addWidget(right_pane)
+        self.main_splitter.addWidget(self._right_pane)
 
         # Splitter Sizing
         self.main_splitter.setStretchFactor(0, 0) # Command Center
@@ -451,6 +456,7 @@ class MainWindow(QMainWindow):
         self.btn_delete_rule.clicked.connect(self._delete_rule)
         self.btn_export_full.clicked.connect(lambda: self._export("full"))
         self.btn_export_clean.clicked.connect(lambda: self._export("cleaned"))
+        self._btn_collapse_cc.clicked.connect(self._toggle_command_center)
 
     def _create_nav_icon(self, text: str) -> QPushButton:
         btn = QPushButton(text)
@@ -706,6 +712,26 @@ class MainWindow(QMainWindow):
         self._dark_mode = not self._dark_mode
         apply_theme(QApplication.instance(), self._dark_mode)
         self._btn_theme.setText("🌙" if self._dark_mode else "☀️")
+
+    def _toggle_command_center(self) -> None:
+        """Show or hide the Command Center sidebar."""
+        visible = self._sidebar_pane.isVisible()
+        self._sidebar_pane.setVisible(not visible)
+        self._btn_toggle_cc.setToolTip(
+            "Show Command Center" if visible else "Hide Command Center"
+        )
+        self._btn_collapse_cc.setText("»" if visible else "«")
+        self._btn_collapse_cc.setToolTip(
+            "Show Command Center" if visible else "Hide Command Center"
+        )
+
+    def _toggle_action_analytics(self) -> None:
+        """Show or hide the Action & Analytics panel."""
+        visible = self._right_pane.isVisible()
+        self._right_pane.setVisible(not visible)
+        self._btn_toggle_aa.setToolTip(
+            "Show Action & Analytics" if visible else "Hide Action & Analytics"
+        )
 
     def _open_bug_report(self) -> None:
         dlg = BugReportDialog(self)
