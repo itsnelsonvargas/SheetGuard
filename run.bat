@@ -10,6 +10,14 @@ if not exist ".venv\Scripts\python.exe" (
     exit /b 1
 )
 
+echo Installing dependencies (if needed)...
+.venv\Scripts\python.exe -m pip install -r requirements.txt -q
+if errorlevel 1 (
+    echo ERROR: Could not install dependencies. Run setup.bat again.
+    pause
+    exit /b 1
+)
+
 echo Starting SheetGuard...
 .venv\Scripts\python.exe main.py
 if errorlevel 1 pause

@@ -11,5 +11,13 @@ if (-not (Test-Path $venvPython)) {
     exit 1
 }
 
+Write-Host "Installing dependencies (if needed)..."
+& $venvPython -m pip install -r requirements.txt -q
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: Could not install dependencies. Run setup.ps1 again."
+    Read-Host "Press Enter to exit"
+    exit 1
+}
+
 Write-Host "Starting SheetGuard..."
 & $venvPython main.py
