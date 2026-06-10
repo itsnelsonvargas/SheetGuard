@@ -1,9 +1,10 @@
-Set-Location $PSScriptRoot
-Write-Host "Installing dependencies (if needed)..."
-if (Get-Command py -ErrorAction SilentlyContinue) {
-    py -3 -m pip install -r requirements.txt
-    py -3 main.py
-} else {
-    python -m pip install -r requirements.txt
-    python main.py
-}
+# SheetGuard launcher (PowerShell).
+# Runs setup automatically if the project is not ready yet.
+
+param(
+    [switch]$NonInteractive
+)
+
+$ErrorActionPreference = "Stop"
+. "$PSScriptRoot\scripts\ensure-environment.ps1"
+exit (Invoke-SheetGuardRun -ProjectRoot $PSScriptRoot -NonInteractive:$NonInteractive)
