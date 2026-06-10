@@ -51,6 +51,10 @@ from sheetguard.models.results import ProcessingResult
 from sheetguard.models.rules import RuleSet
 from sheetguard.services.pipeline import ProcessingPipeline
 from sheetguard.services.rule_service import RuleService
+from sheetguard.services.ai_reviewer import AIReviewService
+from sheetguard.services.ai_anomaly_service import AIAnomalyService
+from sheetguard.gui.ai_insights_dialog import AIInsightsDialog
+from sheetguard.gui.ai_anomaly_dialog import AIAnomalyDialog
 from sheetguard.utils.column_utils import coerce_cell, resolve_column_name
 from sheetguard.utils.paths import resource_path
 
@@ -283,6 +287,19 @@ class MainWindow(QMainWindow):
         lbl_ai_core = QLabel("AI CORE")
         lbl_ai_core.setObjectName("groupHeader")
         sidebar_layout.addWidget(lbl_ai_core)
+        
+        self.btn_ai_review = QPushButton("  ✨ AI File Review")
+        self.btn_ai_review.setObjectName("actionSecondary")
+        self.btn_ai_review.setMinimumHeight(34)
+        self.btn_ai_review.clicked.connect(self._run_ai_review)
+        sidebar_layout.addWidget(self.btn_ai_review)
+
+        self.btn_ai_anomaly = QPushButton("  🔍 AI Anomaly Scan")
+        self.btn_ai_anomaly.setObjectName("actionSecondary")
+        self.btn_ai_anomaly.setMinimumHeight(34)
+        self.btn_ai_anomaly.clicked.connect(self._run_ai_anomaly)
+        sidebar_layout.addWidget(self.btn_ai_anomaly)
+
         self.btn_model_select = QPushButton("  🌐 Model Select")
         self.btn_model_select.setObjectName("actionSecondary")
         self.btn_prompt_builder = QPushButton("  💬 Prompt Builder")
@@ -884,6 +901,70 @@ class MainWindow(QMainWindow):
         dlg = LookupTableManagerDialog(self)
         dlg.exec()
 
+    def _run_ai_review(self) -> None:
+        """Trigger AI data profiling and insights."""
+        if self._source_df is None:
+            QMessageBox.warning(self, "AI Review", "Please load a file first.")
+            return
+
+        service = AIReviewService()
+        if not service.is_configured():
+            QMessageBox.critical(self, "AI Review", "Gemini API Key is not configured. Please add GEMINI_API_KEY to your .env file.")
+            return
+
+        self.btn_ai_review.setEnabled(False)
+        self.processing_overlay.show_processing("AI is analyzing your data structure...")
+        
+        self._ai_worker = AIReviewWorker(service, self._source_df)
+        self._ai_worker.finished_ok.connect(self._on_ai_review_finished)
+        self._ai_worker.failed.connect(self._on_ai_review_failed)
+        self._ai_worker.start()
+
+    @Slot(str)
+    def _on_ai_review_finished(self, markdown: str) -> None:
+        self.btn_ai_review.setEnabled(True)
+        self.processing_overlay.hide()
+        dlg = AIInsightsDialog(markdown, self)
+        dlg.exec()
+
+    @Slot(str)
+    def _on_ai_review_failed(self, message: str) -> None:
+        self.btn_ai_review.setEnabled(True)
+        self.processing_overlay.hide()
+        QMessageBox.critical(self, "AI Review Error", f"Could not complete AI review:\n{message}")
+
+    def _run_ai_anomaly(self) -> None:
+        """Trigger AI anomaly and outlier detection."""
+        if self._source_df is None:
+            QMessageBox.warning(self, "AI Anomaly Scan", "Please load a file first.")
+            return
+
+        service = AIAnomalyService()
+        if not service.is_configured():
+            QMessageBox.critical(self, "AI Anomaly Scan", "Gemini API Key is not configured. Please add GEMINI_API_KEY to your .env file.")
+            return
+
+        self.btn_ai_anomaly.setEnabled(False)
+        self.processing_overlay.show_processing("AI is scanning for anomalies and outliers...")
+        
+        self._anomaly_worker = AIAnomalyWorker(service, self._source_df)
+        self._anomaly_worker.finished_ok.connect(self._on_ai_anomaly_finished)
+        self._anomaly_worker.failed.connect(self._on_ai_anomaly_failed)
+        self._anomaly_worker.start()
+
+    @Slot(str)
+    def _on_ai_anomaly_finished(self, markdown: str) -> None:
+        self.btn_ai_anomaly.setEnabled(True)
+        self.processing_overlay.hide()
+        dlg = AIAnomalyDialog(markdown, self)
+        dlg.exec()
+
+    @Slot(str)
+    def _on_ai_anomaly_failed(self, message: str) -> None:
+        self.btn_ai_anomaly.setEnabled(True)
+        self.processing_overlay.hide()
+        QMessageBox.critical(self, "AI Anomaly Error", f"Could not complete anomaly scan:\n{message}")
+
     def _filter_library(self) -> None:
         """Filter the rule library based on search input, ignoring surrounding % symbols."""
         txt = self.search_library.text().lower()
@@ -956,6 +1037,40 @@ class FileLoadWorker(QThread):
             from sheetguard.services.file_loader import FileLoader
             df = FileLoader.load(self.file_path, self.rule_set)
             self.finished_ok.emit(df, self.file_path)
+        except Exception as e:
+            self.failed.emit(str(e))
+
+
+class AIReviewWorker(QThread):
+    finished_ok = Signal(str)
+    failed = Signal(str)
+
+    def __init__(self, service: AIReviewService, df) -> None:
+        super().__init__()
+        self.service = service
+        self.df = df
+
+    def run(self) -> None:
+        try:
+            result = self.service.review_data(self.df)
+            self.finished_ok.emit(result)
+        except Exception as e:
+            self.failed.emit(str(e))
+
+
+class AIAnomalyWorker(QThread):
+    finished_ok = Signal(str)
+    failed = Signal(str)
+
+    def __init__(self, service: AIAnomalyService, df) -> None:
+        super().__init__()
+        self.service = service
+        self.df = df
+
+    def run(self) -> None:
+        try:
+            result = self.service.scan_anomalies(self.df)
+            self.finished_ok.emit(result)
         except Exception as e:
             self.failed.emit(str(e))
 
