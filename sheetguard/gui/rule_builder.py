@@ -214,6 +214,36 @@ class ColumnRuleEditor(QDialog):
         age_help.setStyleSheet("color: #64748B; font-size: 11px;")
         val_layout.addRow("", age_help)
 
+        # Max Age Restriction
+        max_age_layout = QHBoxLayout()
+        self.max_age_years = QSpinBox()
+        self.max_age_years.setRange(0, 150)
+        self.max_age_years.setMinimumWidth(60)
+        self.max_age_months = QSpinBox()
+        self.max_age_months.setRange(0, 11)
+        self.max_age_months.setMinimumWidth(60)
+        self.max_age_days = QSpinBox()
+        self.max_age_days.setRange(0, 31)
+        self.max_age_days.setMinimumWidth(60)
+
+        if rule:
+            if rule.max_age_years: self.max_age_years.setValue(rule.max_age_years)
+            if rule.max_age_months: self.max_age_months.setValue(rule.max_age_months)
+            if rule.max_age_days: self.max_age_days.setValue(rule.max_age_days)
+
+        max_age_layout.addWidget(QLabel("Years:"))
+        max_age_layout.addWidget(self.max_age_years)
+        max_age_layout.addWidget(QLabel("Months:"))
+        max_age_layout.addWidget(self.max_age_months)
+        max_age_layout.addWidget(QLabel("Days:"))
+        max_age_layout.addWidget(self.max_age_days)
+        max_age_layout.addStretch()
+        val_layout.addRow("Max Age Restriction:", max_age_layout)
+
+        max_age_help = QLabel("Rows older than this total duration will be flagged.")
+        max_age_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        val_layout.addRow("", max_age_help)
+
         # Values & Patterns
         self.allowed_values = QLineEdit()
         self.allowed_values.setPlaceholderText("e.g., M, F, Other")
@@ -295,6 +325,9 @@ class ColumnRuleEditor(QDialog):
             min_age_years=self.min_age_years.value() if self.min_age_years.value() > 0 else None,
             min_age_months=self.min_age_months.value() if self.min_age_months.value() > 0 else None,
             min_age_days=self.min_age_days.value() if self.min_age_days.value() > 0 else None,
+            max_age_years=self.max_age_years.value() if self.max_age_years.value() > 0 else None,
+            max_age_months=self.max_age_months.value() if self.max_age_months.value() > 0 else None,
+            max_age_days=self.max_age_days.value() if self.max_age_days.value() > 0 else None,
             lookup=self.lookup.currentText().strip() or None,
             validate_email=self.validate_email.isChecked(),
         )
@@ -568,6 +601,9 @@ class RuleBuilderPanel(QWidget):
             flags = []
             if col.required:
                 flags.append("req")
+            if any([col.min_age_years, col.min_age_months, col.min_age_days,
+                   col.max_age_years, col.max_age_months, col.max_age_days]):
+                flags.append("age")
             if col.cleaning:
                 flags.append(",".join(col.cleaning))
             suffix = f" [{', '.join(flags)}]" if flags else ""

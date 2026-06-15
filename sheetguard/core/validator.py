@@ -60,6 +60,7 @@ class DataValidator:
             self._check_numeric_range(col_rule, col_name, series)
             self._check_date(col_rule, col_name, series)
             self._check_age(col_rule, col_name, series)
+            self._check_max_age(col_rule, col_name, series)
             self._check_email(col_rule, col_name, series)
             self._check_lookup(col_rule, col_name, series)
 
@@ -294,6 +295,60 @@ class DataValidator:
                     val,
                     val,
                     "min_age",
+                )
+
+    def _check_max_age(self, col_rule: ColumnRule, col_name: str, series: pd.Series) -> None:
+        if col_rule.max_age_years is None and col_rule.max_age_months is None and col_rule.max_age_days is None:
+            return
+        
+        years = col_rule.max_age_years or 0
+        months = col_rule.max_age_months or 0
+        days = col_rule.max_age_days or 0
+        
+        today = pd.Timestamp.now().normalize()
+        # Cutoff: Anyone born BEFORE this is "Too Old"
+        cutoff = today - pd.DateOffset(years=years, months=months, days=days)
+        
+        # Build descriptive message
+        parts = []
+        if years: parts.append(f"{years} years")
+        if months: parts.append(f"{months} months")
+        if days: parts.append(f"{days} days")
+        desc = ", ".join(parts)
+
+        fmt = None
+        if col_rule.date_format:
+            fmt = col_rule.date_format.replace("YYYY", "%Y").replace("MM", "%m").replace("DD", "%d")
+
+        for idx, val in series.items():
+            if pd.isna(val) or str(val).strip() == "":
+                continue
+            
+            s = str(val).strip()
+            dt = None
+            try:
+                if fmt:
+                    dt = pd.to_datetime(s, format=fmt, errors="coerce")
+                else:
+                    dt = pd.to_datetime(s, errors="coerce")
+                    if pd.isna(dt):
+                        dt = pd.to_datetime(s, errors="coerce", dayfirst=True)
+            except Exception:
+                pass
+            
+            if dt is None or pd.isna(dt):
+                continue
+                
+            if dt < cutoff:
+                self._add(
+                    int(idx),
+                    col_rule,
+                    col_name,
+                    self._severity(col_rule),
+                    f"The value must be {desc} or younger as of today",
+                    val,
+                    val,
+                    "max_age",
                 )
 
     def _check_email(self, col_rule: ColumnRule, col_name: str, series: pd.Series) -> None:
