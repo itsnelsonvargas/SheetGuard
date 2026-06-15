@@ -184,6 +184,36 @@ class ColumnRuleEditor(QDialog):
         len_layout.addWidget(self.max_length)
         val_layout.addRow("Text Length:", len_layout)
 
+        # Age Constraint
+        age_layout = QHBoxLayout()
+        self.min_age_years = QSpinBox()
+        self.min_age_years.setRange(0, 150)
+        self.min_age_years.setMinimumWidth(60)
+        self.min_age_months = QSpinBox()
+        self.min_age_months.setRange(0, 11)
+        self.min_age_months.setMinimumWidth(60)
+        self.min_age_days = QSpinBox()
+        self.min_age_days.setRange(0, 31)
+        self.min_age_days.setMinimumWidth(60)
+        
+        if rule:
+            if rule.min_age_years: self.min_age_years.setValue(rule.min_age_years)
+            if rule.min_age_months: self.min_age_months.setValue(rule.min_age_months)
+            if rule.min_age_days: self.min_age_days.setValue(rule.min_age_days)
+            
+        age_layout.addWidget(QLabel("Years:"))
+        age_layout.addWidget(self.min_age_years)
+        age_layout.addWidget(QLabel("Months:"))
+        age_layout.addWidget(self.min_age_months)
+        age_layout.addWidget(QLabel("Days:"))
+        age_layout.addWidget(self.min_age_days)
+        age_layout.addStretch()
+        val_layout.addRow("Age Restriction:", age_layout)
+        
+        age_help = QLabel("Rows younger than this total duration will be flagged.")
+        age_help.setStyleSheet("color: #64748B; font-size: 11px;")
+        val_layout.addRow("", age_help)
+
         # Values & Patterns
         self.allowed_values = QLineEdit()
         self.allowed_values.setPlaceholderText("e.g., M, F, Other")
@@ -262,6 +292,9 @@ class ColumnRuleEditor(QDialog):
             regex=self.regex.text().strip() or None,
             min_length=self.min_length.value() if self.min_length.value() > 0 else None,
             max_length=self.max_length.value() if self.max_length.value() > 0 else None,
+            min_age_years=self.min_age_years.value() if self.min_age_years.value() > 0 else None,
+            min_age_months=self.min_age_months.value() if self.min_age_months.value() > 0 else None,
+            min_age_days=self.min_age_days.value() if self.min_age_days.value() > 0 else None,
             lookup=self.lookup.currentText().strip() or None,
             validate_email=self.validate_email.isChecked(),
         )

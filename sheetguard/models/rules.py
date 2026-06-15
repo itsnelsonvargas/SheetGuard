@@ -61,6 +61,9 @@ class ColumnRule:
     min_value: float | None = None
     max_value: float | None = None
     date_format: str | None = None
+    min_age_years: int | None = None
+    min_age_months: int | None = None
+    min_age_days: int | None = None
     lookup: str | None = None
     warning_only: bool = False
     validate_email: bool = False
@@ -79,6 +82,9 @@ class ColumnRule:
             min_value=data.get("min_value"),
             max_value=data.get("max_value"),
             date_format=data.get("date_format"),
+            min_age_years=data.get("min_age_years") or data.get("min_age"),
+            min_age_months=data.get("min_age_months"),
+            min_age_days=data.get("min_age_days"),
             lookup=data.get("lookup"),
             warning_only=bool(data.get("warning_only", False)),
             validate_email=bool(data.get("validate_email", False)),
@@ -109,6 +115,12 @@ class ColumnRule:
             out["max_value"] = self.max_value
         if self.date_format:
             out["date_format"] = self.date_format
+        if self.min_age_years is not None:
+            out["min_age_years"] = self.min_age_years
+        if self.min_age_months is not None:
+            out["min_age_months"] = self.min_age_months
+        if self.min_age_days is not None:
+            out["min_age_days"] = self.min_age_days
         if self.lookup:
             out["lookup"] = self.lookup
         if self.warning_only:
